@@ -1,0 +1,140 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #e8f5e9; /* light green */
+  color: #2f4f2f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  width: 90%;
+  max-width: 420px;
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+header h1 {
+  color: #2e7d32;
+  font-size: 32px;
+  margin-bottom: 5px;
+}
+
+.tagline {
+  font-size: 16px;
+  color: #4caf50;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 25px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.btn {
+  text-decoration: none;
+  background: #4caf50;
+  color: white;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.btn:hover {
+  background: #388e3c;
+}
+
+footer {
+  margin-top: 25px;
+  font-size: 12px;
+  color: #777;
+}
+.form-card {
+  background: #f1f8e9;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+label {
+  font-size: 14px;
+  margin-top: 10px;
+  display: block;
+  color: #2e7d32;
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-top: 5px;
+}
+/* Old CSS that you already have */
+body {
+  background: #e8f5e9;
+  color: #2f4f2f;
+  ...
+}
+
+.container {
+  ...
+}
+
+/* Notes page CSS */
+.notes-card {
+  ...
+}
+
+/* NOW paste the new CSS below this */
+
+.form-card {
+  background: #f1f8e9;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+label {
+  font-size: 14px;
+  margin-top: 10px;
+  display: block;
+  color: #2e7d32;
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-top: 5px;
+}
+
+.result-box {
+  margin-top: 15px;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: bold;
+}

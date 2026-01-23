@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AgroSense – Crop Risk Tool</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>🌱 Crop Failure Predictor</h1>
+    <p class="subtitle">Check risk before you sow</p>
+  </header>
+
+  <div class="form-card">
+    <label>Season</label>
+    <select id="season">
+      <option value="">Select Season</option>
+      <option value="kharif">Kharif</option>
+      <option value="rabi">Rabi</option>
+      <option value="summer">Summer</option>
+    </select>
+
+    <label>Crop</label>
+    <select id="crop">
+      <option value="">Select Crop</option>
+      <option value="rice">Rice</option>
+      <option value="wheat">Wheat</option>
+      <option value="cotton">Cotton</option>
+      <option value="sugarcane">Sugarcane</option>
+      <option value="soybean">Soybean</option>
+      <option value="bajra">Bajra</option>
+      <option value="jowar">Jowar</option>
+      <option value="groundnut">Groundnut</option>
+      <option value="maize">Maize</option>
+      <option value="onion">Onion</option>
+    </select>
+
+    <label>Soil Type</label>
+    <select id="soil">
+      <option value="">Select Soil</option>
+      <option value="black">Black</option>
+      <option value="red">Red</option>
+      <option value="sandy">Sandy</option>
+      <option value="loamy">Loamy</option>
+    </select>
+
+    <label>Water Source</label>
+    <select id="water">
+      <option value="">Select Water</option>
+      <option value="rain">Rain</option>
+      <option value="borewell">Borewell</option>
+      <option value="canal">Canal</option>
+    </select>
+
+    <button class="btn" onclick="checkRisk()">Check Risk</button>
+  </div>
+
+  <div id="result" class="result-box"></div>
+
+  <a href="index.html" class="btn">⬅ Back to Home</a>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
