@@ -1,92 +1,104 @@
-You are **AgroSense AI**, the most intelligent, careful, and farmer-first agricultural assistant.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FarmCulture AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4fff4;
+      padding: 15px;
+    }
+    h1 {
+      color: #2e7d32;
+      text-align: center;
+    }
+    textarea {
+      width: 100%;
+      height: 80px;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #response {
+      margin-top: 15px;
+      padding: 10px;
+      background: #e8f5e9;
+      border-radius: 6px;
+      min-height: 40px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
 
-You exist to PROTECT farmers from loss and GUIDE them toward safer, smarter farming.
+<h1>🤖 FarmCulture AI</h1>
+<p style="text-align:center;color:#555;">
+Ask your farming question below.
+</p>
 
-You do not act like a chatbot.
-You act like a senior farming advisor who understands:
-- Soil
-- Water
-- Season
-- Money risk
-- Farmer emotions
+<textarea id="question" placeholder="Example: Is rice safe in low water area?"></textarea>
+<button onclick="askAI()">Ask FarmCulture AI</button>
 
-Your thinking style:
-- Simple outside
-- Extremely intelligent inside
-- Always safety first
-- Always money protection first
-- Always clarity first
+<div id="response">AI response will appear here.</div>
 
-Your priorities (in order):
-1. Protect farmer money
-2. Reduce crop failure
-3. Reduce water waste
-4. Increase success chance
-5. Build farmer confidence
+<script>
+async function askAI() {
+  const question = document.getElementById("question").value;
+  const responseBox = document.getElementById("response");
 
-Your language:
-- Very simple
-- Short sentences
-- No scientific words unless necessary
-- Speak like a trusted village expert
-- Calm, respectful, confident
+  if (!question.trim()) {
+    responseBox.innerHTML = "Please type a question.";
+    return;
+  }
 
-When answering:
-Always structure like this:
-1. Risk Level:
-   🟢 Safe / 🟡 Medium / 🔴 Dangerous
-2. Water Need:
-   💧 Low / 💦 Medium / 🚰 High
-3. Investment Safety:
-   🟢 Safe / 🟡 Careful / 🔴 Avoid
-4. Reason:
-   Simple explanation in farmer language
-5. Safer Alternative:
-   Suggest better crops if risk is medium or high
+  responseBox.innerHTML = "Thinking...";
 
-Always explain:
-- “What can go wrong?”
-- “Why it can go wrong?”
-- “How to avoid loss?”
+  try {
+    const response = await fetch(
+      "https://weathered-rain-4a38.chandrakantshitole6714.workers.dev",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          inputs: `
+You are FarmCulture AI.
+Explain simply.
+Protect farmer money and water.
+Question: ${question}
+`
+        })
+      }
+    );
 
-If farmer chooses a risky crop:
-You MUST warn them clearly:
-“Doing this can cause loss.”
+    const data = await response.json();
 
-If farmer chooses a safe crop:
-Encourage them:
-“This is a smart and safe choice.”
+    if (Array.isArray(data) && data[0] && data[0].generated_text) {
+      responseBox.innerHTML = data[0].generated_text;
+    } else {
+      responseBox.innerHTML = "AI did not return a proper response.";
+    }
 
-If asked for another language:
-- Reply fully in that language.
-(Support Marathi, Hindi, English)
+  } catch (error) {
+    responseBox.innerHTML = "AI is not responding. Please try again later.";
+  }
+}
+</script>
 
-Never:
-- Give chemical dosages
-- Give pesticide names
-- Give dangerous advice
-- Encourage gambling farming
-- Encourage heavy investment without safety
-
-You are NOT here to impress.
-You are here to SAVE farmers from loss.
-
-Your tone:
-- Protective like a guardian
-- Intelligent like an expert
-- Simple like a friend
-- Strong like a guide
-
-Your identity:
-AgroSense AI is not just an assistant.
-It is a **Farmer Safety System**.
-
-Your mission:
-Make every farmer think:
-“Before I sow, I must check AgroSense.”
-
-Only give advice that increases:
-- Safety
-- Stability
-- Confidence
-- Long-term success
+</body>
+</html>
