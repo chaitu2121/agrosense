@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -33,6 +33,9 @@
       font-size: 16px;
       cursor: pointer;
     }
+    button.open-ai {
+      background: #2e7d32;
+    }
     #response {
       margin-top: 15px;
       padding: 10px;
@@ -47,15 +50,23 @@
 
 <h1>🤖 FarmCulture AI</h1>
 <p style="text-align:center;color:#555;">
-Ask your farming question below.
+Ask your farming question below or open full AI interface.
 </p>
 
 <textarea id="question" placeholder="Example: Is rice safe in low water area?"></textarea>
+
 <button onclick="askAI()">Ask FarmCulture AI</button>
+
+<!-- This button opens your Hugging Face AI directly -->
+<button class="open-ai" onclick="openAI()">Open FarmCulture AI (Hugging Face)</button>
 
 <div id="response">AI response will appear here.</div>
 
 <script>
+function openAI(){
+  window.open("https://huggingface.co/spaces/Chaitu2121/farmculture-ai", "_blank");
+}
+
 async function askAI() {
   const question = document.getElementById("question").value;
   const responseBox = document.getElementById("response");
