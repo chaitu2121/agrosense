@@ -61,32 +61,26 @@
   <!-- Result box -->
   <div id="result" class="result-box"></div>
 
-  <!-- AI Section -->
+  <!-- AI Section (Embedded – No Redirect) -->
   <hr style="margin:30px 0;">
 
   <h2 style="text-align:center;">🤖 FarmCulture Smart Agriculture AI</h2>
   <p style="text-align:center;color:#555;">
-    Get expert advice from our AI before making farming decisions.
+    Ask your farming questions directly here. No redirection, full AI inside your website.
   </p>
 
-  <!-- TEST BUTTON (to confirm your page is updating) -->
-  <button class="btn" onclick="alert('Button working')">Test Button</button>
-
-  <!-- REAL AI BUTTON -->
-  <button class="btn" onclick="openAI()">Open FarmCulture AI</button>
+  <iframe 
+    src="https://huggingface.co/spaces/Chaitu2121/farmculture-ai"
+    width="100%"
+    height="700"
+    style="border:none;border-radius:12px;">
+  </iframe>
 
   <a href="index.html" class="btn">⬅ Back to Home</a>
 </div>
 
 <!-- Your existing JS -->
 <script src="script.js"></script>
-
-<!-- AI Open Script -->
-<script>
-function openAI(){
-  window.open("https://huggingface.co/spaces/Chaitu2121/farmculture-ai", "_blank");
-}
-</script>
 
 </body>
 </html>
