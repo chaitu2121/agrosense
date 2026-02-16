@@ -1,140 +1,155 @@
-* {
-  margin: 0;
-  padding: 0;
+/* AgroSense - Premium UI (Mobile First) */
+
+:root{
+  --bg: #f6fff6;
+  --card: #ffffff;
+  --text: #132018;
+  --muted: #51605a;
+  --primary: #1b7d3b;
+  --primary2: #0f5a2a;
+  --border: rgba(19, 32, 24, 0.10);
+  --shadow: 0 12px 30px rgba(0,0,0,0.08);
+  --radius: 18px;
+}
+
+*{
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
 }
 
-body {
-  background: #e8f5e9; /* light green */
-  color: #2f4f2f;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+body{
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: radial-gradient(circle at top, #eaffea 0%, var(--bg) 45%, #ffffff 100%);
+  color: var(--text);
 }
 
-.container {
-  width: 90%;
-  max-width: 420px;
-  background: white;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+.container{
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 18px 14px 60px;
+}
+
+header{
   text-align: center;
+  margin-bottom: 18px;
 }
 
-header h1 {
-  color: #2e7d32;
-  font-size: 32px;
-  margin-bottom: 5px;
+header h1{
+  font-size: 28px;
+  margin: 6px 0 6px;
+  letter-spacing: -0.6px;
 }
 
-.tagline {
-  font-size: 16px;
-  color: #4caf50;
-  margin-bottom: 10px;
-}
-
-.subtitle {
+.subtitle{
+  margin: 0;
+  color: var(--muted);
   font-size: 14px;
-  color: #555;
-  margin-bottom: 25px;
 }
 
-.buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+.form-card{
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-top: 16px;
+  box-shadow: var(--shadow);
 }
 
-.btn {
-  text-decoration: none;
-  background: #4caf50;
+.form-card h2{
+  margin: 0 0 6px;
+  font-size: 18px;
+  letter-spacing: -0.3px;
+}
+
+.form-card p{
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+label{
+  display: block;
+  margin: 12px 0 6px;
+  font-weight: 600;
+  font-size: 13px;
+  color: #2a3a32;
+}
+
+select, input{
+  width: 100%;
+  padding: 12px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: #fbfffb;
+  font-size: 15px;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+select:focus, input:focus{
+  border-color: rgba(27, 125, 59, 0.55);
+  box-shadow: 0 0 0 4px rgba(27, 125, 59, 0.12);
+}
+
+.btn{
+  width: 100%;
+  padding: 13px 14px;
+  margin-top: 14px;
+  background: linear-gradient(180deg, var(--primary), var(--primary2));
   color: white;
+  border: none;
+  border-radius: 16px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  box-shadow: 0 10px 20px rgba(27,125,59,0.22);
+}
+
+.btn:active{
+  transform: scale(0.99);
+}
+
+.btn.secondary{
+  background: #ffffff;
+  color: var(--primary);
+  border: 1px solid rgba(27, 125, 59, 0.25);
+  box-shadow: none;
+}
+
+.result-box{
+  margin-top: 14px;
   padding: 14px;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: bold;
-  transition: 0.2s;
+  border-radius: 16px;
+  background: #f2fff2;
+  border: 1px solid rgba(27, 125, 59, 0.18);
+  color: #173222;
+  line-height: 1.6;
+  font-size: 14px;
 }
 
-.btn:hover {
-  background: #388e3c;
-}
-
-footer {
-  margin-top: 25px;
+.pill{
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
   font-size: 12px;
-  color: #777;
-}
-.form-card {
-  background: #f1f8e9;
-  padding: 15px;
-  border-radius: 10px;
-  margin-bottom: 15px;
-  text-align: left;
+  font-weight: 700;
+  margin: 6px 6px 0 0;
+  border: 1px solid rgba(0,0,0,0.08);
 }
 
-label {
-  font-size: 14px;
-  margin-top: 10px;
-  display: block;
-  color: #2e7d32;
+.pill.good{ background: #e9fff0; }
+.pill.mid{ background: #fff8e6; }
+.pill.bad{ background: #ffecec; }
+
+.grid2{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
 }
 
-select {
-  width: 100%;
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  margin-top: 5px;
-}
-/* Old CSS that you already have */
-body {
-  background: #e8f5e9;
-  color: #2f4f2f;
-  ...
-}
-
-.container {
-  ...
-}
-
-/* Notes page CSS */
-.notes-card {
-  ...
-}
-
-/* NOW paste the new CSS below this */
-
-.form-card {
-  background: #f1f8e9;
-  padding: 15px;
-  border-radius: 10px;
-  margin-bottom: 15px;
-  text-align: left;
-}
-
-label {
-  font-size: 14px;
-  margin-top: 10px;
-  display: block;
-  color: #2e7d32;
-}
-
-select {
-  width: 100%;
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  margin-top: 5px;
-}
-
-.result-box {
-  margin-top: 15px;
-  padding: 15px;
-  border-radius: 10px;
-  text-align: center;
-  font-weight: bold;
+@media (min-width: 640px){
+  header h1{ font-size: 34px; }
+  .grid2{ grid-template-columns: 1fr 1fr; }
 }
