@@ -153,3 +153,19 @@ select:focus, input:focus{
   header h1{ font-size: 34px; }
   .grid2{ grid-template-columns: 1fr 1fr; }
 }
+
+/* FIX MOBILE BUTTON OVERLAP */
+@media (max-width: 600px) {
+  .btn {
+    width: 100% !important;
+    display: block !important;
+    margin: 10px 0 !important;
+    text-align: center !important;
+  }
+
+  .grid2 {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+}
