@@ -12,8 +12,25 @@
 
   <header>
     <h1>🌾 AgroSense Tools</h1>
-    <p class="subtitle">Smart tools + AI assistant to protect farmer money and water</p>
+    <p class="subtitle">World-class farming tools + AI assistant to protect farmer money and water</p>
   </header>
+
+  <!-- TOOL NAV -->
+  <div class="form-card">
+    <h2 style="text-align:center;">⚡ Quick Tools Menu</h2>
+    <p style="text-align:center;color:#555;">Tap to jump instantly.</p>
+
+    <div class="grid2">
+      <button class="btn secondary" onclick="jumpTo('riskTool')">🌱 Risk Predictor</button>
+      <button class="btn secondary" onclick="jumpTo('waterTool')">💧 Water Budget</button>
+      <button class="btn secondary" onclick="jumpTo('seedTool')">🌾 Seed + Varieties</button>
+      <button class="btn secondary" onclick="jumpTo('calendarTool')">📅 Crop Calendar</button>
+      <button class="btn secondary" onclick="jumpTo('rescueTool')">🚨 Rescue Mode</button>
+      <button class="btn secondary" onclick="jumpTo('fertTool')">🧪 Fertilizer Guide</button>
+      <button class="btn secondary" onclick="jumpTo('notesTool')">📝 Farmer Notes</button>
+      <button class="btn secondary" onclick="jumpTo('aiTool')">🤖 FarmCulture AI</button>
+    </div>
+  </div>
 
   <!-- LANGUAGE SWITCH -->
   <div class="form-card">
@@ -30,8 +47,8 @@
     </div>
   </div>
 
-  <!-- MAIN TOOL -->
-  <div class="form-card">
+  <!-- 1) RISK TOOL -->
+  <div class="form-card" id="riskTool">
     <h2 style="text-align:center;" id="t_risk_title">🌱 Crop Failure Risk Predictor</h2>
     <p style="text-align:center;color:#555;" id="t_risk_sub">
       Check risk before sowing to protect money and water.
@@ -117,78 +134,189 @@
     </div>
   </div>
 
-  <!-- CROP SUITABILITY CHECKER -->
-  <div class="form-card">
-    <h2 style="text-align:center;">🧠 Crop Suitability Checker</h2>
+  <!-- 2) WATER TOOL -->
+  <div class="form-card" id="waterTool">
+    <h2 style="text-align:center;">💧 Water Budget + Water Risk</h2>
+    <p style="text-align:center;color:#555;">
+      This tool protects farmers from choosing high-water crops in low-water areas.
+    </p>
 
-    <label>Season</label>
-    <select id="s_season">
-      <option value="">Select Season</option>
-      <option value="monsoon">Monsoon (Kharif)</option>
-      <option value="winter">Winter (Rabi)</option>
-      <option value="summer">Summer</option>
+    <label>Crop</label>
+    <select id="w_crop">
+      <option value="">Select Crop</option>
+      <option value="rice">Rice</option>
+      <option value="wheat">Wheat</option>
+      <option value="cotton">Cotton</option>
+      <option value="sugarcane">Sugarcane</option>
+      <option value="soybean">Soybean</option>
+      <option value="onion">Onion</option>
+      <option value="tomato">Tomato</option>
+      <option value="banana">Banana</option>
+      <option value="gram">Chana</option>
+      <option value="bajra">Bajra</option>
+      <option value="jowar">Jowar</option>
     </select>
 
-    <label>Soil Type</label>
-    <select id="s_soil">
-      <option value="">Select Soil</option>
-      <option value="black">Black Soil</option>
-      <option value="red">Red Soil</option>
-      <option value="loamy">Loamy Soil</option>
-      <option value="sandy">Sandy Soil</option>
-      <option value="clay">Clay Soil</option>
-      <option value="mixed">Mixed / Local Soil</option>
-    </select>
+    <label>Land (Acres)</label>
+    <input id="w_acres" type="number" placeholder="Example: 1.5" />
 
-    <label>Water Availability</label>
-    <select id="s_water">
+    <label>Water Source</label>
+    <select id="w_source">
       <option value="">Select Water</option>
-      <option value="low">Low</option>
-      <option value="medium">Medium</option>
-      <option value="high">High</option>
+      <option value="rain">Rainfed</option>
+      <option value="well">Well</option>
+      <option value="borewell">Borewell</option>
+      <option value="canal">Canal</option>
+      <option value="drip">Drip</option>
     </select>
 
-    <button class="btn" onclick="checkSuitability()">🌿 Suggest Best Crops</button>
+    <button class="btn" onclick="calcWater()">💧 Calculate Water Budget</button>
 
-    <div id="suitabilityResult" class="result-box">
-      Your best crop suggestions will appear here.
+    <div class="result-box" id="waterResult">
+      Water budget will appear here.
     </div>
   </div>
 
-  <!-- WEATHER -->
-  <div class="form-card">
-    <h2 style="text-align:center;">🌦 Hidden Weather Risk Factors</h2>
-    <ul style="line-height:1.9; font-size:15px; margin:0; padding-left:18px;">
-      <li><b>Dry Spell Risk:</b> 7–10 days no rain after sowing kills seedlings.</li>
-      <li><b>Heatwave Risk:</b> Above 40°C causes flower drop and yield loss.</li>
-      <li><b>High Humidity:</b> Increases fungus diseases.</li>
-      <li><b>Strong Wind:</b> Damages crops + increases water loss.</li>
-    </ul>
+  <!-- 3) SEED TOOL -->
+  <div class="form-card" id="seedTool">
+    <h2 style="text-align:center;">🌾 Seed Rate + Seed Varieties</h2>
+    <p style="text-align:center;color:#555;">
+      Farmers often lose money by buying wrong seed quantity. This fixes that.
+    </p>
 
-    <button class="btn secondary" onclick="openWeather()">🌦 Check Weather (Daund)</button>
-  </div>
+    <label>Crop</label>
+    <select id="seed_crop">
+      <option value="">Select Crop</option>
+      <option value="rice">Rice</option>
+      <option value="wheat">Wheat</option>
+      <option value="cotton">Cotton</option>
+      <option value="soybean">Soybean</option>
+      <option value="maize">Maize</option>
+      <option value="gram">Chana</option>
+      <option value="tur">Tur</option>
+      <option value="onion">Onion</option>
+      <option value="tomato">Tomato</option>
+      <option value="bajra">Bajra</option>
+      <option value="jowar">Jowar</option>
+    </select>
 
-  <!-- REPORT -->
-  <div class="form-card">
-    <h2 style="text-align:center;">📄 Download Farmer Report</h2>
-    <button class="btn" onclick="downloadReport()">⬇️ Download Report (PDF)</button>
-    <div class="result-box">
-      Tip: Click → print → choose <b>Save as PDF</b>
+    <label>Land (Acres)</label>
+    <input id="seed_acres" type="number" placeholder="Example: 2" />
+
+    <button class="btn" onclick="calcSeed()">🌱 Calculate Seed + Varieties</button>
+
+    <div class="result-box" id="seedResult">
+      Seed rate and varieties will appear here.
     </div>
   </div>
 
-  <!-- AI -->
-  <div class="form-card">
+  <!-- 4) CROP CALENDAR -->
+  <div class="form-card" id="calendarTool">
+    <h2 style="text-align:center;">📅 Crop Calendar (Month-wise)</h2>
+
+    <label>Select Crop</label>
+    <select id="cal_crop">
+      <option value="">Select Crop</option>
+      <option value="rice">Rice</option>
+      <option value="wheat">Wheat</option>
+      <option value="soybean">Soybean</option>
+      <option value="cotton">Cotton</option>
+      <option value="onion">Onion</option>
+      <option value="gram">Chana</option>
+      <option value="tur">Tur</option>
+      <option value="bajra">Bajra</option>
+      <option value="jowar">Jowar</option>
+      <option value="sugarcane">Sugarcane</option>
+    </select>
+
+    <button class="btn" onclick="showCalendar()">📅 Show Calendar</button>
+
+    <div class="result-box" id="calendarResult">
+      Crop calendar will appear here.
+    </div>
+  </div>
+
+  <!-- 5) RESCUE MODE -->
+  <div class="form-card" id="rescueTool">
+    <h2 style="text-align:center;">🚨 Emergency Crop Rescue Mode</h2>
+    <p style="text-align:center;color:#555;">
+      Tap the problem. Get instant safe steps.
+    </p>
+
+    <div class="grid2">
+      <button class="btn secondary" onclick="rescue('yellow')">🍂 Leaves Yellow</button>
+      <button class="btn secondary" onclick="rescue('dry')">🔥 Plant Drying</button>
+      <button class="btn secondary" onclick="rescue('slow')">🐌 Slow Growth</button>
+      <button class="btn secondary" onclick="rescue('pest')">🐛 Pest Attack</button>
+    </div>
+
+    <div class="result-box" id="rescueResult">
+      Rescue steps will appear here.
+    </div>
+  </div>
+
+  <!-- 6) FERTILIZER GUIDE -->
+  <div class="form-card" id="fertTool">
+    <h2 style="text-align:center;">🧪 Fertilizer Basic Guide (Safe)</h2>
+
+    <label>Select Crop</label>
+    <select id="f_crop">
+      <option value="">Select Crop</option>
+      <option value="rice">Rice</option>
+      <option value="wheat">Wheat</option>
+      <option value="cotton">Cotton</option>
+      <option value="soybean">Soybean</option>
+      <option value="onion">Onion</option>
+      <option value="tomato">Tomato</option>
+      <option value="gram">Chana</option>
+      <option value="tur">Tur</option>
+      <option value="bajra">Bajra</option>
+      <option value="jowar">Jowar</option>
+    </select>
+
+    <button class="btn" onclick="fertGuide()">🧪 Show Fertilizer Guide</button>
+
+    <div class="result-box" id="fertResult">
+      Fertilizer guide will appear here.
+    </div>
+  </div>
+
+  <!-- 7) NOTES -->
+  <div class="form-card" id="notesTool">
+    <h2 style="text-align:center;">📝 Farmer Notes (Saved on Phone)</h2>
+    <p style="text-align:center;color:#555;">
+      Write notes. It saves automatically in your phone browser.
+    </p>
+
+    <label>My Notes</label>
+    <textarea id="notesBox" style="width:100%; height:120px; padding:12px; border-radius:14px; border:1px solid rgba(0,0,0,0.12);"></textarea>
+
+    <button class="btn" onclick="saveNotes()">💾 Save Notes</button>
+    <button class="btn secondary" onclick="clearNotes()">🗑 Clear Notes</button>
+
+    <div class="result-box" id="notesStatus">
+      Notes status will appear here.
+    </div>
+  </div>
+
+  <!-- 8) AI -->
+  <div class="form-card" id="aiTool">
     <h2 style="text-align:center;">🤖 FarmCulture AI Assistant</h2>
+    <p style="text-align:center;color:#555;">
+      Ask farming questions and get guidance instantly.
+    </p>
+
     <button class="btn" onclick="openFarmCulture()">🤖 Open FarmCulture AI (Live)</button>
+
+    <div class="result-box">
+      ⚠️ AI gives guidance. Final decision depends on local conditions.
+    </div>
   </div>
 
   <a href="index.html" class="btn secondary">⬅ Back to Home</a>
 
 </div>
 
-<!-- IMPORTANT: Only load tools.js -->
 <script src="tools.js"></script>
-
 </body>
-      </html>
+        </html>
