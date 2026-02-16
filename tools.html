@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>AgroSense – Crop Risk Tool</title>
+  <title>AgroSense – Smart Agriculture Tools</title>
   <link rel="stylesheet" href="style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -10,11 +10,17 @@
 
 <div class="container">
   <header>
-    <h1>🌱 Crop Failure Predictor</h1>
-    <p class="subtitle">Check risk before you sow and get AI guidance</p>
+    <h1>🌾 AgroSense Tools</h1>
+    <p class="subtitle">Smart agriculture tools + AI assistant for farmers</p>
   </header>
 
+  <!-- MAIN TOOL -->
   <div class="form-card">
+    <h2 style="text-align:center;">🌱 Crop Failure Predictor</h2>
+    <p style="text-align:center;color:#555;">
+      Check risk before you sow.
+    </p>
+
     <label>Season</label>
     <select id="season">
       <option value="">Select Season</option>
@@ -55,32 +61,116 @@
       <option value="canal">Canal</option>
     </select>
 
-    <button class="btn" onclick="checkRisk()">Check Risk</button>
+    <button class="btn" onclick="checkRisk()">✅ Check Risk</button>
   </div>
 
-  <!-- Result box -->
+  <!-- RESULT -->
   <div id="result" class="result-box"></div>
 
-  <!-- AI Section -->
-  <hr style="margin:30px 0;">
+  <!-- SMART SOWING ADVICE -->
+  <div class="form-card" style="margin-top:20px;">
+    <h2 style="text-align:center;">🌱 Smart Sowing Advice</h2>
+    <p style="text-align:center;color:#555;">
+      Simple rules farmers can follow for better success.
+    </p>
 
-  <h2 style="text-align:center;">🤖 FarmCulture Smart Agriculture AI</h2>
-  <p style="text-align:center;color:#555;">
-    Click the button below to open our real AI assistant for expert farming advice.
-  </p>
+    <ul style="line-height:1.9; font-size:15px;">
+      <li>✅ Sow only after soil has good moisture (or good rain in last 2 days).</li>
+      <li>⚠️ Avoid sowing if 7–10 days rain gap is expected.</li>
+      <li>✅ In low water areas, prefer short-duration crops.</li>
+      <li>⚠️ Never apply heavy fertilizer in dry soil (it burns roots).</li>
+    </ul>
+  </div>
 
-  <button class="btn" onclick="openAI()">🤖 Open FarmCulture AI Assistant</button>
+  <!-- HIDDEN WEATHER FACTORS -->
+  <div class="form-card" style="margin-top:20px;">
+    <h2 style="text-align:center;">🌦 Hidden Weather Risk Factors</h2>
+    <p style="text-align:center;color:#555;">
+      These factors silently cause crop failure even when everything looks normal.
+    </p>
+
+    <ul style="line-height:1.9; font-size:15px;">
+      <li><b>Dry Spell Risk:</b> 7–10 days no rain after sowing kills seedlings.</li>
+      <li><b>Heatwave Risk:</b> Above 40°C causes flower drop and yield loss.</li>
+      <li><b>High Humidity:</b> Increases fungus (onion, tomato, soybean).</li>
+      <li><b>Strong Wind:</b> Damages crops + increases soil water loss.</li>
+    </ul>
+
+    <button class="btn" onclick="openWeather()">
+      🌦 Check Weather (Daund)
+    </button>
+  </div>
+
+  <!-- LOW COST FARMING TIPS -->
+  <div class="form-card" style="margin-top:20px;">
+    <h2 style="text-align:center;">💧 Low-Cost Water Saving Tips</h2>
+    <p style="text-align:center;color:#555;">
+      Save water. Save money. Increase yield.
+    </p>
+
+    <ul style="line-height:1.9; font-size:15px;">
+      <li>🌾 Mulching reduces water loss and weeds.</li>
+      <li>💧 Drip irrigation is best for vegetables and orchards.</li>
+      <li>🪴 Use compost to improve soil water holding.</li>
+      <li>🌱 Avoid over-watering (it reduces roots strength).</li>
+    </ul>
+  </div>
+
+  <!-- FARMER SAFETY DISCLAIMER -->
+  <div class="form-card" style="margin-top:20px;">
+    <h2 style="text-align:center;">🛡 Farmer Safety Note</h2>
+    <p style="color:#555; line-height:1.7; font-size:15px;">
+      AgroSense provides guidance using basic agriculture logic and AI.
+      Final farming decisions depend on local conditions.
+      For critical cases, consult your local agriculture officer (Krushi Sevak) or experienced farmers.
+    </p>
+  </div>
+
+  <!-- AI ASSISTANT -->
+  <div class="form-card" style="margin-top:20px;">
+    <h2 style="text-align:center;">🤖 FarmCulture AI Assistant</h2>
+    <p style="text-align:center;color:#555;">
+      Ask farming questions and get smart guidance instantly.
+    </p>
+
+    <button class="btn" onclick="openFarmCulture()">
+      🤖 Open FarmCulture AI (Live)
+    </button>
+  </div>
+
+  <!-- EXTRA QUICK LINKS -->
+  <div class="form-card" style="margin-top:20px;">
+    <h2 style="text-align:center;">🔗 Quick Farmer Links</h2>
+
+    <button class="btn" onclick="openLink('https://www.google.com/search?q=PM+Kisan+scheme')">
+      🏦 PM-Kisan Scheme Info
+    </button>
+
+    <button class="btn" onclick="openLink('https://www.google.com/search?q=soil+testing+near+me')">
+      🧪 Find Soil Testing Center
+    </button>
+
+    <button class="btn" onclick="openLink('https://www.google.com/search?q=best+fertilizer+for+soybean')">
+      🌿 Fertilizer Guide (Search)
+    </button>
+  </div>
 
   <a href="index.html" class="btn">⬅ Back to Home</a>
 </div>
 
-<!-- Your existing JS -->
 <script src="script.js"></script>
 
-<!-- AI Redirect Script -->
 <script>
-function openAI(){
+function openFarmCulture(){
   window.open("https://huggingface.co/spaces/Chaitu2121/farmculture-ai", "_blank");
+}
+
+function openWeather(){
+  window.open("https://www.google.com/search?q=Daund+weather+tomorrow", "_blank");
+}
+
+function openLink(url){
+  window.open(url, "_blank");
 }
 </script>
 
