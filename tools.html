@@ -18,9 +18,7 @@
   <!-- LANGUAGE SWITCH -->
   <div class="form-card">
     <h2 style="text-align:center;">🌐 Language</h2>
-    <p style="text-align:center;color:#555;">
-      Switch language for farmers.
-    </p>
+    <p style="text-align:center;color:#555;">Switch language for farmers.</p>
 
     <div class="grid2">
       <button class="btn secondary" onclick="setLang('en')">English</button>
@@ -52,40 +50,28 @@
 
     <select id="crop" onchange="showQuickAdvice()">
       <option value="">Select Crop</option>
-
-      <!-- Major -->
       <option value="rice">Rice</option>
       <option value="wheat">Wheat</option>
       <option value="cotton">Cotton</option>
       <option value="sugarcane">Sugarcane</option>
       <option value="soybean">Soybean</option>
       <option value="maize">Maize</option>
-
-      <!-- Millets -->
-      <option value="bajra">Bajra (Pearl Millet)</option>
-      <option value="jowar">Jowar (Sorghum)</option>
-      <option value="ragi">Ragi (Finger Millet)</option>
-
-      <!-- Pulses -->
+      <option value="bajra">Bajra</option>
+      <option value="jowar">Jowar</option>
+      <option value="ragi">Ragi</option>
       <option value="gram">Chana (Gram)</option>
-      <option value="tur">Tur (Pigeon Pea)</option>
-      <option value="moong">Moong (Green Gram)</option>
-      <option value="urad">Urad (Black Gram)</option>
-
-      <!-- Oilseeds -->
+      <option value="tur">Tur</option>
+      <option value="moong">Moong</option>
+      <option value="urad">Urad</option>
       <option value="groundnut">Groundnut</option>
       <option value="sunflower">Sunflower</option>
       <option value="mustard">Mustard</option>
-
-      <!-- Vegetables -->
       <option value="onion">Onion</option>
       <option value="tomato">Tomato</option>
       <option value="potato">Potato</option>
       <option value="chilli">Chilli</option>
-      <option value="brinjal">Brinjal (Baingan)</option>
-      <option value="okra">Okra (Bhendi)</option>
-
-      <!-- Fruits -->
+      <option value="brinjal">Brinjal</option>
+      <option value="okra">Okra</option>
       <option value="banana">Banana</option>
       <option value="grapes">Grapes</option>
       <option value="pomegranate">Pomegranate</option>
@@ -94,13 +80,11 @@
     <label id="t_soil_label">Soil Type</label>
     <select id="soil" onchange="showQuickAdvice()">
       <option value="">Select Soil</option>
-      <option value="black">Black Soil (Cotton soil)</option>
+      <option value="black">Black Soil</option>
       <option value="red">Red Soil</option>
       <option value="loamy">Loamy Soil</option>
       <option value="sandy">Sandy Soil</option>
       <option value="clay">Clay Soil</option>
-      <option value="silt">Silty Soil</option>
-      <option value="laterite">Laterite Soil</option>
       <option value="mixed">Mixed / Local Soil</option>
     </select>
 
@@ -115,7 +99,7 @@
       <option value="farmpond">Farm Pond</option>
       <option value="drip">Drip Irrigation</option>
       <option value="sprinkler">Sprinkler Irrigation</option>
-      <option value="tank">Water Tank / Storage</option>
+      <option value="tank">Water Tank</option>
     </select>
 
     <button class="btn" onclick="analyzeRisk()" id="t_check_btn">🚀 Analyze Risk</button>
@@ -128,10 +112,6 @@
   <!-- QUICK RECOMMENDATION -->
   <div class="form-card">
     <h2 style="text-align:center;">⚡ Quick Recommendation</h2>
-    <p style="text-align:center;color:#555;">
-      Instant advice based on your selection.
-    </p>
-
     <div class="result-box" id="quickAdvice">
       Select season, crop, soil and water source to see quick advice.
     </div>
@@ -140,9 +120,6 @@
   <!-- CROP SUITABILITY CHECKER -->
   <div class="form-card">
     <h2 style="text-align:center;">🧠 Crop Suitability Checker</h2>
-    <p style="text-align:center;color:#555;">
-      Select your conditions and get best crop suggestions instantly.
-    </p>
 
     <label>Season</label>
     <select id="s_season">
@@ -166,9 +143,9 @@
     <label>Water Availability</label>
     <select id="s_water">
       <option value="">Select Water</option>
-      <option value="low">Low (Rainfed / Less water)</option>
-      <option value="medium">Medium (Well / Pond)</option>
-      <option value="high">High (Canal / Borewell / Drip)</option>
+      <option value="low">Low</option>
+      <option value="medium">Medium</option>
+      <option value="high">High</option>
     </select>
 
     <button class="btn" onclick="checkSuitability()">🌿 Suggest Best Crops</button>
@@ -177,425 +154,41 @@
       Your best crop suggestions will appear here.
     </div>
   </div>
-  <!-- WEATHER FACTORS -->
+
+  <!-- WEATHER -->
   <div class="form-card">
     <h2 style="text-align:center;">🌦 Hidden Weather Risk Factors</h2>
-    <p style="text-align:center;color:#555;">
-      These factors silently cause crop failure even when everything looks normal.
-    </p>
-
     <ul style="line-height:1.9; font-size:15px; margin:0; padding-left:18px;">
       <li><b>Dry Spell Risk:</b> 7–10 days no rain after sowing kills seedlings.</li>
       <li><b>Heatwave Risk:</b> Above 40°C causes flower drop and yield loss.</li>
-      <li><b>High Humidity:</b> Increases fungus (onion, tomato, soybean).</li>
-      <li><b>Strong Wind:</b> Damages crops + increases soil water loss.</li>
+      <li><b>High Humidity:</b> Increases fungus diseases.</li>
+      <li><b>Strong Wind:</b> Damages crops + increases water loss.</li>
     </ul>
 
-    <button class="btn secondary" onclick="openWeather()">
-      🌦 Check Weather (Daund)
-    </button>
+    <button class="btn secondary" onclick="openWeather()">🌦 Check Weather (Daund)</button>
   </div>
 
-  <!-- SMART SOWING ADVICE -->
-  <div class="form-card">
-    <h2 style="text-align:center;">🌱 Smart Sowing Advice</h2>
-    <p style="text-align:center;color:#555;">
-      Simple rules farmers can follow for better success.
-    </p>
-
-    <ul style="line-height:1.9; font-size:15px; margin:0; padding-left:18px;">
-      <li>✅ Sow only after soil has good moisture (or good rain in last 2 days).</li>
-      <li>⚠️ Avoid sowing if 7–10 days rain gap is expected.</li>
-      <li>✅ In low water areas, prefer short-duration crops.</li>
-      <li>⚠️ Never apply heavy fertilizer in dry soil (it burns roots).</li>
-    </ul>
-  </div>
-
-  <!-- DOWNLOAD REPORT -->
+  <!-- REPORT -->
   <div class="form-card">
     <h2 style="text-align:center;">📄 Download Farmer Report</h2>
-    <p style="text-align:center;color:#555;">
-      Generate a clean report and save as PDF (mobile supported).
-    </p>
-
     <button class="btn" onclick="downloadReport()">⬇️ Download Report (PDF)</button>
-
-    <div class="result-box" id="reportHint">
-      Tip: After clicking, choose <b>Save as PDF</b> in print options.
+    <div class="result-box">
+      Tip: Click → print → choose <b>Save as PDF</b>
     </div>
   </div>
 
-  <!-- AI ASSISTANT -->
+  <!-- AI -->
   <div class="form-card">
     <h2 style="text-align:center;">🤖 FarmCulture AI Assistant</h2>
-    <p style="text-align:center;color:#555;">
-      Ask farming questions and get smart guidance instantly.
-    </p>
-
-    <button class="btn" onclick="openFarmCulture()">
-      🤖 Open FarmCulture AI (Live)
-    </button>
-
-    <div class="result-box">
-      ⚠️ Note: AI works best for advice. Final decision depends on local conditions.
-    </div>
+    <button class="btn" onclick="openFarmCulture()">🤖 Open FarmCulture AI (Live)</button>
   </div>
 
-  <!-- BACK -->
   <a href="index.html" class="btn secondary">⬅ Back to Home</a>
 
-</div> <!-- container end -->
+</div>
 
-
-<script>
-/* -----------------------------
-   GLOBAL STATE
-------------------------------*/
-let CURRENT_LANG = "en";
-
-/* -----------------------------
-   LANGUAGE (Basic Marathi)
-------------------------------*/
-const LANG = {
-  en: {
-    status: "Current language: <b>English</b>",
-    riskTitle: "🌱 Crop Failure Risk Predictor",
-    riskSub: "Check risk before sowing to protect money and water.",
-    season: "Season",
-    crop: "Crop",
-    soil: "Soil Type",
-    water: "Water Source",
-    analyze: "🚀 Analyze Risk"
-  },
-  mr: {
-    status: "भाषा: <b>मराठी</b> (Basic)",
-    riskTitle: "🌱 पिक नुकसान धोका तपासणी",
-    riskSub: "पेरणी आधी धोका तपासा. पैसा आणि पाणी वाचवा.",
-    season: "हंगाम",
-    crop: "पीक",
-    soil: "माती प्रकार",
-    water: "पाण्याचा स्रोत",
-    analyze: "🚀 धोका तपासा"
-  }
-};
-
-function setLang(lang){
-  CURRENT_LANG = lang;
-
-  document.getElementById("langStatus").innerHTML = LANG[lang].status;
-
-  document.getElementById("t_risk_title").innerHTML = LANG[lang].riskTitle;
-  document.getElementById("t_risk_sub").innerHTML = LANG[lang].riskSub;
-
-  document.getElementById("t_season_label").innerHTML = LANG[lang].season;
-  document.getElementById("t_crop_label").innerHTML = LANG[lang].crop;
-  document.getElementById("t_soil_label").innerHTML = LANG[lang].soil;
-  document.getElementById("t_water_label").innerHTML = LANG[lang].water;
-
-  document.getElementById("t_check_btn").innerHTML = LANG[lang].analyze;
-}
-
-/* -----------------------------
-   OPEN LINKS
-------------------------------*/
-function openFarmCulture(){
-  window.open("https://huggingface.co/spaces/Chaitu2121/farmculture-ai", "_blank");
-}
-
-function openWeather(){
-  window.open("https://www.google.com/search?q=Daund+weather+tomorrow", "_blank");
-}
-
-/* -----------------------------
-   CROP SEARCH FILTER
-------------------------------*/
-function filterCrops(){
-  const search = document.getElementById("cropSearch").value.toLowerCase();
-  const cropSelect = document.getElementById("crop");
-  const options = cropSelect.options;
-
-  for(let i=0; i<options.length; i++){
-    const txt = options[i].text.toLowerCase();
-    if(i === 0){
-      options[i].style.display = "";
-      continue;
-    }
-    options[i].style.display = txt.includes(search) ? "" : "none";
-  }
-}
-
-/* -----------------------------
-   QUICK ADVICE
-------------------------------*/
-function showQuickAdvice(){
-  const season = document.getElementById("season").value;
-  const crop = document.getElementById("crop").value;
-  const soil = document.getElementById("soil").value;
-  const water = document.getElementById("water").value;
-  const box = document.getElementById("quickAdvice");
-
-  if(!season || !crop || !soil || !water){
-    box.innerHTML = "Select season, crop, soil and water source to see quick advice.";
-    return;
-  }
-
-  let advice = "✅ Good selection. Follow weather and soil moisture before sowing.";
-
-  if(water === "rain"){
-    advice = "⚠️ Rainfed only: Choose drought-resistant crops and avoid long-duration crops.";
-  }
-
-  if(soil === "sandy"){
-    advice = "⚠️ Sandy soil loses water fast. Use mulching + frequent irrigation. Avoid water-heavy crops.";
-  }
-
-  if(crop === "sugarcane" || crop === "banana" || crop === "rice"){
-    if(water === "rain"){
-      advice = "❌ High risk: This crop needs high water. Rainfed only is dangerous. Use canal/borewell/farm pond.";
-    } else {
-      advice = "✅ This crop needs high water. Ensure strong irrigation + fertilizer planning.";
-    }
-  }
-
-  if(season === "summer" && water === "rain"){
-    advice = "❌ Summer + Rainfed is extremely risky. Use irrigation or change crop.";
-  }
-
-  box.innerHTML = advice;
-}
-  /* -----------------------------
-   MAIN: DECISION SCORE + RISK BREAKDOWN
-------------------------------*/
-function analyzeRisk(){
-  const season = document.getElementById("season").value;
-  const crop = document.getElementById("crop").value;
-  const soil = document.getElementById("soil").value;
-  const water = document.getElementById("water").value;
-  const out = document.getElementById("riskResult");
-
-  if(!season || !crop || !soil || !water){
-    out.innerHTML = "⚠️ Please select Season, Crop, Soil and Water Source.";
-    return;
-  }
-
-  // Base score
-  let score = 85;
-
-  // Risk breakdown (0 = low risk, 100 = high risk)
-  let waterRisk = 20;
-  let soilRisk = 20;
-  let seasonRisk = 20;
-  let cropRisk = 20;
-
-  // WATER RISK
-  if(water === "rain"){ waterRisk = 75; score -= 25; }
-  if(water === "farmpond"){ waterRisk = 45; score -= 10; }
-  if(water === "canal"){ waterRisk = 20; }
-  if(water === "borewell"){ waterRisk = 25; }
-  if(water === "drip"){ waterRisk = 15; score += 3; }
-  if(water === "sprinkler"){ waterRisk = 18; score += 2; }
-
-  // SOIL RISK
-  if(soil === "sandy"){ soilRisk = 65; score -= 18; }
-  if(soil === "clay"){ soilRisk = 45; score -= 10; }
-  if(soil === "loamy"){ soilRisk = 18; score += 2; }
-  if(soil === "black"){ soilRisk = 22; }
-  if(soil === "mixed"){ soilRisk = 35; score -= 6; }
-
-  // SEASON RISK
-  if(season === "summer"){ seasonRisk = 70; score -= 22; }
-  if(season === "monsoon"){ seasonRisk = 30; }
-  if(season === "winter"){ seasonRisk = 25; score += 2; }
-
-  // CROP RISK (water heavy crops)
-  if(crop === "rice"){ cropRisk = 70; score -= 18; }
-  if(crop === "sugarcane"){ cropRisk = 80; score -= 25; }
-  if(crop === "banana"){ cropRisk = 75; score -= 20; }
-  if(crop === "cotton"){ cropRisk = 45; score -= 6; }
-  if(crop === "soybean"){ cropRisk = 30; score += 2; }
-  if(crop === "bajra" || crop === "jowar" || crop === "ragi"){ cropRisk = 18; score += 5; }
-  if(crop === "gram" || crop === "moong" || crop === "urad"){ cropRisk = 20; score += 4; }
-
-  // Special combos
-  if(season === "summer" && water === "rain"){
-    score -= 30;
-    seasonRisk = 90;
-    waterRisk = 90;
-  }
-
-  if((crop === "rice" || crop === "sugarcane") && water === "rain"){
-    score -= 30;
-    cropRisk = 95;
-    waterRisk = 95;
-  }
-
-  // Clamp score
-  if(score > 100) score = 100;
-  if(score < 0) score = 0;
-
-  // Rating
-  let rating = "Good";
-  let pillClass = "good";
-  if(score < 70){ rating = "Medium"; pillClass = "mid"; }
-  if(score < 45){ rating = "High Risk"; pillClass = "bad"; }
-
-  // Convert risks to labels
-  function riskLabel(x){
-    if(x <= 30) return `<span class="pill good">Low</span>`;
-    if(x <= 60) return `<span class="pill mid">Medium</span>`;
-    return `<span class="pill bad">High</span>`;
-  }
-
-  // Main recommendation
-  let rec = "✅ You can proceed, but check weather and soil moisture before sowing.";
-  if(score < 70) rec = "⚠️ Risk is medium. Improve water plan, mulching, and choose safer crop if possible.";
-  if(score < 45) rec = "❌ High risk. Change crop OR improve irrigation before sowing.";
-
-  // Output
-  out.innerHTML = `
-    <div style="font-size:16px;">
-      <b>Farmer Decision Score:</b> <span class="pill ${pillClass}">${score}/100 (${rating})</span>
-    </div>
-    <div style="margin-top:10px;">
-      <b>Risk Breakdown:</b><br><br>
-      💧 Water Risk: ${riskLabel(waterRisk)}<br>
-      🌱 Soil Risk: ${riskLabel(soilRisk)}<br>
-      🌦 Season Risk: ${riskLabel(seasonRisk)}<br>
-      🌾 Crop Risk: ${riskLabel(cropRisk)}<br>
-    </div>
-    <div style="margin-top:12px;">
-      <b>Recommendation:</b><br>
-      ${rec}
-    </div>
-  `;
-
-  // Keep quick advice updated too
-  showQuickAdvice();
-}
-
-/* -----------------------------
-   CROP SUITABILITY CHECKER
-------------------------------*/
-function checkSuitability(){
-  const season = document.getElementById("s_season").value;
-  const soil = document.getElementById("s_soil").value;
-  const water = document.getElementById("s_water").value;
-  const out = document.getElementById("suitabilityResult");
-
-  if(!season || !soil || !water){
-    out.innerHTML = "⚠️ Please select Season, Soil and Water to get suggestions.";
-    return;
-  }
-
-  let crops = [];
-
-  if(water === "low"){
-    if(season === "monsoon"){
-      crops = ["Bajra", "Jowar", "Tur", "Moong", "Groundnut"];
-    } else if(season === "winter"){
-      crops = ["Gram (Chana)", "Mustard", "Wheat (only if moisture is good)"];
-    } else {
-      crops = ["Moong", "Sunflower", "Fodder crops (short duration)"];
-    }
-  }
-
-  if(water === "medium"){
-    if(season === "monsoon"){
-      crops = ["Soybean", "Maize", "Cotton", "Groundnut", "Tur"];
-    } else if(season === "winter"){
-      crops = ["Wheat", "Gram (Chana)", "Onion", "Mustard"];
-    } else {
-      crops = ["Vegetables (Tomato/Chilli)", "Maize", "Sunflower"];
-    }
-  }
-
-  if(water === "high"){
-    if(season === "monsoon"){
-      crops = ["Rice", "Sugarcane", "Cotton", "Soybean", "Maize"];
-    } else if(season === "winter"){
-      crops = ["Wheat", "Onion", "Potato", "Vegetables"];
-    } else {
-      crops = ["Sugarcane", "Banana", "Vegetables (with drip)"];
-    }
-  }
-
-  // soil filter
-  if(soil === "sandy"){
-    crops = crops.filter(c => c !== "Rice" && c !== "Sugarcane");
-  }
-
-  out.innerHTML =
-    "✅ Best crops for your condition:<br><br>" +
-    "🌱 " + crops.slice(0, 6).join("<br>🌱 ");
-}
-
-/* -----------------------------
-   DOWNLOAD REPORT (PRINT TO PDF)
-------------------------------*/
-function downloadReport(){
-  const season = document.getElementById("season").value || "Not selected";
-  const crop = document.getElementById("crop").value || "Not selected";
-  const soil = document.getElementById("soil").value || "Not selected";
-  const water = document.getElementById("water").value || "Not selected";
-
-  const riskHTML = document.getElementById("riskResult").innerHTML;
-  const adviceHTML = document.getElementById("quickAdvice").innerHTML;
-
-  const win = window.open("", "_blank");
-
-  win.document.write(`
-    <html>
-    <head>
-      <title>AgroSense Farmer Report</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <style>
-        body{ font-family: Arial, sans-serif; padding: 20px; }
-        h1{ margin:0; }
-        .box{ border:1px solid #ddd; padding:14px; border-radius:12px; margin-top:14px; }
-        .muted{ color:#555; }
-      </style>
-    </head>
-    <body>
-      <h1>🌾 AgroSense Farmer Report</h1>
-      <p class="muted">Generated by AgroSense (Student Project)</p>
-
-      <div class="box">
-        <b>Selected Inputs</b><br><br>
-        Season: ${season}<br>
-        Crop: ${crop}<br>
-        Soil: ${soil}<br>
-        Water: ${water}<br>
-      </div>
-
-      <div class="box">
-        <b>Risk Analysis</b><br><br>
-        ${riskHTML}
-      </div>
-
-      <div class="box">
-        <b>Quick Recommendation</b><br><br>
-        ${adviceHTML}
-      </div>
-
-      <div class="box">
-        <b>Safety Note</b><br><br>
-        This report provides guidance using basic agriculture logic.
-        Final decision depends on local weather, soil and expert advice.
-      </div>
-
-      <script>
-        window.onload = function(){
-          window.print();
-        }
-      </script>
-    </body>
-    </html>
-  `);
-
-  win.document.close();
-}
-</script>
+<!-- IMPORTANT: Only load tools.js -->
+<script src="tools.js"></script>
 
 </body>
-</html>
-  
+      </html>
