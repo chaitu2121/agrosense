@@ -32,7 +32,7 @@
     </div>
   </div>
 
-  <!-- MAIN RISK TOOL -->
+  <!-- MAIN TOOL -->
   <div class="form-card">
     <h2 style="text-align:center;" id="t_risk_title">🌱 Crop Failure Risk Predictor</h2>
     <p style="text-align:center;color:#555;" id="t_risk_sub">
@@ -48,9 +48,8 @@
     </select>
 
     <label id="t_crop_label">Crop</label>
-
-    <!-- SEARCH + SELECT -->
     <input id="cropSearch" type="text" placeholder="Search crop (example: onion, wheat, cotton)" oninput="filterCrops()" />
+
     <select id="crop" onchange="showQuickAdvice()">
       <option value="">Select Crop</option>
 
@@ -178,7 +177,6 @@
       Your best crop suggestions will appear here.
     </div>
   </div>
-
   <!-- WEATHER FACTORS -->
   <div class="form-card">
     <h2 style="text-align:center;">🌦 Hidden Weather Risk Factors</h2>
@@ -211,8 +209,9 @@
       <li>✅ In low water areas, prefer short-duration crops.</li>
       <li>⚠️ Never apply heavy fertilizer in dry soil (it burns roots).</li>
     </ul>
-        </div>
-        <!-- DOWNLOAD REPORT -->
+  </div>
+
+  <!-- DOWNLOAD REPORT -->
   <div class="form-card">
     <h2 style="text-align:center;">📄 Download Farmer Report</h2>
     <p style="text-align:center;color:#555;">
@@ -364,8 +363,7 @@ function showQuickAdvice(){
 
   box.innerHTML = advice;
 }
-
-/* -----------------------------
+  /* -----------------------------
    MAIN: DECISION SCORE + RISK BREAKDOWN
 ------------------------------*/
 function analyzeRisk(){
@@ -600,3 +598,4 @@ function downloadReport(){
 
 </body>
 </html>
+  
