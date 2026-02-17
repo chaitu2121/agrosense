@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AgroSense – Smart Agriculture Tools</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=4" />
 </head>
 <body>
 
@@ -14,6 +14,44 @@
     <h1>🌾 AgroSense Tools</h1>
     <p class="subtitle">World-class farming tools + AI assistant to protect farmer money and water</p>
   </header>
+
+  <!-- STEP 4: FARMER PROFILE -->
+  <div class="form-card" id="profileTool">
+    <h2 style="text-align:center;">👤 Farmer Profile (Saved on Phone)</h2>
+    <p style="text-align:center;color:#555;">
+      Fill once. It will auto-load next time.
+    </p>
+
+    <div class="grid2">
+      <div>
+        <label>Farmer Name</label>
+        <input id="p_name" type="text" placeholder="Example: Ramesh Patil" />
+      </div>
+
+      <div>
+        <label>Village / Taluka</label>
+        <input id="p_place" type="text" placeholder="Example: Daund, Pune" />
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div>
+        <label>Total Land (Acres)</label>
+        <input id="p_acres" type="number" placeholder="Example: 2.5" />
+      </div>
+
+      <div>
+        <label>Main Crop</label>
+        <input id="p_maincrop" type="text" placeholder="Example: Soybean" />
+      </div>
+    </div>
+
+    <button class="btn" onclick="saveProfile()">💾 Save Profile</button>
+
+    <div class="result-box" id="profileStatus">
+      Profile status will appear here.
+    </div>
+  </div>
 
   <!-- TOOL NAV -->
   <div class="form-card">
@@ -28,6 +66,8 @@
       <button class="btn secondary" onclick="jumpTo('rescueTool')">🚨 Rescue Mode</button>
       <button class="btn secondary" onclick="jumpTo('fertTool')">🧪 Fertilizer Guide</button>
       <button class="btn secondary" onclick="jumpTo('notesTool')">📝 Farmer Notes</button>
+      <button class="btn secondary" onclick="jumpTo('reportTool')">🧾 Report</button>
+      <button class="btn secondary" onclick="jumpTo('historyTool')">🕒 History</button>
       <button class="btn secondary" onclick="jumpTo('aiTool')">🤖 FarmCulture AI</button>
     </div>
   </div>
@@ -119,7 +159,7 @@
       <option value="tank">Water Tank</option>
     </select>
 
-    <button class="btn" onclick="analyzeRisk()" id="t_check_btn">🚀 Analyze Risk</button>
+    <button class="btn" onclick="analyzeRisk(); autoReport();">🚀 Analyze Risk</button>
 
     <div class="result-box" id="riskResult">
       Your risk analysis will appear here.
@@ -137,9 +177,6 @@
   <!-- 2) WATER TOOL -->
   <div class="form-card" id="waterTool">
     <h2 style="text-align:center;">💧 Water Budget + Water Risk</h2>
-    <p style="text-align:center;color:#555;">
-      This tool protects farmers from choosing high-water crops in low-water areas.
-    </p>
 
     <label>Crop</label>
     <select id="w_crop">
@@ -170,7 +207,7 @@
       <option value="drip">Drip</option>
     </select>
 
-    <button class="btn" onclick="calcWater()">💧 Calculate Water Budget</button>
+    <button class="btn" onclick="calcWater(); autoReport();">💧 Calculate Water Budget</button>
 
     <div class="result-box" id="waterResult">
       Water budget will appear here.
@@ -180,9 +217,6 @@
   <!-- 3) SEED TOOL -->
   <div class="form-card" id="seedTool">
     <h2 style="text-align:center;">🌾 Seed Rate + Seed Varieties</h2>
-    <p style="text-align:center;color:#555;">
-      Farmers often lose money by buying wrong seed quantity. This fixes that.
-    </p>
 
     <label>Crop</label>
     <select id="seed_crop">
@@ -203,7 +237,7 @@
     <label>Land (Acres)</label>
     <input id="seed_acres" type="number" placeholder="Example: 2" />
 
-    <button class="btn" onclick="calcSeed()">🌱 Calculate Seed + Varieties</button>
+    <button class="btn" onclick="calcSeed(); autoReport();">🌱 Calculate Seed + Varieties</button>
 
     <div class="result-box" id="seedResult">
       Seed rate and varieties will appear here.
@@ -229,7 +263,7 @@
       <option value="sugarcane">Sugarcane</option>
     </select>
 
-    <button class="btn" onclick="showCalendar()">📅 Show Calendar</button>
+    <button class="btn" onclick="showCalendar(); autoReport();">📅 Show Calendar</button>
 
     <div class="result-box" id="calendarResult">
       Crop calendar will appear here.
@@ -239,9 +273,6 @@
   <!-- 5) RESCUE MODE -->
   <div class="form-card" id="rescueTool">
     <h2 style="text-align:center;">🚨 Emergency Crop Rescue Mode</h2>
-    <p style="text-align:center;color:#555;">
-      Tap the problem. Get instant safe steps.
-    </p>
 
     <div class="grid2">
       <button class="btn secondary" onclick="rescue('yellow')">🍂 Leaves Yellow</button>
@@ -274,7 +305,7 @@
       <option value="jowar">Jowar</option>
     </select>
 
-    <button class="btn" onclick="fertGuide()">🧪 Show Fertilizer Guide</button>
+    <button class="btn" onclick="fertGuide(); autoReport();">🧪 Show Fertilizer Guide</button>
 
     <div class="result-box" id="fertResult">
       Fertilizer guide will appear here.
@@ -284,9 +315,6 @@
   <!-- 7) NOTES -->
   <div class="form-card" id="notesTool">
     <h2 style="text-align:center;">📝 Farmer Notes (Saved on Phone)</h2>
-    <p style="text-align:center;color:#555;">
-      Write notes. It saves automatically in your phone browser.
-    </p>
 
     <label>My Notes</label>
     <textarea id="notesBox" style="width:100%; height:120px; padding:12px; border-radius:14px; border:1px solid rgba(0,0,0,0.12);"></textarea>
@@ -299,11 +327,44 @@
     </div>
   </div>
 
+  <!-- STEP 4: REPORT -->
+  <div class="form-card" id="reportTool">
+    <h2 style="text-align:center;">🧾 Farmer Report (Download + Share)</h2>
+    <p style="text-align:center;color:#555;">
+      After using tools above, generate a report to show family / officer / teacher.
+    </p>
+
+    <button class="btn" onclick="generateReport()">🧾 Generate Report</button>
+
+    <div class="grid2">
+      <button class="btn secondary" onclick="downloadReport()">📥 Download (Save PDF)</button>
+      <button class="btn secondary" onclick="shareReport()">📲 Share (WhatsApp)</button>
+    </div>
+
+    <div class="result-box" id="reportBox">
+      Your report will appear here.
+    </div>
+  </div>
+
+  <!-- STEP 4: HISTORY -->
+  <div class="form-card" id="historyTool">
+    <h2 style="text-align:center;">🕒 History (Last 5 Results)</h2>
+    <p style="text-align:center;color:#555;">
+      Saved automatically on this phone.
+    </p>
+
+    <div class="result-box" id="historyBox">
+      No history yet.
+    </div>
+
+    <button class="btn secondary" onclick="clearHistory()">🗑 Clear History</button>
+  </div>
+
   <!-- 8) AI -->
   <div class="form-card" id="aiTool">
     <h2 style="text-align:center;">🤖 FarmCulture AI Assistant</h2>
     <p style="text-align:center;color:#555;">
-      Ask farming questions and get guidance instantly.
+      Welcome! Ask farming questions and get guidance instantly.
     </p>
 
     <button class="btn" onclick="openFarmCulture()">🤖 Open FarmCulture AI (Live)</button>
@@ -317,6 +378,6 @@
 
 </div>
 
-<script src="tools.js"></script>
+<script src="tools.js?v=4"></script>
 </body>
         </html>
