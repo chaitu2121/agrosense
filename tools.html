@@ -4,7 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AgroSense – Smart Agriculture Tools</title>
-  <link rel="stylesheet" href="style.css?v=4" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css?v=1" />
 </head>
 <body>
 
@@ -12,46 +14,10 @@
 
   <header>
     <h1>🌾 AgroSense Tools</h1>
-    <p class="subtitle">World-class farming tools + AI assistant to protect farmer money and water</p>
-  </header>
-
-  <!-- STEP 4: FARMER PROFILE -->
-  <div class="form-card" id="profileTool">
-    <h2 style="text-align:center;">👤 Farmer Profile (Saved on Phone)</h2>
-    <p style="text-align:center;color:#555;">
-      Fill once. It will auto-load next time.
+    <p class="subtitle">
+      Smart farming tools + AI assistant to protect farmer money and water
     </p>
-
-    <div class="grid2">
-      <div>
-        <label>Farmer Name</label>
-        <input id="p_name" type="text" placeholder="Example: Ramesh Patil" />
-      </div>
-
-      <div>
-        <label>Village / Taluka</label>
-        <input id="p_place" type="text" placeholder="Example: Daund, Pune" />
-      </div>
-    </div>
-
-    <div class="grid2">
-      <div>
-        <label>Total Land (Acres)</label>
-        <input id="p_acres" type="number" placeholder="Example: 2.5" />
-      </div>
-
-      <div>
-        <label>Main Crop</label>
-        <input id="p_maincrop" type="text" placeholder="Example: Soybean" />
-      </div>
-    </div>
-
-    <button class="btn" onclick="saveProfile()">💾 Save Profile</button>
-
-    <div class="result-box" id="profileStatus">
-      Profile status will appear here.
-    </div>
-  </div>
+  </header>
 
   <!-- TOOL NAV -->
   <div class="form-card">
@@ -66,35 +32,18 @@
       <button class="btn secondary" onclick="jumpTo('rescueTool')">🚨 Rescue Mode</button>
       <button class="btn secondary" onclick="jumpTo('fertTool')">🧪 Fertilizer Guide</button>
       <button class="btn secondary" onclick="jumpTo('notesTool')">📝 Farmer Notes</button>
-      <button class="btn secondary" onclick="jumpTo('reportTool')">🧾 Report</button>
-      <button class="btn secondary" onclick="jumpTo('historyTool')">🕒 History</button>
       <button class="btn secondary" onclick="jumpTo('aiTool')">🤖 FarmCulture AI</button>
-    </div>
-  </div>
-
-  <!-- LANGUAGE SWITCH -->
-  <div class="form-card">
-    <h2 style="text-align:center;">🌐 Language</h2>
-    <p style="text-align:center;color:#555;">Switch language for farmers.</p>
-
-    <div class="grid2">
-      <button class="btn secondary" onclick="setLang('en')">English</button>
-      <button class="btn secondary" onclick="setLang('mr')">मराठी (Basic)</button>
-    </div>
-
-    <div class="result-box" id="langStatus">
-      Current language: <b>English</b>
     </div>
   </div>
 
   <!-- 1) RISK TOOL -->
   <div class="form-card" id="riskTool">
-    <h2 style="text-align:center;" id="t_risk_title">🌱 Crop Failure Risk Predictor</h2>
-    <p style="text-align:center;color:#555;" id="t_risk_sub">
+    <h2 style="text-align:center;">🌱 Crop Failure Risk Predictor</h2>
+    <p style="text-align:center;color:#555;">
       Check risk before sowing to protect money and water.
     </p>
 
-    <label id="t_season_label">Season</label>
+    <label>Season</label>
     <select id="season" onchange="showQuickAdvice()">
       <option value="">Select Season</option>
       <option value="monsoon">Monsoon (Kharif)</option>
@@ -102,8 +51,10 @@
       <option value="summer">Summer</option>
     </select>
 
-    <label id="t_crop_label">Crop</label>
-    <input id="cropSearch" type="text" placeholder="Search crop (example: onion, wheat, cotton)" oninput="filterCrops()" />
+    <label>Crop</label>
+    <input id="cropSearch" type="text"
+      placeholder="Search crop (example: onion, wheat, cotton)"
+      oninput="filterCrops()" />
 
     <select id="crop" onchange="showQuickAdvice()">
       <option value="">Select Crop</option>
@@ -134,7 +85,7 @@
       <option value="pomegranate">Pomegranate</option>
     </select>
 
-    <label id="t_soil_label">Soil Type</label>
+    <label>Soil Type</label>
     <select id="soil" onchange="showQuickAdvice()">
       <option value="">Select Soil</option>
       <option value="black">Black Soil</option>
@@ -145,7 +96,7 @@
       <option value="mixed">Mixed / Local Soil</option>
     </select>
 
-    <label id="t_water_label">Water Source</label>
+    <label>Water Source</label>
     <select id="water" onchange="showQuickAdvice()">
       <option value="">Select Water Source</option>
       <option value="rain">Rainfed Only</option>
@@ -159,7 +110,7 @@
       <option value="tank">Water Tank</option>
     </select>
 
-    <button class="btn" onclick="analyzeRisk(); autoReport();">🚀 Analyze Risk</button>
+    <button class="btn" onclick="analyzeRisk()">🚀 Analyze Risk</button>
 
     <div class="result-box" id="riskResult">
       Your risk analysis will appear here.
@@ -207,7 +158,7 @@
       <option value="drip">Drip</option>
     </select>
 
-    <button class="btn" onclick="calcWater(); autoReport();">💧 Calculate Water Budget</button>
+    <button class="btn" onclick="calcWater()">💧 Calculate Water Budget</button>
 
     <div class="result-box" id="waterResult">
       Water budget will appear here.
@@ -237,7 +188,7 @@
     <label>Land (Acres)</label>
     <input id="seed_acres" type="number" placeholder="Example: 2" />
 
-    <button class="btn" onclick="calcSeed(); autoReport();">🌱 Calculate Seed + Varieties</button>
+    <button class="btn" onclick="calcSeed()">🌱 Calculate Seed + Varieties</button>
 
     <div class="result-box" id="seedResult">
       Seed rate and varieties will appear here.
@@ -263,7 +214,7 @@
       <option value="sugarcane">Sugarcane</option>
     </select>
 
-    <button class="btn" onclick="showCalendar(); autoReport();">📅 Show Calendar</button>
+    <button class="btn" onclick="showCalendar()">📅 Show Calendar</button>
 
     <div class="result-box" id="calendarResult">
       Crop calendar will appear here.
@@ -305,7 +256,7 @@
       <option value="jowar">Jowar</option>
     </select>
 
-    <button class="btn" onclick="fertGuide(); autoReport();">🧪 Show Fertilizer Guide</button>
+    <button class="btn" onclick="fertGuide()">🧪 Show Fertilizer Guide</button>
 
     <div class="result-box" id="fertResult">
       Fertilizer guide will appear here.
@@ -317,7 +268,8 @@
     <h2 style="text-align:center;">📝 Farmer Notes (Saved on Phone)</h2>
 
     <label>My Notes</label>
-    <textarea id="notesBox" style="width:100%; height:120px; padding:12px; border-radius:14px; border:1px solid rgba(0,0,0,0.12);"></textarea>
+    <textarea id="notesBox"
+      style="width:100%; height:120px; padding:12px; border-radius:14px; border:1px solid rgba(0,0,0,0.12);"></textarea>
 
     <button class="btn" onclick="saveNotes()">💾 Save Notes</button>
     <button class="btn secondary" onclick="clearNotes()">🗑 Clear Notes</button>
@@ -327,45 +279,9 @@
     </div>
   </div>
 
-  <!-- STEP 4: REPORT -->
-  <div class="form-card" id="reportTool">
-    <h2 style="text-align:center;">🧾 Farmer Report (Download + Share)</h2>
-    <p style="text-align:center;color:#555;">
-      After using tools above, generate a report to show family / officer / teacher.
-    </p>
-
-    <button class="btn" onclick="generateReport()">🧾 Generate Report</button>
-
-    <div class="grid2">
-      <button class="btn secondary" onclick="downloadReport()">📥 Download (Save PDF)</button>
-      <button class="btn secondary" onclick="shareReport()">📲 Share (WhatsApp)</button>
-    </div>
-
-    <div class="result-box" id="reportBox">
-      Your report will appear here.
-    </div>
-  </div>
-
-  <!-- STEP 4: HISTORY -->
-  <div class="form-card" id="historyTool">
-    <h2 style="text-align:center;">🕒 History (Last 5 Results)</h2>
-    <p style="text-align:center;color:#555;">
-      Saved automatically on this phone.
-    </p>
-
-    <div class="result-box" id="historyBox">
-      No history yet.
-    </div>
-
-    <button class="btn secondary" onclick="clearHistory()">🗑 Clear History</button>
-  </div>
-
   <!-- 8) AI -->
   <div class="form-card" id="aiTool">
     <h2 style="text-align:center;">🤖 FarmCulture AI Assistant</h2>
-    <p style="text-align:center;color:#555;">
-      Welcome! Ask farming questions and get guidance instantly.
-    </p>
 
     <button class="btn" onclick="openFarmCulture()">🤖 Open FarmCulture AI (Live)</button>
 
@@ -378,6 +294,7 @@
 
 </div>
 
-<script src="tools.js?v=4"></script>
+<!-- JS -->
+<script src="tools.js?v=1"></script>
 </body>
         </html>
