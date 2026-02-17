@@ -1,7 +1,10 @@
-/* AgroSense Tools - Step A MAX (Bug-free) */
+/* AgroSense Tools - STEP 4 (Profile + Report + Share + History) */
 
 let CURRENT_LANG = "en";
 
+/* -----------------------------
+   Language
+------------------------------*/
 const LANG = {
   en: {
     status: "Current language: <b>English</b>",
@@ -41,8 +44,6 @@ function setLang(lang){
   document.getElementById("t_crop_label").innerHTML = LANG[lang].crop;
   document.getElementById("t_soil_label").innerHTML = LANG[lang].soil;
   document.getElementById("t_water_label").innerHTML = LANG[lang].water;
-
-  document.getElementById("t_check_btn").innerHTML = LANG[lang].analyze;
 }
 
 function openFarmCulture(){
@@ -161,6 +162,8 @@ function analyzeRisk(){
   `;
 
   showQuickAdvice();
+  saveHistory("Risk Predictor", `Score: ${score}/100 (${tag}) | Crop: ${crop} | Season: ${season}`);
+  scrollToBox("riskResult");
 }
 
 /* -----------------------------
@@ -210,6 +213,9 @@ function calcWater(){
     <b>Water Risk:</b> <span class="pill ${risk === "High" ? "bad" : (risk === "Medium" ? "mid" : "good")}">${risk}</span><br><br>
     <b>Tip:</b><br>${tip}
   `;
+
+  saveHistory("Water Budget", `Crop: ${crop} | Need: ${need} | Risk: ${risk} | Acres: ${acres}`);
+  scrollToBox("waterResult");
 }
 
 /* -----------------------------
@@ -225,7 +231,6 @@ function calcSeed(){
     return;
   }
 
-  // seed rate per acre (approx)
   const seedRate = {
     wheat: {min: 35, max: 45, unit:"kg"},
     soybean: {min: 25, max: 35, unit:"kg"},
@@ -275,6 +280,9 @@ function calcSeed(){
     <b>Money-Saving Tip:</b><br>
     Buy seed only from trusted shop + check packing date.
   `;
+
+  saveHistory("Seed Calculator", `Crop: ${crop} | Acres: ${acres} | Seed: ${minTotal}-${maxTotal} ${r.unit}`);
+  scrollToBox("seedResult");
 }
 
 /* -----------------------------
@@ -303,6 +311,8 @@ function showCalendar(){
   };
 
   out.innerHTML = cal[crop] || "Calendar not available.";
+  saveHistory("Crop Calendar", `Crop: ${crop}`);
+  scrollToBox("calendarResult");
 }
 
 /* -----------------------------
@@ -343,10 +353,12 @@ function rescue(type){
   };
 
   out.innerHTML = data[type] || "Select a problem.";
+  saveHistory("Rescue Mode", `Problem: ${type}`);
+  scrollToBox("rescueResult");
 }
 
 /* -----------------------------
-   Fertilizer Guide (Safe)
+   Fertilizer Guide
 ------------------------------*/
 function fertGuide(){
   const crop = document.getElementById("f_crop").value;
@@ -376,6 +388,9 @@ function fertGuide(){
     <b>Safety:</b><br>
     ⚠️ Never apply fertilizer in dry soil. Irrigate first.
   `;
+
+  saveHistory("Fertilizer Guide", `Crop: ${crop}`);
+  scrollToBox("fertResult");
 }
 
 /* -----------------------------
@@ -385,20 +400,214 @@ function saveNotes(){
   const text = document.getElementById("notesBox").value;
   localStorage.setItem("agrosense_notes", text);
   document.getElementById("notesStatus").innerHTML = "✅ Notes saved on this phone.";
+  saveHistory("Notes", "Saved notes");
 }
 
 function clearNotes(){
   localStorage.removeItem("agrosense_notes");
   document.getElementById("notesBox").value = "";
   document.getElementById("notesStatus").innerHTML = "🗑 Notes cleared.";
+  saveHistory("Notes", "Cleared notes");
 }
 
-(function loadNotes(){
+/* -----------------------------
+   Step 4: Profile
+------------------------------*/
+function saveProfile(){
+  const p = {
+    name: document.getElementById("p_name").value.trim(),
+    place: document.getElementById("p_place").value.trim(),
+    acres: document.getElementById("p_acres").value.trim(),
+    maincrop: document.getElementById("p_maincrop").value.trim(),
+  };
+  localStorage.setItem("agrosense_profile", JSON.stringify(p));
+  document.getElementById("profileStatus").innerHTML = "✅ Profile saved on this phone.";
+  saveHistory("Profile", `Saved: ${p.name || "Farmer"} (${p.place || "location"})`);
+}
+
+function loadProfile(){
   try{
-    const saved = localStorage.getItem("agrosense_notes");
-    if(saved){
-      document.getElementById("notesBox").value = saved;
-      document.getElementById("notesStatus").innerHTML = "✅ Loaded saved notes from this phone.";
-    }
+    const raw = localStorage.getItem("agrosense_profile");
+    if(!raw) return;
+    const p = JSON.parse(raw);
+
+    document.getElementById("p_name").value = p.name || "";
+    document.getElementById("p_place").value = p.place || "";
+    document.getElementById("p_acres").value = p.acres || "";
+    document.getElementById("p_maincrop").value = p.maincrop || "";
+
+    document.getElementById("profileStatus").innerHTML = "✅ Loaded saved profile from this phone.";
   }catch(e){}
-})();
+}
+
+/* -----------------------------
+   Step 4: Report
+------------------------------*/
+function getSelectedText(selectId){
+  const sel = document.getElementById(selectId);
+  if(!sel) return "";
+  const idx = sel.selectedIndex;
+  if(idx < 0) return "";
+  return sel.options[idx].text || sel.value || "";
+}
+
+function generateReport(){
+  const box = document.getElementById("reportBox");
+
+  const profile = getProfile();
+
+  const season = getSelectedText("season");
+  const crop = getSelectedText("crop");
+  const soil = getSelectedText("soil");
+  const water = getSelectedText("water");
+
+  const risk = document.getElementById("riskResult").innerText.trim();
+  const quick = document.getElementById("quickAdvice").innerText.trim();
+
+  const waterRes = document.getElementById("waterResult").innerText.trim();
+  const seedRes = document.getElementById("seedResult").innerText.trim();
+  const calRes = document.getElementById("calendarResult").innerText.trim();
+  const fertRes = document.getElementById("fertResult").innerText.trim();
+
+  const date = new Date().toLocaleString();
+
+  box.innerHTML = `
+    <b>🧾 AgroSense Farmer Report</b><br>
+    <span style="color:#51605a;">Generated: ${date}</span><br><br>
+
+    <b>👤 Farmer:</b> ${escapeHtml(profile.name)}<br>
+    <b>📍 Location:</b> ${escapeHtml(profile.place)}<br>
+    <b>🌾 Land:</b> ${escapeHtml(profile.acres)} acres<br>
+    <b>🌱 Main Crop:</b> ${escapeHtml(profile.maincrop)}<br><br>
+
+    <b>🔎 Current Selection:</b><br>
+    Season: ${escapeHtml(season)}<br>
+    Crop: ${escapeHtml(crop)}<br>
+    Soil: ${escapeHtml(soil)}<br>
+    Water: ${escapeHtml(water)}<br><br>
+
+    <b>🌱 Risk Result:</b><br>
+    <pre style="white-space:pre-wrap;margin:0;">${escapeHtml(risk)}</pre><br>
+
+    <b>⚡ Quick Advice:</b><br>
+    <pre style="white-space:pre-wrap;margin:0;">${escapeHtml(quick)}</pre><br>
+
+    <b>💧 Water Tool:</b><br>
+    <pre style="white-space:pre-wrap;margin:0;">${escapeHtml(waterRes)}</pre><br>
+
+    <b>🌾 Seed Tool:</b><br>
+    <pre style="white-space:pre-wrap;margin:0;">${escapeHtml(seedRes)}</pre><br>
+
+    <b>📅 Calendar:</b><br>
+    <pre style="white-space:pre-wrap;margin:0;">${escapeHtml(calRes)}</pre><br>
+
+    <b>🧪 Fertilizer:</b><br>
+    <pre style="white-space:pre-wrap;margin:0;">${escapeHtml(fertRes)}</pre><br>
+
+    <br><b>⚠️ Note:</b> This report is guidance. Final decision depends on local weather and soil test.
+  `;
+
+  saveHistory("Report", `Generated report for ${profile.name || "Farmer"}`);
+  scrollToBox("reportBox");
+}
+
+function downloadReport(){
+  generateReport();
+  alert("Now press: Share/Print → Save as PDF");
+  window.print();
+}
+
+function shareReport(){
+  generateReport();
+  const text = getReportText();
+  navigator.clipboard.writeText(text).then(()=>{
+    alert("✅ Report copied. Now open WhatsApp and paste.");
+  }).catch(()=>{
+    alert("⚠️ Copy failed. Please manually copy from report box.");
+  });
+}
+
+function getReportText(){
+  const box = document.getElementById("reportBox");
+  return box.innerText || "AgroSense report";
+}
+
+/* -----------------------------
+   Step 4: History
+------------------------------*/
+function saveHistory(tool, summary){
+  try{
+    const raw = localStorage.getItem("agrosense_history");
+    let arr = raw ? JSON.parse(raw) : [];
+    arr.unshift({
+      time: new Date().toLocaleString(),
+      tool,
+      summary
+    });
+    arr = arr.slice(0,5);
+    localStorage.setItem("agrosense_history", JSON.stringify(arr));
+    renderHistory();
+  }catch(e){}
+}
+
+function renderHistory(){
+  const box = document.getElementById("historyBox");
+  if(!box) return;
+
+  try{
+    const raw = localStorage.getItem("agrosense_history");
+    const arr = raw ? JSON.parse(raw) : [];
+
+    if(!arr.length){
+      box.innerHTML = "No history yet.";
+      return;
+    }
+
+    box.innerHTML = arr.map((x, i)=>`
+      <div style="padding:10px;border-bottom:1px solid rgba(0,0,0,0.08);">
+        <b>${i+1}) ${escapeHtml(x.tool)}</b><br>
+        <span style="color:#51605a;">${escapeHtml(x.time)}</span><br>
+        <span>${escapeHtml(x.summary)}</span>
+      </div>
+    `).join("");
+  }catch(e){
+    box.innerHTML = "History error.";
+  }
+}
+
+function clearHistory(){
+  localStorage.removeItem("agrosense_history");
+  renderHistory();
+  alert("🗑 History cleared.");
+}
+
+/* -----------------------------
+   Helpers
+------------------------------*/
+function scrollToBox(id){
+  setTimeout(()=> jumpTo(id), 250);
+}
+
+function escapeHtml(str){
+  if(!str) return "";
+  return String(str)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;");
+}
+
+function getProfile(){
+  try{
+    const raw = localStorage.getItem("agrosense_profile");
+    if(!raw) return {name:"", place:"", acres:"", maincrop:""};
+    return JSON.parse(raw);
+  }catch(e){
+    return {name:"", place:"", acres:"", maincrop:""};
+  }
+}
+
+/* Auto Report refresh (optional) */
+function autoReport(){
+  // only update if report already generated once
+  const box = document.getElementById("reportBox");
+  if(box && box.innerText && box.innerText.includes("AgroSense Farmer Report
