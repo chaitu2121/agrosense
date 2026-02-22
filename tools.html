@@ -36,7 +36,7 @@ function showQuickAdvice(){
   let advice = "System stable. Monitor soil moisture and weather.";
 
   if(water === "rain") advice = "Rain dependent: choose drought tolerant crops.";
-  if(soil === "sandy") advice = "Sandy soil: use mulching and frequent irrigation.";
+  if(soil === "sandy") advice = "Sandy soil: use mulching and irrigation.";
 
   const waterHeavy = ["rice","sugarcane","banana"];
   if(waterHeavy.includes(crop) && water === "rain")
@@ -46,6 +46,7 @@ function showQuickAdvice(){
 }
 
 function analyzeRisk(){
+
   const season = document.getElementById("season").value;
   const crop = document.getElementById("crop").value;
   const soil = document.getElementById("soil").value;
@@ -90,10 +91,25 @@ function analyzeRisk(){
   if(finalScore < 70) classification = "Moderate Risk";
   if(finalScore < 50) classification = "High Strategic Risk";
 
+  let advice = "System stable. Continue monitoring.";
+  if(finalScore < 70)
+    advice = "Improve irrigation + diversify crops.";
+  if(finalScore < 50)
+    advice = "Switch to resilient crops and reduce high-risk inputs.";
+
   document.getElementById("riskResult").innerHTML = `
     <h3>🌍 AgroSense 360° Strategic Report</h3>
-    Final Score: ${finalScore}/100 <br>
-    Classification: ${classification}
+    🌡 Climate: ${climateScore}/100 <br>
+    💧 Water Security: ${waterScore}/100 <br>
+    🌱 Soil Health: ${soilScore}/100 <br>
+    🧪 Fertilizer Dependency: ${fertilizerScore}/100 <br>
+    📉 Market Stability: ${marketScore}/100 <br>
+    🛡 Crop Resilience: ${resilienceScore}/100 <br>
+    <br>
+    <b>Final Unified Score:</b> ${finalScore}/100 <br>
+    <b>Classification:</b> ${classification}
+    <br><br>
+    <b>Strategic Advice:</b><br>${advice}
   `;
 
   showQuickAdvice();
