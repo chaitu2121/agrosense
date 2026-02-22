@@ -309,7 +309,7 @@ function generateIntelligenceReport() {
   const water = document.getElementById("water")?.value;
 
   if(!season || !crop || !soil || !water){
-    alert("Please complete Risk Predictor first.");
+    alert("Complete Risk Predictor first.");
     return;
   }
 
@@ -319,19 +319,15 @@ function generateIntelligenceReport() {
   let economicScore = 75;
   let resilienceScore = 70;
 
-  // Climate logic
   if(season === "summer") climateScore -= 20;
   if(season === "monsoon") climateScore += 5;
 
-  // Water logic
   if(water === "rain") waterScore -= 25;
   if(water === "drip") waterScore += 10;
 
-  // Soil logic
   if(soil === "sandy") soilScore -= 20;
   if(soil === "loamy") soilScore += 5;
 
-  // Crop resilience
   const droughtCrops = ["bajra","jowar","ragi","gram"];
   if(droughtCrops.includes(crop)) resilienceScore += 15;
 
@@ -347,18 +343,18 @@ function generateIntelligenceReport() {
   if(finalScore < 50) classification = "High Risk";
 
   const output = `
-    <h3>🌍 AgroSense 2050 Intelligence Report</h3>
-    <br>
-    🌡 Climate Layer: ${climateScore}/100 <br>
-    💧 Water Layer: ${waterScore}/100 <br>
-    🌱 Soil Layer: ${soilScore}/100 <br>
-    💰 Economic Layer: ${economicScore}/100 <br>
-    🛡 Resilience Layer: ${resilienceScore}/100 <br>
-    <br>
-    <b>Final Strategic Score:</b> ${finalScore}/100 <br>
-    <b>System Classification:</b> ${classification}
+    <div style="margin-top:20px; padding:15px; border-radius:14px; background:#f4fff4; border:1px solid rgba(0,0,0,0.08);">
+      <h3>🌍 AgroSense 2050 Intelligence Report</h3>
+      🌡 Climate Layer: ${climateScore}/100 <br>
+      💧 Water Layer: ${waterScore}/100 <br>
+      🌱 Soil Layer: ${soilScore}/100 <br>
+      💰 Economic Layer: ${economicScore}/100 <br>
+      🛡 Resilience Layer: ${resilienceScore}/100 <br><br>
+      <b>Final Strategic Score:</b> ${finalScore}/100 <br>
+      <b>System Classification:</b> ${classification}
+    </div>
   `;
 
   const box = document.getElementById("riskResult");
-  box.innerHTML += "<hr>" + output;
+  box.innerHTML = box.innerHTML + output;
 }
