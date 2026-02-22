@@ -298,3 +298,208 @@
 <script src="tools.js?v=1"></script>
 </body>
         </html>
+/* =================================================
+   AGROSENSE UNIFIED 360° INTELLIGENCE ENGINE
+   Stable + Future Ready + Multi-Layer Logic
+================================================= */
+
+/* ---------------- BASIC NAVIGATION ---------------- */
+
+function jumpTo(id){
+  const el = document.getElementById(id);
+  if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+function openFarmCulture(){
+  window.open("https://huggingface.co/spaces/Chaitu2121/farmculture-ai", "_blank");
+}
+
+/* ---------------- CROP SEARCH ---------------- */
+
+function filterCrops(){
+  const search = document.getElementById("cropSearch").value.toLowerCase();
+  const cropSelect = document.getElementById("crop");
+  const options = cropSelect.options;
+
+  for(let i=0; i<options.length; i++){
+    if(i === 0) continue;
+    const txt = options[i].text.toLowerCase();
+    options[i].style.display = txt.includes(search) ? "" : "none";
+  }
+}
+
+/* ---------------- QUICK ADVICE ---------------- */
+
+function showQuickAdvice(){
+  const season = document.getElementById("season").value;
+  const crop = document.getElementById("crop").value;
+  const soil = document.getElementById("soil").value;
+  const water = document.getElementById("water").value;
+  const box = document.getElementById("quickAdvice");
+
+  if(!season || !crop || !soil || !water){
+    box.innerHTML = "Complete all selections for advice.";
+    return;
+  }
+
+  let advice = "System stable. Monitor soil moisture and weather.";
+
+  if(water === "rain") advice = "Rain dependent: choose drought tolerant crops.";
+  if(soil === "sandy") advice = "Sandy soil: use mulching and frequent irrigation.";
+
+  const waterHeavy = ["rice","sugarcane","banana"];
+  if(waterHeavy.includes(crop) && water === "rain")
+    advice = "High risk: high-water crop under rainfed condition.";
+
+  box.innerHTML = advice;
+}
+
+/* ---------------- 360° MASTER ENGINE ---------------- */
+
+function analyzeRisk(){
+
+  const season = document.getElementById("season").value;
+  const crop = document.getElementById("crop").value;
+  const soil = document.getElementById("soil").value;
+  const water = document.getElementById("water").value;
+
+  if(!season || !crop || !soil || !water){
+    document.getElementById("riskResult").innerHTML =
+      "⚠️ Complete Season, Crop, Soil and Water first.";
+    return;
+  }
+
+  /* --- Layer Scores --- */
+
+  let climateScore = 80;
+  let waterScore = 80;
+  let soilScore = 80;
+  let fertilizerScore = 75;
+  let marketScore = 75;
+  let resilienceScore = 70;
+
+  /* Climate */
+  if(season === "summer") climateScore -= 25;
+  if(season === "monsoon") climateScore += 5;
+
+  /* Water */
+  if(water === "rain") waterScore -= 30;
+  if(water === "drip") waterScore += 10;
+
+  /* Soil */
+  if(soil === "sandy") soilScore -= 20;
+  if(soil === "loamy") soilScore += 5;
+
+  /* Fertilizer Dependency */
+  const nitrogenHeavy = ["rice","sugarcane","cotton"];
+  if(nitrogenHeavy.includes(crop)) fertilizerScore -= 15;
+
+  /* Market Volatility */
+  const volatile = ["tomato","onion","chilli"];
+  if(volatile.includes(crop)) marketScore -= 20;
+
+  /* Resilience */
+  const droughtCrops = ["bajra","jowar","ragi","gram","tur"];
+  if(droughtCrops.includes(crop)) resilienceScore += 20;
+
+  const finalScore = Math.round(
+    (climateScore + waterScore + soilScore + fertilizerScore + marketScore + resilienceScore) / 6
+  );
+
+  let classification = "Future Stable";
+  if(finalScore < 70) classification = "Moderate Risk";
+  if(finalScore < 50) classification = "High Strategic Risk";
+
+  let advice = "System stable. Continue monitoring.";
+  if(finalScore < 70)
+    advice = "Improve irrigation + consider diversification.";
+  if(finalScore < 50)
+    advice = "Switch to resilient crops and reduce high-risk inputs.";
+
+  document.getElementById("riskResult").innerHTML = `
+    <h3>🌍 AgroSense 360° Strategic Report</h3>
+    🌡 Climate: ${climateScore}/100 <br>
+    💧 Water Security: ${waterScore}/100 <br>
+    🌱 Soil Health: ${soilScore}/100 <br>
+    🧪 Fertilizer Dependency: ${fertilizerScore}/100 <br>
+    📉 Market Stability: ${marketScore}/100 <br>
+    🛡 Crop Resilience: ${resilienceScore}/100 <br>
+    <br>
+    <b>Final Unified Score:</b> ${finalScore}/100 <br>
+    <b>Classification:</b> ${classification}
+    <br><br>
+    <b>Strategic Advice:</b><br>${advice}
+  `;
+
+  showQuickAdvice();
+}
+
+/* ---------------- WATER TOOL ---------------- */
+
+function calcWater(){
+  const crop = document.getElementById("w_crop").value;
+  const acres = parseFloat(document.getElementById("w_acres").value);
+  const source = document.getElementById("w_source").value;
+
+  if(!crop || !acres || acres <= 0 || !source){
+    document.getElementById("waterResult").innerHTML =
+      "Complete crop, acres, and water source.";
+    return;
+  }
+
+  let risk = "Low";
+  if(source === "rain") risk = "High";
+  if(source === "drip") risk = "Low";
+
+  document.getElementById("waterResult").innerHTML =
+    `Water Risk: ${risk} <br>Land: ${acres} acres`;
+}
+
+/* ---------------- SEED TOOL ---------------- */
+
+function calcSeed(){
+  const crop = document.getElementById("seed_crop").value;
+  const acres = parseFloat(document.getElementById("seed_acres").value);
+
+  if(!crop || !acres || acres <= 0){
+    document.getElementById("seedResult").innerHTML =
+      "Select crop and acres.";
+    return;
+  }
+
+  const seedRates = {
+    maize: 9,
+    wheat: 40,
+    soybean: 30,
+    rice: 10
+  };
+
+  const rate = seedRates[crop] || 25;
+  const total = (rate * acres).toFixed(2);
+
+  document.getElementById("seedResult").innerHTML =
+    `Estimated Seed Required: ${total} kg`;
+}
+
+/* ---------------- NOTES ---------------- */
+
+function saveNotes(){
+  const text = document.getElementById("notesBox").value;
+  localStorage.setItem("agrosense_notes", text);
+  document.getElementById("notesStatus").innerHTML =
+    "Notes saved.";
+}
+
+function clearNotes(){
+  localStorage.removeItem("agrosense_notes");
+  document.getElementById("notesBox").value = "";
+  document.getElementById("notesStatus").innerHTML =
+    "Notes cleared.";
+}
+
+window.onload = function(){
+  const saved = localStorage.getItem("agrosense_notes");
+  if(saved){
+    document.getElementById("notesBox").value = saved;
+  }
+};
