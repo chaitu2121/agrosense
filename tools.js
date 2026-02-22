@@ -297,3 +297,68 @@ window.onload = function(){
     }
   }catch(e){}
 };
+/* ===============================
+   AGROSENSE DECISION INTELLIGENCE 2050
+=================================*/
+
+function generateIntelligenceReport() {
+
+  const season = document.getElementById("season")?.value;
+  const crop = document.getElementById("crop")?.value;
+  const soil = document.getElementById("soil")?.value;
+  const water = document.getElementById("water")?.value;
+
+  if(!season || !crop || !soil || !water){
+    alert("Please complete Risk Predictor first.");
+    return;
+  }
+
+  let climateScore = 80;
+  let waterScore = 80;
+  let soilScore = 80;
+  let economicScore = 75;
+  let resilienceScore = 70;
+
+  // Climate logic
+  if(season === "summer") climateScore -= 20;
+  if(season === "monsoon") climateScore += 5;
+
+  // Water logic
+  if(water === "rain") waterScore -= 25;
+  if(water === "drip") waterScore += 10;
+
+  // Soil logic
+  if(soil === "sandy") soilScore -= 20;
+  if(soil === "loamy") soilScore += 5;
+
+  // Crop resilience
+  const droughtCrops = ["bajra","jowar","ragi","gram"];
+  if(droughtCrops.includes(crop)) resilienceScore += 15;
+
+  const waterHeavy = ["rice","sugarcane","banana"];
+  if(waterHeavy.includes(crop)) resilienceScore -= 15;
+
+  const finalScore = Math.round(
+    (climateScore + waterScore + soilScore + economicScore + resilienceScore) / 5
+  );
+
+  let classification = "Stable";
+  if(finalScore < 70) classification = "Moderate Risk";
+  if(finalScore < 50) classification = "High Risk";
+
+  const output = `
+    <h3>🌍 AgroSense 2050 Intelligence Report</h3>
+    <br>
+    🌡 Climate Layer: ${climateScore}/100 <br>
+    💧 Water Layer: ${waterScore}/100 <br>
+    🌱 Soil Layer: ${soilScore}/100 <br>
+    💰 Economic Layer: ${economicScore}/100 <br>
+    🛡 Resilience Layer: ${resilienceScore}/100 <br>
+    <br>
+    <b>Final Strategic Score:</b> ${finalScore}/100 <br>
+    <b>System Classification:</b> ${classification}
+  `;
+
+  const box = document.getElementById("riskResult");
+  box.innerHTML += "<hr>" + output;
+}
