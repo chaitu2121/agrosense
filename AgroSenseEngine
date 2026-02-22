@@ -1,0 +1,5 @@
+com/agrosense/
+    model/
+    engine/
+    repository/
+    Main.java
