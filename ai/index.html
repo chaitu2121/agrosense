@@ -9,10 +9,19 @@
       font-family: Arial, sans-serif;
       background: #f4fff4;
       padding: 15px;
+      box-sizing: border-box;
     }
     h1 {
       color: #2e7d32;
       text-align: center;
+      margin-bottom: 5px;
+    }
+    .brand-identity {
+      text-align: center;
+      color: #4caf50;
+      font-weight: bold;
+      margin-top: 0;
+      font-size: 14px;
     }
     textarea {
       width: 100%;
@@ -21,6 +30,7 @@
       border-radius: 6px;
       border: 1px solid #ccc;
       font-size: 14px;
+      box-sizing: border-box; /* Prevents text box from overflowing screen */
     }
     button {
       width: 100%;
@@ -44,11 +54,19 @@
       min-height: 40px;
       white-space: pre-wrap;
     }
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 13px;
+      color: #777;
+    }
   </style>
 </head>
 <body>
 
 <h1>🤖 FarmCulture AI</h1>
+<p class="brand-identity">by chaitu21</p>
+
 <p style="text-align:center;color:#555;">
 Ask your farming question below or open full AI interface.
 </p>
@@ -61,6 +79,10 @@ Ask your farming question below or open full AI interface.
 <button class="open-ai" onclick="openAI()">Open FarmCulture AI (Hugging Face)</button>
 
 <div id="response">AI response will appear here.</div>
+
+<footer>
+  FarmCulture AI &copy; 2026 | Developed by chaitu21
+</footer>
 
 <script>
 function openAI(){
