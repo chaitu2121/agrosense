@@ -5,24 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AgroSense – Smart Agriculture Tools</title>
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="style.css?v=1" />
+  <link rel="stylesheet" href="style.css?v=4" />
 </head>
 <body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      🌾 <b>AgroSense Tools</b>
+    </div>
+    <div class="topbar-links">
+      <a href="index.html">Home</a>
+      <a href="notes.html">Notes</a>
+      <button id="themeToggle" class="theme-toggle" aria-label="Toggle Dark Mode">🌙</button>
+    </div>
+  </div>
+</div>
 
 <div class="container">
 
   <header>
-    <h1>🌾 AgroSense Tools</h1>
+    <h1>🌾 Smart Dashboard</h1>
     <p class="subtitle">
-      Smart farming tools + AI assistant to protect farmer money and water
+      Protect farmer money and water with precision data.
     </p>
   </header>
 
-  <!-- TOOL NAV -->
   <div class="form-card">
-    <h2 style="text-align:center;">⚡ Quick Tools Menu</h2>
-    <p style="text-align:center;color:#555;">Tap to jump instantly.</p>
+    <h2>⚡ Quick Jump Menu</h2>
+    <p>Tap a tool to jump instantly.</p>
 
     <div class="grid2">
       <button class="btn secondary" onclick="jumpTo('riskTool')">🌱 Risk Predictor</button>
@@ -36,12 +47,9 @@
     </div>
   </div>
 
-  <!-- 1) RISK TOOL -->
   <div class="form-card" id="riskTool">
-    <h2 style="text-align:center;">🌱 Crop Failure Risk Predictor</h2>
-    <p style="text-align:center;color:#555;">
-      Check risk before sowing to protect money and water.
-    </p>
+    <h2>🌱 Crop Failure Risk Predictor</h2>
+    <p>Check risk before sowing to protect money and water.</p>
 
     <label>Season</label>
     <select id="season" onchange="showQuickAdvice()">
@@ -53,10 +61,10 @@
 
     <label>Crop</label>
     <input id="cropSearch" type="text"
-      placeholder="Search crop (example: onion, wheat, cotton)"
+      placeholder="Search crop (example: onion, wheat)..."
       oninput="filterCrops()" />
 
-    <select id="crop" onchange="showQuickAdvice()">
+    <select id="crop" onchange="showQuickAdvice()" style="margin-top: 10px;">
       <option value="">Select Crop</option>
       <option value="rice">Rice</option>
       <option value="wheat">Wheat</option>
@@ -117,17 +125,15 @@
     </div>
   </div>
 
-  <!-- QUICK RECOMMENDATION -->
   <div class="form-card">
-    <h2 style="text-align:center;">⚡ Quick Recommendation</h2>
+    <h2>⚡ Quick Recommendation</h2>
     <div class="result-box" id="quickAdvice">
       Select season, crop, soil and water source to see quick advice.
     </div>
   </div>
 
-  <!-- 2) WATER TOOL -->
   <div class="form-card" id="waterTool">
-    <h2 style="text-align:center;">💧 Water Budget + Water Risk</h2>
+    <h2>💧 Water Budget + Water Risk</h2>
 
     <label>Crop</label>
     <select id="w_crop">
@@ -165,9 +171,8 @@
     </div>
   </div>
 
-  <!-- 3) SEED TOOL -->
   <div class="form-card" id="seedTool">
-    <h2 style="text-align:center;">🌾 Seed Rate + Seed Varieties</h2>
+    <h2>🌾 Seed Rate + Seed Varieties</h2>
 
     <label>Crop</label>
     <select id="seed_crop">
@@ -195,9 +200,8 @@
     </div>
   </div>
 
-  <!-- 4) CROP CALENDAR -->
   <div class="form-card" id="calendarTool">
-    <h2 style="text-align:center;">📅 Crop Calendar (Month-wise)</h2>
+    <h2>📅 Crop Calendar (Month-wise)</h2>
 
     <label>Select Crop</label>
     <select id="cal_crop">
@@ -221,9 +225,8 @@
     </div>
   </div>
 
-  <!-- 5) RESCUE MODE -->
   <div class="form-card" id="rescueTool">
-    <h2 style="text-align:center;">🚨 Emergency Crop Rescue Mode</h2>
+    <h2>🚨 Emergency Crop Rescue Mode</h2>
 
     <div class="grid2">
       <button class="btn secondary" onclick="rescue('yellow')">🍂 Leaves Yellow</button>
@@ -237,9 +240,8 @@
     </div>
   </div>
 
-  <!-- 6) FERTILIZER GUIDE -->
   <div class="form-card" id="fertTool">
-    <h2 style="text-align:center;">🧪 Fertilizer Basic Guide (Safe)</h2>
+    <h2>🧪 Fertilizer Basic Guide (Safe)</h2>
 
     <label>Select Crop</label>
     <select id="f_crop">
@@ -263,13 +265,11 @@
     </div>
   </div>
 
-  <!-- 7) NOTES -->
   <div class="form-card" id="notesTool">
-    <h2 style="text-align:center;">📝 Farmer Notes (Saved on Phone)</h2>
+    <h2>📝 Farmer Notes (Saved on Phone)</h2>
 
     <label>My Notes</label>
-    <textarea id="notesBox"
-      style="width:100%; height:120px; padding:12px; border-radius:14px; border:1px solid rgba(0,0,0,0.12);"></textarea>
+    <textarea id="notesBox" style="width:100%; height:120px; padding:14px; border-radius:14px; border:1px solid var(--border); background: var(--input-bg); color: var(--text); font-family: inherit; resize: vertical; outline: none; transition: 0.3s;"></textarea>
 
     <button class="btn" onclick="saveNotes()">💾 Save Notes</button>
     <button class="btn secondary" onclick="clearNotes()">🗑 Clear Notes</button>
@@ -279,9 +279,8 @@
     </div>
   </div>
 
-  <!-- 8) AI -->
   <div class="form-card" id="aiTool">
-    <h2 style="text-align:center;">🤖 FarmCulture AI Assistant</h2>
+    <h2>🤖 FarmCulture AI Assistant</h2>
 
     <button class="btn" onclick="openFarmCulture()">🤖 Open FarmCulture AI (Live)</button>
 
@@ -290,11 +289,31 @@
     </div>
   </div>
 
-  <a href="index.html" class="btn secondary">⬅ Back to Home</a>
-
 </div>
 
-<!-- JS -->
+<script>
+  const toggleBtn = document.getElementById('themeToggle');
+  const currentTheme = localStorage.getItem('theme');
+
+  if (currentTheme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    toggleBtn.textContent = '☀️';
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    let theme = document.documentElement.getAttribute('data-theme');
+    if (theme === 'dark') {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
+      toggleBtn.textContent = '🌙';
+    } else {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+      toggleBtn.textContent = '☀️';
+    }
+  });
+</script>
+
 <script src="tools.js?v=1"></script>
 </body>
-        </html>
+</html>
