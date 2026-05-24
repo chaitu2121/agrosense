@@ -3,260 +3,85 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AgroSense AI | Agricultural Strategic Intelligence Operating System</title>
-  <meta name="description" content="AgroSense AI is a cinematic agricultural intelligence platform with FarmCulture AI, smart tools, and future-proof decision support." />
-  <link rel="stylesheet" href="style.css?v=10" />
-  <script defer src="script.js?v=10"></script>
+  <title>AgroSense AI</title>
+  <link rel="stylesheet" href="style.css?v=40" />
+  <script defer src="script.js?v=40"></script>
 </head>
 <body>
 
-  <div id="intro" class="intro">
-    <div class="intro__content">
-      <div class="intro__eyebrow">AGROSENSE AI</div>
-      <div class="intro__title">Agricultural Strategic Intelligence Operating System</div>
-      <div class="intro__line"></div>
-      <div class="intro__sub">Future-proof farming intelligence • Designed for real decisions</div>
-    </div>
+  <div class="intro" id="intro">
+    <div class="intro-overlay"></div>
+    <h1 class="intro-logo">AGROSENSE</h1>
   </div>
 
   <header class="topbar">
     <div class="topbar-inner">
-      <a class="brand" href="#home" aria-label="AgroSense home">
-        <span class="brand-mark">◉</span>
-        <span><strong>AgroSense</strong><span class="brand-small"> AI</span></span>
+      <a class="brand" href="index.html">
+        <span class="brand-mark"></span>
+        <span class="brand-text">AGROSENSE</span>
       </a>
 
-      <nav class="topbar-links" aria-label="Primary">
-        <a href="#platform">Platform</a>
-        <a href="#intelligence">Intelligence</a>
+      <nav class="topbar-links">
         <a href="#tools">Tools</a>
-        <a href="#farmculture">FarmCulture AI</a>
+        <a href="#about">About</a>
+        <a href="tools.html">Open Tools</a>
+        <a href="https://huggingface.co/spaces/Chaitu2121/farmculture-ai" target="_blank" rel="noopener">AI</a>
       </nav>
     </div>
   </header>
 
-  <main id="home">
-    <section class="hero section-shell reveal">
-      <div class="hero-copy">
-        <div class="eyebrow">Cinematic Agricultural Intelligence</div>
-        <h1>AgroSense AI</h1>
-        <p class="hero-lead">
-          A premium strategic platform for farming decisions, combining crop intelligence, competition modeling,
-          climate awareness, capital protection, and integrated FarmCulture AI.
+  <main class="container">
+
+    <section class="hero">
+      <div class="hero-content">
+        <p class="hero-label">AGRICULTURE • AI • DECISION SUPPORT</p>
+        <h1 class="hero-title">AGROSENSE</h1>
+        <p class="hero-subtitle">
+          AI-assisted farming tools for crop planning, water management, seed planning, and field-level guidance.
         </p>
 
         <div class="hero-actions">
-          <a class="btn" href="tools.html">Open Smart Tools</a>
-          <a class="btn secondary" href="https://huggingface.co/spaces/Chaitu2121/farmculture-ai" target="_blank" rel="noopener">Open FarmCulture AI</a>
-        </div>
-
-        <div class="hero-badges">
-          <span class="pill good">Future Proof</span>
-          <span class="pill good">Mobile First</span>
-          <span class="pill good">Data Driven</span>
-          <span class="pill good">SACIE Core</span>
-        </div>
-      </div>
-
-      <div class="hero-visual" aria-hidden="true">
-        <div class="hero-orbit hero-orbit--one"></div>
-        <div class="hero-orbit hero-orbit--two"></div>
-        <div class="hero-panel">
-          <div class="hero-panel__label">SYSTEM SIGNAL</div>
-          <div class="hero-panel__value">Adaptive</div>
-          <div class="hero-panel__meta">Regime detection • Policy risk • Market pressure</div>
-        </div>
-        <div class="hero-stat hero-stat--a">
-          <span>Oversupply</span>
-          <strong>Probability Engine</strong>
-        </div>
-        <div class="hero-stat hero-stat--b">
-          <span>Capital</span>
-          <strong>Protection Layer</strong>
+          <a href="tools.html" class="btn">Open Tools</a>
+          <a href="https://huggingface.co/spaces/Chaitu2121/farmculture-ai" target="_blank" rel="noopener" class="btn secondary">
+            FarmCulture AI
+          </a>
         </div>
       </div>
     </section>
 
-    <section id="platform" class="section-shell reveal">
+    <section class="section-card" id="tools">
       <div class="section-head">
-        <div class="eyebrow">Platform Identity</div>
-        <h2>Built like a strategic intelligence terminal, not a normal farming app.</h2>
-        <p>
-          AgroSense is designed to help farmers think before they sow, compare risk before they invest,
-          and respond to market conditions with structure instead of guesswork.
-        </p>
-      </div>
-
-      <div class="feature-grid">
-        <article class="feature-card">
-          <div class="feature-kicker">Natural Layer</div>
-          <h3>Soil, water, heat, rainfall</h3>
-          <p>Reads the land conditions that shape whether a crop can survive and perform well.</p>
-        </article>
-
-        <article class="feature-card">
-          <div class="feature-kicker">Crop Layer</div>
-          <h3>Variety and sensitivity logic</h3>
-          <p>Looks at water need, tolerance, storage strength, demand behavior, and yield stability.</p>
-        </article>
-
-        <article class="feature-card">
-          <div class="feature-kicker">Market Layer</div>
-          <h3>Competition and saturation</h3>
-          <p>Helps detect crowd behavior, oversupply risk, and pressure from repeated crop imitation.</p>
-        </article>
-
-        <article class="feature-card">
-          <div class="feature-kicker">Policy Layer</div>
-          <h3>Political and policy signals</h3>
-          <p>Tracks MSP, export/import shifts, subsidies, procurement, and election-linked impacts.</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="intelligence" class="section-shell reveal">
-      <div class="section-head">
-        <div class="eyebrow">SACIE Core</div>
-        <h2>Situational Adaptive Crop Intelligence Engine</h2>
-        <p>
-          SACIE is the brain of AgroSense. It is built to analyze recent trends, detect regime changes,
-          and optimize crop decisions using confidence-aware intelligence.
-        </p>
-      </div>
-
-      <div class="intel-layout">
-        <article class="intel-card">
-          <div class="intel-card__top">
-            <span class="status-dot status-dot--green"></span>
-            <span>Validation Layer</span>
-          </div>
-          <h3>Confidence-aware outputs</h3>
-          <p>
-            AgroSense should never fake precision. Every strategic output must reflect data confidence,
-            uncertainty, and risk boundaries.
-          </p>
-        </article>
-
-        <article class="intel-card">
-          <div class="intel-card__top">
-            <span class="status-dot status-dot--amber"></span>
-            <span>Regime Detection</span>
-          </div>
-          <h3>Situation shifter mode</h3>
-          <p>
-            The system adapts between saturation, stability, shock, and transition phases instead of using one fixed logic.
-          </p>
-        </article>
-
-        <article class="intel-card">
-          <div class="intel-card__top">
-            <span class="status-dot status-dot--white"></span>
-            <span>Portfolio Brain</span>
-          </div>
-          <h3>Land allocation strategy</h3>
-          <p>
-            AgroSense does not only suggest crops. It helps determine stable, balanced, and high-opportunity allocation.
-          </p>
-        </article>
-      </div>
-    </section>
-
-    <section id="tools" class="section-shell reveal">
-      <div class="section-head">
-        <div class="eyebrow">Smart Tools</div>
-        <h2>Practical tools for farming decisions</h2>
-        <p>Everything is organized for speed, clarity, and mobile use.</p>
+        <p class="section-label">TOOLS</p>
+        <h2>Core Farming Utilities</h2>
       </div>
 
       <div class="tools-grid">
-        <a class="tool-card" href="tools.html">
-          <span class="tool-card__tag">Tool 01</span>
-          <h3>Crop Risk Analyzer</h3>
-          <p>Check weather, soil, and crop compatibility before spending money.</p>
-        </a>
-
-        <a class="tool-card" href="tools.html#waterTool">
-          <span class="tool-card__tag">Tool 02</span>
-          <h3>Water Budget</h3>
-          <p>Know whether a crop suits your water source and irrigation capacity.</p>
-        </a>
-
-        <a class="tool-card" href="tools.html#seedTool">
-          <span class="tool-card__tag">Tool 03</span>
-          <h3>Seed and Variety Logic</h3>
-          <p>Estimate seed quantity and compare crop variety suggestions.</p>
-        </a>
-
-        <a class="tool-card" href="tools.html#fertTool">
-          <span class="tool-card__tag">Tool 04</span>
-          <h3>Fertilizer Guide</h3>
-          <p>Simple fertilizer guidance with safety-first logic.</p>
-        </a>
+        <div class="tool-card"><span>Crop Risk</span></div>
+        <div class="tool-card"><span>Water Budget</span></div>
+        <div class="tool-card"><span>Seed Planning</span></div>
+        <div class="tool-card"><span>Crop Calendar</span></div>
+        <div class="tool-card"><span>Rescue Mode</span></div>
+        <div class="tool-card"><span>Fertilizer Guide</span></div>
       </div>
     </section>
 
-    <section id="farmculture" class="section-shell reveal">
-      <div class="terminal">
-        <div class="terminal__head">
-          <div class="terminal__badge">INTEGRATED AI</div>
-          <div class="terminal__title">FarmCulture AI</div>
-        </div>
-        <p>
-          Dedicated AI companion for AgroSense. Use it for guidance, ideas, and support while making decisions.
-        </p>
-        <div class="hero-actions">
-          <a class="btn" href="https://huggingface.co/spaces/Chaitu2121/farmculture-ai" target="_blank" rel="noopener">Open FarmCulture AI</a>
-          <a class="btn secondary" href="notes.html">Open Farmer Notes</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section-shell reveal">
+    <section class="section-card" id="about">
       <div class="section-head">
-        <div class="eyebrow">Future Proof</div>
-        <h2>Designed for expansion</h2>
-        <p>
-          The system is structured to grow into a full Agricultural Strategic Intelligence Operating System with
-          policy intelligence, market modeling, and global crop coverage.
-        </p>
+        <p class="section-label">PLATFORM</p>
+        <h2>Built for practical farming support</h2>
       </div>
 
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-card__label">ASIOS</div>
-          <strong>Core intelligence platform</strong>
-        </div>
-        <div class="stat-card">
-          <div class="stat-card__label">SACIE</div>
-          <strong>Adaptive decision engine</strong>
-        </div>
-        <div class="stat-card">
-          <div class="stat-card__label">Validation</div>
-          <strong>No misinformation philosophy</strong>
-        </div>
-        <div class="stat-card">
-          <div class="stat-card__label">Scale</div>
-          <strong>Taluka → District → State</strong>
-        </div>
-      </div>
+      <p class="about-text">
+        AgroSense focuses on farming guidance, planning tools, and AI-assisted support with a clean and simple user experience.
+      </p>
     </section>
 
-    <section class="section-shell reveal">
-      <div class="notice">
-        <h2>Note</h2>
-        <p>
-          Farming outcomes depend on land, climate, water, market, and local conditions.
-          AgroSense tools and FarmCulture AI are for guidance only.
-          The final farming decision must always be made by the farmer after checking real conditions.
-        </p>
-      </div>
-    </section>
-
-    <footer class="footer section-shell reveal">
-      <p>Built for farmers • Future-proof • Intelligent • Premium</p>
-      <p class="footer-muted">AgroSense AI • <span id="year"></span></p>
+    <footer class="footer">
+      <p>AgroSense AI</p>
+      <span>Farming guidance platform</span>
     </footer>
+
   </main>
 
 </body>
-        </html>
+</html>
