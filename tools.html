@@ -2,296 +2,396 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AgroSense – Smart Agriculture Tools</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>AgroSense – Premium Instruments</title>
+  <link rel="stylesheet" href="style.css?v=5" />
+  <style>
+    /* ---------------------------------------------------
+       APP ENGINE: NATIVE VIEW CONTROLLER
+       --------------------------------------------------- */
+    :root {
+      --app-bg: #f9fafb;
+      --app-card: #ffffff;
+      --app-text: #111827;
+      --app-green: #1b7d3b;
+      --app-border: rgba(0,0,0,0.06);
+    }
 
-  <link rel="stylesheet" href="style.css?v=4" />
+    [data-theme="dark"] {
+      --app-bg: #050806;
+      --app-card: #111512;
+      --app-text: #ffffff;
+      --app-green: #2e7d32;
+      --app-border: rgba(255,255,255,0.08);
+    }
+
+    body {
+      background: var(--app-bg);
+      color: var(--app-text);
+      overflow-x: hidden;
+    }
+
+    /* BENTO DASHBOARD GRID */
+    #dashboard-view {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 16px;
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .bento-card {
+      background: var(--app-card);
+      border: 1px solid var(--app-border);
+      border-radius: 24px;
+      padding: 24px 16px;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .bento-card:active {
+      transform: scale(0.96);
+    }
+
+    .bento-icon {
+      font-size: 32px;
+      background: rgba(27, 125, 59, 0.1);
+      width: 64px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 20px;
+    }
+
+    .bento-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--app-text);
+    }
+
+    /* ISOLATED TOOL VIEWS */
+    .tool-view {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: var(--app-bg);
+      z-index: 1000;
+      overflow-y: auto;
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      padding-bottom: 40px;
+    }
+
+    .tool-view.active {
+      transform: translateX(0);
+    }
+
+    .tool-header {
+      position: sticky;
+      top: 0;
+      background: var(--app-bg);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-bottom: 1px solid var(--app-border);
+      z-index: 10;
+    }
+
+    .back-btn {
+      background: transparent;
+      border: none;
+      font-size: 24px;
+      color: var(--app-text);
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .tool-header-title {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .tool-content {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+  </style>
 </head>
 <body>
 
 <div class="topbar">
   <div class="topbar-inner">
-    <div class="brand">
-      🌾 <b>AgroSense Tools</b>
-    </div>
+    <div class="brand">🌾 <b>AgroSense Dashboard</b></div>
     <div class="topbar-links">
-      <a href="index.html">Home</a>
-      <a href="notes.html">Notes</a>
-      <button id="themeToggle" class="theme-toggle" aria-label="Toggle Dark Mode">🌙</button>
+      <a href="index.html">Exit</a>
+      <button id="themeToggle" class="theme-toggle">🌙</button>
     </div>
   </div>
 </div>
 
-<div class="container">
-
-  <header>
-    <h1>🌾 Smart Dashboard</h1>
-    <p class="subtitle">
-      Protect farmer money and water with precision data.
-    </p>
-  </header>
-
-  <div class="form-card">
-    <h2>⚡ Quick Jump Menu</h2>
-    <p>Tap a tool to jump instantly.</p>
-
-    <div class="grid2">
-      <button class="btn secondary" onclick="jumpTo('riskTool')">🌱 Risk Predictor</button>
-      <button class="btn secondary" onclick="jumpTo('waterTool')">💧 Water Budget</button>
-      <button class="btn secondary" onclick="jumpTo('seedTool')">🌾 Seed + Varieties</button>
-      <button class="btn secondary" onclick="jumpTo('calendarTool')">📅 Crop Calendar</button>
-      <button class="btn secondary" onclick="jumpTo('rescueTool')">🚨 Rescue Mode</button>
-      <button class="btn secondary" onclick="jumpTo('fertTool')">🧪 Fertilizer Guide</button>
-      <button class="btn secondary" onclick="jumpTo('notesTool')">📝 Farmer Notes</button>
-      <button class="btn secondary" onclick="jumpTo('aiTool')">🤖 FarmCulture AI</button>
-    </div>
+<div id="dashboard-view">
+  
+  <div class="bento-card" onclick="openTool('riskTool')">
+    <div class="bento-icon">🌱</div>
+    <div class="bento-title">Risk Predictor</div>
   </div>
 
-  <div class="form-card" id="riskTool">
-    <h2>🌱 Crop Failure Risk Predictor</h2>
-    <p>Check risk before sowing to protect money and water.</p>
-
-    <label>Season</label>
-    <select id="season" onchange="showQuickAdvice()">
-      <option value="">Select Season</option>
-      <option value="monsoon">Monsoon (Kharif)</option>
-      <option value="winter">Winter (Rabi)</option>
-      <option value="summer">Summer</option>
-    </select>
-
-    <label>Crop</label>
-    <input id="cropSearch" type="text"
-      placeholder="Search crop (example: onion, wheat)..."
-      oninput="filterCrops()" />
-
-    <select id="crop" onchange="showQuickAdvice()" style="margin-top: 10px;">
-      <option value="">Select Crop</option>
-      <option value="rice">Rice</option>
-      <option value="wheat">Wheat</option>
-      <option value="cotton">Cotton</option>
-      <option value="sugarcane">Sugarcane</option>
-      <option value="soybean">Soybean</option>
-      <option value="maize">Maize</option>
-      <option value="bajra">Bajra</option>
-      <option value="jowar">Jowar</option>
-      <option value="ragi">Ragi</option>
-      <option value="gram">Chana (Gram)</option>
-      <option value="tur">Tur</option>
-      <option value="moong">Moong</option>
-      <option value="urad">Urad</option>
-      <option value="groundnut">Groundnut</option>
-      <option value="sunflower">Sunflower</option>
-      <option value="mustard">Mustard</option>
-      <option value="onion">Onion</option>
-      <option value="tomato">Tomato</option>
-      <option value="potato">Potato</option>
-      <option value="chilli">Chilli</option>
-      <option value="brinjal">Brinjal</option>
-      <option value="okra">Okra</option>
-      <option value="banana">Banana</option>
-      <option value="grapes">Grapes</option>
-      <option value="pomegranate">Pomegranate</option>
-    </select>
-
-    <label>Soil Type</label>
-    <select id="soil" onchange="showQuickAdvice()">
-      <option value="">Select Soil</option>
-      <option value="black">Black Soil</option>
-      <option value="red">Red Soil</option>
-      <option value="loamy">Loamy Soil</option>
-      <option value="sandy">Sandy Soil</option>
-      <option value="clay">Clay Soil</option>
-      <option value="mixed">Mixed / Local Soil</option>
-    </select>
-
-    <label>Water Source</label>
-    <select id="water" onchange="showQuickAdvice()">
-      <option value="">Select Water Source</option>
-      <option value="rain">Rainfed Only</option>
-      <option value="borewell">Borewell</option>
-      <option value="openwell">Open Well</option>
-      <option value="canal">Canal</option>
-      <option value="river">River</option>
-      <option value="farmpond">Farm Pond</option>
-      <option value="drip">Drip Irrigation</option>
-      <option value="sprinkler">Sprinkler Irrigation</option>
-      <option value="tank">Water Tank</option>
-    </select>
-
-    <button class="btn" onclick="analyzeRisk()">🚀 Analyze Risk</button>
-
-    <div class="result-box" id="riskResult">
-      Your risk analysis will appear here.
-    </div>
+  <div class="bento-card" onclick="openTool('waterTool')">
+    <div class="bento-icon">💧</div>
+    <div class="bento-title">Water Budget</div>
   </div>
 
-  <div class="form-card">
-    <h2>⚡ Quick Recommendation</h2>
-    <div class="result-box" id="quickAdvice">
-      Select season, crop, soil and water source to see quick advice.
-    </div>
+  <div class="bento-card" onclick="openTool('seedTool')">
+    <div class="bento-icon">🌾</div>
+    <div class="bento-title">Seed Matrix</div>
   </div>
 
-  <div class="form-card" id="waterTool">
-    <h2>💧 Water Budget + Water Risk</h2>
+  <div class="bento-card" onclick="openTool('calendarTool')">
+    <div class="bento-icon">📅</div>
+    <div class="bento-title">Crop Calendar</div>
+  </div>
 
-    <label>Crop</label>
+  <div class="bento-card" style="border-color: rgba(239, 68, 68, 0.3);" onclick="openTool('rescueTool')">
+    <div class="bento-icon" style="background: rgba(239, 68, 68, 0.1);">🚨</div>
+    <div class="bento-title">Rescue Mode</div>
+  </div>
+
+  <div class="bento-card" onclick="openTool('fertTool')">
+    <div class="bento-icon">🧪</div>
+    <div class="bento-title">Fertilizers</div>
+  </div>
+
+  <div class="bento-card" onclick="openTool('notesTool')">
+    <div class="bento-icon">📝</div>
+    <div class="bento-title">Secure Notes</div>
+  </div>
+
+  <div class="bento-card" style="background: var(--app-green); border: none;" onclick="openTool('aiTool')">
+    <div class="bento-icon" style="background: rgba(255,255,255,0.2);">🤖</div>
+    <div class="bento-title" style="color: white;">FarmCulture AI</div>
+  </div>
+
+</div>
+
+
+<div id="riskTool" class="tool-view">
+  <div class="tool-header">
+    <button class="back-btn" onclick="closeTool()">←</button>
+    <div class="tool-header-title">Crop Risk Predictor</div>
+  </div>
+  <div class="tool-content">
+    <div class="form-card">
+      <label>Season</label>
+      <select id="season" onchange="showQuickAdvice()">
+        <option value="">Select Season</option>
+        <option value="monsoon">Monsoon (Kharif)</option>
+        <option value="winter">Winter (Rabi)</option>
+        <option value="summer">Summer</option>
+      </select>
+
+      <label>Target Crop</label>
+      <input id="cropSearch" type="text" placeholder="Search crop..." oninput="filterCrops()" />
+      <select id="crop" onchange="showQuickAdvice()" style="margin-top: 8px;">
+        <option value="">Select Crop</option>
+        <option value="rice">Rice</option>
+        <option value="wheat">Wheat</option>
+        <option value="cotton">Cotton</option>
+        <option value="sugarcane">Sugarcane</option>
+        <option value="soybean">Soybean</option>
+        <option value="maize">Maize</option>
+        <option value="onion">Onion</option>
+        <option value="tomato">Tomato</option>
+        </select>
+
+      <label>Soil Composition</label>
+      <select id="soil" onchange="showQuickAdvice()">
+        <option value="">Select Soil</option>
+        <option value="black">Black Soil</option>
+        <option value="red">Red Soil</option>
+        <option value="loamy">Loamy Soil</option>
+      </select>
+
+      <label>Water Infrastructure</label>
+      <select id="water" onchange="showQuickAdvice()">
+        <option value="">Select Water Source</option>
+        <option value="rain">Rainfed Only</option>
+        <option value="borewell">Borewell</option>
+        <option value="drip">Drip Irrigation</option>
+      </select>
+
+      <button class="btn" onclick="analyzeRisk()">🚀 Execute Analysis</button>
+      <div class="result-box" id="riskResult">Awaiting data input...</div>
+    </div>
+    
+    <div class="form-card">
+      <h2>⚡ Quick Intelligence</h2>
+      <div class="result-box" id="quickAdvice">Select parameters above for instant guidance.</div>
+    </div>
+  </div>
+</div>
+
+<div id="waterTool" class="tool-view">
+  <div class="tool-header">
+    <button class="back-btn" onclick="closeTool()">←</button>
+    <div class="tool-header-title">Water Budget Allocation</div>
+  </div>
+  <div class="tool-content form-card">
+    <label>Crop Type</label>
     <select id="w_crop">
       <option value="">Select Crop</option>
       <option value="rice">Rice</option>
       <option value="wheat">Wheat</option>
       <option value="cotton">Cotton</option>
-      <option value="sugarcane">Sugarcane</option>
-      <option value="soybean">Soybean</option>
-      <option value="onion">Onion</option>
-      <option value="tomato">Tomato</option>
-      <option value="banana">Banana</option>
-      <option value="gram">Chana</option>
-      <option value="bajra">Bajra</option>
-      <option value="jowar">Jowar</option>
     </select>
 
-    <label>Land (Acres)</label>
-    <input id="w_acres" type="number" placeholder="Example: 1.5" />
+    <label>Acreage</label>
+    <input id="w_acres" type="number" placeholder="Enter land size in acres" />
 
     <label>Water Source</label>
     <select id="w_source">
       <option value="">Select Water</option>
       <option value="rain">Rainfed</option>
-      <option value="well">Well</option>
       <option value="borewell">Borewell</option>
-      <option value="canal">Canal</option>
       <option value="drip">Drip</option>
     </select>
 
-    <button class="btn" onclick="calcWater()">💧 Calculate Water Budget</button>
-
-    <div class="result-box" id="waterResult">
-      Water budget will appear here.
-    </div>
+    <button class="btn" onclick="calcWater()">💧 Calculate Capacity</button>
+    <div class="result-box" id="waterResult">System ready.</div>
   </div>
+</div>
 
-  <div class="form-card" id="seedTool">
-    <h2>🌾 Seed Rate + Seed Varieties</h2>
-
-    <label>Crop</label>
+<div id="seedTool" class="tool-view">
+  <div class="tool-header">
+    <button class="back-btn" onclick="closeTool()">←</button>
+    <div class="tool-header-title">Seed Optimization</div>
+  </div>
+  <div class="tool-content form-card">
+    <label>Crop Type</label>
     <select id="seed_crop">
       <option value="">Select Crop</option>
       <option value="rice">Rice</option>
       <option value="wheat">Wheat</option>
-      <option value="cotton">Cotton</option>
-      <option value="soybean">Soybean</option>
-      <option value="maize">Maize</option>
-      <option value="gram">Chana</option>
-      <option value="tur">Tur</option>
-      <option value="onion">Onion</option>
-      <option value="tomato">Tomato</option>
-      <option value="bajra">Bajra</option>
-      <option value="jowar">Jowar</option>
     </select>
 
-    <label>Land (Acres)</label>
-    <input id="seed_acres" type="number" placeholder="Example: 2" />
+    <label>Acreage</label>
+    <input id="seed_acres" type="number" placeholder="Enter land size in acres" />
 
-    <button class="btn" onclick="calcSeed()">🌱 Calculate Seed + Varieties</button>
-
-    <div class="result-box" id="seedResult">
-      Seed rate and varieties will appear here.
-    </div>
+    <button class="btn" onclick="calcSeed()">🌱 Generate Matrix</button>
+    <div class="result-box" id="seedResult">System ready.</div>
   </div>
+</div>
 
-  <div class="form-card" id="calendarTool">
-    <h2>📅 Crop Calendar (Month-wise)</h2>
-
+<div id="calendarTool" class="tool-view">
+  <div class="tool-header">
+    <button class="back-btn" onclick="closeTool()">←</button>
+    <div class="tool-header-title">Temporal Calendar</div>
+  </div>
+  <div class="tool-content form-card">
     <label>Select Crop</label>
     <select id="cal_crop">
       <option value="">Select Crop</option>
       <option value="rice">Rice</option>
       <option value="wheat">Wheat</option>
-      <option value="soybean">Soybean</option>
-      <option value="cotton">Cotton</option>
-      <option value="onion">Onion</option>
-      <option value="gram">Chana</option>
-      <option value="tur">Tur</option>
-      <option value="bajra">Bajra</option>
-      <option value="jowar">Jowar</option>
-      <option value="sugarcane">Sugarcane</option>
     </select>
 
-    <button class="btn" onclick="showCalendar()">📅 Show Calendar</button>
-
-    <div class="result-box" id="calendarResult">
-      Crop calendar will appear here.
-    </div>
+    <button class="btn" onclick="showCalendar()">📅 Map Timeline</button>
+    <div class="result-box" id="calendarResult">System ready.</div>
   </div>
+</div>
 
-  <div class="form-card" id="rescueTool">
-    <h2>🚨 Emergency Crop Rescue Mode</h2>
-
+<div id="rescueTool" class="tool-view">
+  <div class="tool-header">
+    <button class="back-btn" onclick="closeTool()">←</button>
+    <div class="tool-header-title">Emergency Rescue</div>
+  </div>
+  <div class="tool-content form-card">
     <div class="grid2">
-      <button class="btn secondary" onclick="rescue('yellow')">🍂 Leaves Yellow</button>
-      <button class="btn secondary" onclick="rescue('dry')">🔥 Plant Drying</button>
-      <button class="btn secondary" onclick="rescue('slow')">🐌 Slow Growth</button>
-      <button class="btn secondary" onclick="rescue('pest')">🐛 Pest Attack</button>
+      <button class="btn secondary" onclick="rescue('yellow')">🍂 Leaves Yellowing</button>
+      <button class="btn secondary" onclick="rescue('dry')">🔥 Rapid Drying</button>
+      <button class="btn secondary" onclick="rescue('slow')">🐌 Stunted Growth</button>
+      <button class="btn secondary" onclick="rescue('pest')">🐛 Pest Infestation</button>
     </div>
-
-    <div class="result-box" id="rescueResult">
-      Rescue steps will appear here.
-    </div>
+    <div class="result-box" id="rescueResult" style="border-color: #ef4444;">Select symptom for emergency protocols.</div>
   </div>
+</div>
 
-  <div class="form-card" id="fertTool">
-    <h2>🧪 Fertilizer Basic Guide (Safe)</h2>
-
+<div id="fertTool" class="tool-view">
+  <div class="tool-header">
+    <button class="back-btn" onclick="closeTool()">←</button>
+    <div class="tool-header-title">Chemical Protocols</div>
+  </div>
+  <div class="tool-content form-card">
     <label>Select Crop</label>
     <select id="f_crop">
       <option value="">Select Crop</option>
       <option value="rice">Rice</option>
       <option value="wheat">Wheat</option>
-      <option value="cotton">Cotton</option>
-      <option value="soybean">Soybean</option>
-      <option value="onion">Onion</option>
-      <option value="tomato">Tomato</option>
-      <option value="gram">Chana</option>
-      <option value="tur">Tur</option>
-      <option value="bajra">Bajra</option>
-      <option value="jowar">Jowar</option>
     </select>
 
-    <button class="btn" onclick="fertGuide()">🧪 Show Fertilizer Guide</button>
-
-    <div class="result-box" id="fertResult">
-      Fertilizer guide will appear here.
-    </div>
+    <button class="btn" onclick="fertGuide()">🧪 Extract Guide</button>
+    <div class="result-box" id="fertResult">System ready.</div>
   </div>
+</div>
 
-  <div class="form-card" id="notesTool">
-    <h2>📝 Farmer Notes (Saved on Phone)</h2>
-
-    <label>My Notes</label>
-    <textarea id="notesBox" style="width:100%; height:120px; padding:14px; border-radius:14px; border:1px solid var(--border); background: var(--input-bg); color: var(--text); font-family: inherit; resize: vertical; outline: none; transition: 0.3s;"></textarea>
-
-    <button class="btn" onclick="saveNotes()">💾 Save Notes</button>
-    <button class="btn secondary" onclick="clearNotes()">🗑 Clear Notes</button>
-
-    <div class="result-box" id="notesStatus">
-      Notes status will appear here.
-    </div>
+<div id="notesTool" class="tool-view">
+  <div class="tool-header">
+    <button class="back-btn" onclick="closeTool()">←</button>
+    <div class="tool-header-title">Secure Encrypted Notes</div>
   </div>
+  <div class="tool-content form-card">
+    <label>Local Storage Directory</label>
+    <textarea id="notesBox" style="width:100%; height:200px; padding:16px; border-radius:16px; border:1px solid var(--app-border); background: var(--input-bg); color: var(--app-text); font-family: inherit; resize: none; outline: none; transition: 0.3s;"></textarea>
 
-  <div class="form-card" id="aiTool">
-    <h2>🤖 FarmCulture AI Assistant</h2>
+    <button class="btn" onclick="saveNotes()">💾 Write to Disk</button>
+    <button class="btn secondary" onclick="clearNotes()" style="color: #ef4444; border-color: rgba(239, 68, 68, 0.2);">🗑 Format Data</button>
 
-    <button class="btn" onclick="openFarmCulture()">🤖 Open FarmCulture AI (Live)</button>
-
-    <div class="result-box">
-      ⚠️ AI gives guidance. Final decision depends on local conditions.
-    </div>
+    <div class="result-box" id="notesStatus">Vault initialized.</div>
   </div>
+</div>
 
+<div id="aiTool" class="tool-view">
+  <div class="tool-header">
+    <button class="back-btn" onclick="closeTool()">←</button>
+    <div class="tool-header-title">System Intelligence</div>
+  </div>
+  <div class="tool-content form-card">
+    <p style="text-align: center; color: var(--app-text); margin-bottom: 20px;">Activate neural processing unit for dynamic agricultural guidance.</p>
+    <button class="btn" onclick="openFarmCulture()" style="box-shadow: 0 10px 30px rgba(27,125,59,0.4);">🤖 Initialize FarmCulture AI</button>
+  </div>
 </div>
 
 <script>
+  // View Controller: Handles sliding screens
+  function openTool(toolId) {
+    const toolView = document.getElementById(toolId);
+    if(toolView) {
+      toolView.classList.add('active');
+      // Lock background scrolling
+      document.body.style.overflow = 'hidden'; 
+    }
+  }
+
+  function closeTool() {
+    const activeViews = document.querySelectorAll('.tool-view.active');
+    activeViews.forEach(view => view.classList.remove('active'));
+    // Unlock background scrolling
+    document.body.style.overflow = '';
+  }
+
+  // Theme Engine Controller
   const toggleBtn = document.getElementById('themeToggle');
   const currentTheme = localStorage.getItem('theme');
 
@@ -300,18 +400,20 @@
     toggleBtn.textContent = '☀️';
   }
 
-  toggleBtn.addEventListener('click', () => {
-    let theme = document.documentElement.getAttribute('data-theme');
-    if (theme === 'dark') {
-      document.documentElement.removeAttribute('data-theme');
-      localStorage.setItem('theme', 'light');
-      toggleBtn.textContent = '🌙';
-    } else {
-      document.documentElement.setAttribute('data-theme', 'dark');
-      localStorage.setItem('theme', 'dark');
-      toggleBtn.textContent = '☀️';
-    }
-  });
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      let theme = document.documentElement.getAttribute('data-theme');
+      if (theme === 'dark') {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+        toggleBtn.textContent = '🌙';
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+        toggleBtn.textContent = '☀️';
+      }
+    });
+  }
 </script>
 
 <script src="tools.js?v=1"></script>
