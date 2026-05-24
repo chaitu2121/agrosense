@@ -1,223 +1,148 @@
-/* AgroSense - Premium UI Matrix (Dual Theme) */
+/* =========================================
+   RICHARD MILLE CINEMATIC OVERRIDE
+========================================= */
 
-:root {
-  /* DAYLIGHT PREMIUM (Default) */
-  --bg: #F9FAFB;
-  --card: #ffffff;
-  --text: #111827;
-  --muted: #6B7280;
-  --primary: #1b7d3b;
-  --primary2: #0f5a2a;
-  --border: rgba(0, 0, 0, 0.08);
-  --shadow: 0 12px 30px rgba(0,0,0,0.04);
-  --radius: 20px;
-  --input-bg: #F3F4F6;
-  --result-bg: #F0FDF4;
-  --result-border: rgba(27, 125, 59, 0.15);
-  --topbar-bg: rgba(255, 255, 255, 0.85);
-  --body-grad: radial-gradient(circle at top, #eaffea 0%, var(--bg) 45%, var(--bg) 100%);
-}
-
-[data-theme="dark"] {
-  /* MIDNIGHT SOIL (Richard Mille Dark Mode) */
-  --bg: #050806;
-  --card: #111512;
-  --text: #ffffff;
-  --muted: #8b9a92;
-  --primary: #2e7d32;
-  --primary2: #1b5e20;
-  --border: rgba(255, 255, 255, 0.08);
-  --shadow: 0 16px 40px rgba(0,0,0,0.4);
-  --input-bg: #1a201b;
-  --result-bg: #0d1710;
-  --result-border: rgba(46, 125, 50, 0.3);
-  --topbar-bg: rgba(5, 8, 6, 0.85);
-  --body-grad: radial-gradient(circle at top, #0a140d 0%, var(--bg) 45%, var(--bg) 100%);
-}
-
-* { box-sizing: border-box; }
-
-/* Smooth Transition for Theme Swapping */
-body, .form-card, .topbar, input, select, .result-box, .btn {
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-body {
+body.rm-mode {
+  background-color: #030504;
+  color: #ffffff;
   margin: 0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  background: var(--body-grad);
-  background-color: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
+  overflow: hidden; /* Stops standard scrolling */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-h1, h2, h3 { letter-spacing: -0.3px; }
-a { text-decoration: none; }
-hr { border: none; border-top: 1px solid var(--border); }
-button, select, input { font-family: inherit; }
-
-.container {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 18px 14px 60px;
-  animation: fadeUp 0.45s ease;
+/* Minimal Top Nav */
+.rm-nav {
+  position: fixed;
+  top: 0; width: 100%;
+  padding: 20px 30px;
+  display: flex; justify-content: space-between;
+  z-index: 100;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  background: rgba(3, 5, 4, 0.8);
+  backdrop-filter: blur(10px);
 }
 
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
+.rm-brand {
+  font-size: 12px; letter-spacing: 4px; font-weight: 300;
 }
 
-header { text-align: center; margin-bottom: 18px; }
-header h1 { font-size: 28px; margin: 6px 0 6px; letter-spacing: -0.6px; }
-.subtitle { margin: 0; color: var(--muted); font-size: 14px; }
+.rm-back {
+  font-size: 10px; letter-spacing: 2px; color: #888; text-decoration: none;
+  transition: color 0.3s;
+}
+.rm-back:hover { color: #fff; }
 
-.form-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px;
-  margin-top: 16px;
-  box-shadow: var(--shadow);
+/* The Snap Scrolling Physics */
+.snap-container {
+  height: 100vh;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
 }
 
-.form-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 16px 40px rgba(0,0,0,0.08);
-}
-
-[data-theme="dark"] .form-card:hover {
-  box-shadow: 0 16px 40px rgba(0,0,0,0.6);
-}
-
-.form-card h2 { margin: 0 0 6px; font-size: 18px; }
-.form-card p { margin: 0 0 14px; color: var(--muted); font-size: 14px; line-height: 1.5; }
-
-label {
-  display: block;
-  margin: 12px 0 6px;
-  font-weight: 600;
-  font-size: 13px;
-  color: var(--text);
-}
-
-select, input {
-  width: 100%;
-  padding: 14px;
-  border-radius: 14px;
-  border: 1px solid var(--border);
-  background: var(--input-bg);
-  color: var(--text);
-  font-size: 15px;
-  outline: none;
-}
-
-select:focus, input:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgba(27, 125, 59, 0.12);
-}
-
-.btn {
-  width: 100%;
-  padding: 14px;
-  margin-top: 14px;
-  background: linear-gradient(180deg, var(--primary), var(--primary2));
-  color: white;
-  border: none;
-  border-radius: 16px;
-  font-size: 15px;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 10px 20px rgba(27,125,59,0.22);
-}
-
-.btn:hover { filter: brightness(1.05); transform: translateY(-1px); }
-.btn:active { transform: scale(0.98); }
-
-.btn.secondary {
-  background: transparent;
-  color: var(--text);
-  border: 1px solid var(--border);
-  box-shadow: none;
-}
-
-.result-box {
-  margin-top: 14px;
-  padding: 16px;
-  border-radius: 16px;
-  background: var(--result-bg);
-  border: 1px solid var(--result-border);
-  color: var(--text);
-  line-height: 1.6;
-  font-size: 14px;
-}
-
-.pill {
-  display: inline-block;
-  padding: 6px 12px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 700;
-  margin: 6px 6px 0 0;
-  border: 1px solid var(--border);
-}
-
-.pill.good { background: rgba(34, 197, 94, 0.15); color: var(--primary); }
-.pill.mid { background: rgba(234, 179, 8, 0.15); color: #ca8a04; }
-.pill.bad { background: rgba(239, 68, 68, 0.15); color: #dc2626; }
-
-.grid2 { display: grid; grid-template-columns: 1fr; gap: 12px; }
-
-/* TOPBAR */
-.topbar {
-  position: sticky;
-  top: 0;
-  z-index: 999;
-  background: var(--topbar-bg);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--border);
-}
-
-.topbar-inner {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 12px 14px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.brand { font-size: 15px; font-weight: bold; display: flex; gap: 8px; align-items: center; }
-
-.topbar-links { display: flex; gap: 8px; align-items: center; }
-.topbar-links a { font-size: 13px; font-weight: 700; color: var(--text); padding: 8px 10px; border-radius: 12px; }
-.topbar-links a:hover { background: rgba(27,125,59,0.1); color: var(--primary); }
-
-/* Theme Toggle Button */
-.theme-toggle {
-  background: var(--input-bg);
-  border: 1px solid var(--border);
-  color: var(--text);
-  border-radius: 50%;
-  width: 34px;
-  height: 34px;
+.snap-slide {
+  height: 100vh;
+  width: 100vw;
+  scroll-snap-align: start;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+
+/* Content Layout Grid */
+.slide-content {
+  width: 90%;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+/* Massive Typography */
+.massive-title {
+  font-size: 8vw;
+  font-weight: 900;
+  line-height: 0.85;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: -2px;
+}
+
+.outline-text {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+}
+
+/* Transparent, High-End Forms */
+.rm-form {
+  background: transparent;
+  display: flex; flex-direction: column; gap: 20px;
+}
+
+.input-group {
+  position: relative;
+}
+
+.rm-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  font-size: 16px;
+  padding: 15px 0;
+  outline: none;
+  border-radius: 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: border-color 0.3s;
+  appearance: none;
+}
+
+.rm-input:focus {
+  border-bottom: 1px solid #2e7d32;
+}
+
+.rm-input option {
+  background: #000; color: #fff;
+}
+
+/* Instrument Buttons */
+.rm-btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.4);
+  color: #fff;
+  padding: 18px 20px;
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
   cursor: pointer;
-  margin-left: 8px;
+  transition: all 0.3s ease;
+  margin-top: 10px;
 }
 
-.theme-toggle:hover {
-  background: var(--border);
+.rm-btn:hover {
+  background: #fff;
+  color: #000;
 }
 
-@media (min-width: 640px) {
-  header h1 { font-size: 34px; }
-  .grid2 { grid-template-columns: 1fr 1fr; }
+/* Terminal Style Output */
+.rm-result {
+  margin-top: 20px;
+  font-family: monospace;
+  color: #2e7d32;
+  font-size: 14px;
+  letter-spacing: 1px;
 }
 
-@media (max-width: 600px) {
-  .btn { width: 100% !important; display: block !important; margin: 10px 0 !important; text-align: center !important; }
+/* Mobile Fallback */
+@media (max-width: 768px) {
+  .slide-content {
+    grid-template-columns: 1fr;
+    text-align: left;
+    gap: 30px;
+  }
+  .massive-title { font-size: 16vw; }
 }
