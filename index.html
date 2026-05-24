@@ -3,217 +3,128 @@
 <head>
   <meta charset="UTF-8">
   <title>AgroSense – Smart Farming Decision System</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
   <link rel="stylesheet" href="style.css?v=3">
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-
-  <style>
-    /* Lock body scroll and force black background during intro */
-    body.intro-active {
-      overflow: hidden !important;
-      background-color: #000000 !important; 
-    }
-
-    /* Hide main content initially so it doesn't flash */
-    #main-wrapper {
-      opacity: 0;
-      visibility: hidden;
-    }
-
-    /* The Richard Mille Intro Overlay */
-    #luxury-intro {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: #000000;
-      z-index: 99999;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-
-    /* Cinematic Typography */
-    .intro-brand {
-      font-size: 8vw;
-      font-weight: 200;
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-      color: #ffffff;
-      opacity: 0;
-      transform: scale(0.95);
-      margin-left: 0.4em; /* Optical centering */
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    }
-
-    .intro-line {
-      width: 0px;
-      height: 1px;
-      background: rgba(255, 255, 255, 0.4);
-      margin-top: 2vh;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body class="intro-active">
+<body>
 
-<div id="luxury-intro">
-  <div class="intro-brand">Agrosense</div>
-  <div class="intro-line"></div>
-</div>
+<!-- TOP NAVBAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      🌾 <b>AgroSense</b>
+    </div>
 
-<div id="main-wrapper">
-
-  <div class="topbar">
-    <div class="topbar-inner">
-      <div class="brand">
-        🌾 <b>AgroSense</b>
-      </div>
-
-      <div class="topbar-links">
-        <a href="tools.html">Tools</a>
-        <a href="notes.html">Notes</a>
-        <a href="https://huggingface.co/spaces/Chaitu2121/farmculture-ai" target="_blank">AI</a>
-      </div>
+    <div class="topbar-links">
+      <a href="tools.html">Tools</a>
+      <a href="notes.html">Notes</a>
+      <a href="https://huggingface.co/spaces/Chaitu2121/farmculture-ai" target="_blank">AI</a>
     </div>
   </div>
+</div>
 
-  <div class="container">
+<div class="container">
 
-    <header class="hero">
-      <h1 class="hero-title">AgroSense</h1>
-      <p class="hero-subtitle">
-        Think Before You Sow. Protect money 💰, water 💧, and crops 🌱.
-      </p>
+  <!-- HERO -->
+  <header class="hero">
+    <h1 class="hero-title">AgroSense</h1>
+    <p class="hero-subtitle">
+      Think Before You Sow. Protect money 💰, water 💧, and crops 🌱.
+    </p>
 
-      <div class="grid2 hero-actions">
-        <a href="tools.html" class="btn">🚀 Open Smart Tools</a>
-        <a href="https://huggingface.co/spaces/Chaitu2121/farmculture-ai" class="btn secondary" target="_blank">
-          🤖 FarmCulture AI
-        </a>
-      </div>
-
-      <div class="hero-badges">
-        <span class="pill good">Mobile First</span>
-        <span class="pill good">Farmer Friendly</span>
-        <span class="pill good">Made for Maharashtra</span>
-      </div>
-    </header>
-
-    <div class="form-card">
-      <h2>✨ What AgroSense Can Do</h2>
-      <p>
-        Premium smart farming tools — built for real farmers, real problems.
-      </p>
-
-      <div class="grid2">
-        <div class="result-box">
-          <b>🌱 Crop Risk</b><br>
-          Check failure risk before sowing.
-        </div>
-        <div class="result-box">
-          <b>💧 Water Budget</b><br>
-          Know if your crop is safe for your water source.
-        </div>
-        <div class="result-box">
-          <b>🌾 Seed Calculator</b><br>
-          Correct seed rate + variety suggestions.
-        </div>
-        <div class="result-box">
-          <b>📅 Crop Calendar</b><br>
-          Month-wise sowing + harvest guidance.
-        </div>
-        <div class="result-box">
-          <b>🚨 Emergency Rescue</b><br>
-          Quick steps when crop is in danger.
-        </div>
-        <div class="result-box">
-          <b>📝 Farmer Notes</b><br>
-          Save important farm notes on phone.
-        </div>
-      </div>
-
-      <a href="tools.html" class="btn">🌱 Open Smart Tools</a>
+    <div class="grid2 hero-actions">
+      <a href="tools.html" class="btn">🚀 Open Smart Tools</a>
+      <a href="https://huggingface.co/spaces/Chaitu2121/farmculture-ai" class="btn secondary" target="_blank">
+        🤖 FarmCulture AI
+      </a>
     </div>
 
-    <div class="form-card">
-      <h2>🛡 Why This Helps Farmers</h2>
-      <p>
-        Most crop loss happens because of wrong crop choice, wrong season, water shortage, and wrong timing.
-        AgroSense helps farmers take safer decisions before spending money.
-      </p>
+    <div class="hero-badges">
+      <span class="pill good">Mobile First</span>
+      <span class="pill good">Farmer Friendly</span>
+      <span class="pill good">Made for Maharashtra</span>
+    </div>
+  </header>
+
+  <!-- FEATURES -->
+  <div class="form-card">
+    <h2>✨ What AgroSense Can Do</h2>
+    <p>
+      Premium smart farming tools — built for real farmers, real problems.
+    </p>
+
+    <div class="grid2">
+
       <div class="result-box">
-        <b>Goal:</b> Reduce crop failure risk + prevent fertilizer waste + save water.
+        <b>🌱 Crop Risk</b><br>
+        Check failure risk before sowing.
       </div>
-    </div>
 
-    <div class="form-card">
-      <h2>⚡ Quick Links</h2>
-      <p>Open directly without searching.</p>
-
-      <div class="grid2">
-        <a href="tools.html" class="btn">🌱 Smart Tools</a>
-        <a href="notes.html" class="btn secondary">📒 Farmer Notes</a>
+      <div class="result-box">
+        <b>💧 Water Budget</b><br>
+        Know if your crop is safe for your water source.
       </div>
+
+      <div class="result-box">
+        <b>🌾 Seed Calculator</b><br>
+        Correct seed rate + variety suggestions.
+      </div>
+
+      <div class="result-box">
+        <b>📅 Crop Calendar</b><br>
+        Month-wise sowing + harvest guidance.
+      </div>
+
+      <div class="result-box">
+        <b>🚨 Emergency Rescue</b><br>
+        Quick steps when crop is in danger.
+      </div>
+
+      <div class="result-box">
+        <b>📝 Farmer Notes</b><br>
+        Save important farm notes on phone.
+      </div>
+
     </div>
 
-    <div class="form-card footer-card">
-      <p>
-        Built for Farmers • Simple • Free • Future Ready
-      </p>
-      <p class="muted">
-        Made by Chaitanya (AgroSense Project)
-      </p>
-    </div>
-
+    <a href="tools.html" class="btn">🌱 Open Smart Tools</a>
   </div>
+
+  <!-- WHY TRUST -->
+  <div class="form-card">
+    <h2>🛡 Why This Helps Farmers</h2>
+    <p>
+      Most crop loss happens because of wrong crop choice, wrong season, water shortage, and wrong timing.
+      AgroSense helps farmers take safer decisions before spending money.
+    </p>
+
+    <div class="result-box">
+      <b>Goal:</b> Reduce crop failure risk + prevent fertilizer waste + save water.
+    </div>
+  </div>
+
+  <!-- QUICK LINKS -->
+  <div class="form-card">
+    <h2>⚡ Quick Links</h2>
+    <p>Open directly without searching.</p>
+
+    <div class="grid2">
+      <a href="tools.html" class="btn">🌱 Smart Tools</a>
+      <a href="notes.html" class="btn secondary">📒 Farmer Notes</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="form-card footer-card">
+    <p>
+      Built for Farmers • Simple • Free • Future Ready
+    </p>
+    <p class="muted">
+      Made by Chaitanya (AgroSense Project)
+    </p>
+  </div>
+
 </div>
-
-<script>
-  // Initialize the GSAP Timeline
-  const tl = gsap.timeline();
-
-  tl.to(".intro-brand", { 
-      opacity: 1, 
-      scale: 1.05, 
-      duration: 3.5, 
-      ease: "power2.out" 
-    })
-    .to(".intro-line", { 
-      width: "15vw", 
-      duration: 1.5, 
-      ease: "power2.inOut" 
-    }, "-=2") // Line draws while text is still scaling
-    .to("#luxury-intro", { 
-      opacity: 0, 
-      duration: 1.5, 
-      ease: "power2.inOut", 
-      delay: 0.8 
-    })
-    .set("#luxury-intro", { 
-      display: "none" 
-    }) // Remove intro from DOM completely
-    .call(() => {
-      // Remove the intro lock, reverting background back to your style.css
-      document.body.classList.remove("intro-active");
-    })
-    .to("#main-wrapper", { 
-      autoAlpha: 1, 
-      duration: 1.2, 
-      ease: "power3.out" 
-    })
-    // Extra Premium Polish: Make your cards slide up smoothly when the site appears
-    .from(".hero, .form-card", {
-      y: 30,
-      opacity: 0,
-      duration: 1,
-      stagger: 0.15,
-      ease: "power3.out"
-    }, "-=0.8");
-</script>
 
 </body>
-</html>
+  </html>
