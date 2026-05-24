@@ -3,300 +3,439 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AgroSense – Smart Agriculture Tools</title>
+  <title>AgroSense AI — Smart Intelligence Tools</title>
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="style.css?v=1" />
+  <link rel="stylesheet" href="style.css?v=20" />
 </head>
 <body>
 
-<div class="container">
+<!-- NAVBAR -->
+<header class="topbar">
+  <div class="topbar-inner">
 
-  <header>
-    <h1>🌾 AgroSense Tools</h1>
-    <p class="subtitle">
-      Smart farming tools + AI assistant to protect farmer money and water
+    <a class="brand" href="index.html">
+      <span class="brand-mark">◉</span>
+      <span><strong>AgroSense</strong> <span class="brand-small">AI</span></span>
+    </a>
+
+    <nav class="topbar-links">
+      <a href="index.html">Home</a>
+      <a href="#riskTool">Risk</a>
+      <a href="#waterTool">Water</a>
+      <a href="#farmculture">AI</a>
+    </nav>
+
+  </div>
+</header>
+
+<div class="tools-wrapper">
+
+  <!-- HERO -->
+  <section class="form-card">
+
+    <h2>AgroSense Intelligence Tools</h2>
+
+    <p>
+      Strategic farming intelligence designed to help protect capital,
+      water, crop stability, and long-term farming sustainability.
     </p>
-  </header>
-
-  <!-- TOOL NAV -->
-  <div class="form-card">
-    <h2 style="text-align:center;">⚡ Quick Tools Menu</h2>
-    <p style="text-align:center;color:#555;">Tap to jump instantly.</p>
 
     <div class="grid2">
-      <button class="btn secondary" onclick="jumpTo('riskTool')">🌱 Risk Predictor</button>
-      <button class="btn secondary" onclick="jumpTo('waterTool')">💧 Water Budget</button>
-      <button class="btn secondary" onclick="jumpTo('seedTool')">🌾 Seed + Varieties</button>
-      <button class="btn secondary" onclick="jumpTo('calendarTool')">📅 Crop Calendar</button>
-      <button class="btn secondary" onclick="jumpTo('rescueTool')">🚨 Rescue Mode</button>
-      <button class="btn secondary" onclick="jumpTo('fertTool')">🧪 Fertilizer Guide</button>
-      <button class="btn secondary" onclick="jumpTo('notesTool')">📝 Farmer Notes</button>
-      <button class="btn secondary" onclick="jumpTo('aiTool')">🤖 FarmCulture AI</button>
-    </div>
-  </div>
 
-  <!-- 1) RISK TOOL -->
-  <div class="form-card" id="riskTool">
-    <h2 style="text-align:center;">🌱 Crop Failure Risk Predictor</h2>
-    <p style="text-align:center;color:#555;">
-      Check risk before sowing to protect money and water.
+      <button class="btn secondary" onclick="jumpTo('riskTool')">
+        🌱 Risk Predictor
+      </button>
+
+      <button class="btn secondary" onclick="jumpTo('waterTool')">
+        💧 Water Budget
+      </button>
+
+      <button class="btn secondary" onclick="jumpTo('seedTool')">
+        🌾 Seed + Varieties
+      </button>
+
+      <button class="btn secondary" onclick="jumpTo('calendarTool')">
+        📅 Crop Calendar
+      </button>
+
+      <button class="btn secondary" onclick="jumpTo('rescueTool')">
+        🚨 Rescue Mode
+      </button>
+
+      <button class="btn secondary" onclick="jumpTo('fertTool')">
+        🧪 Fertilizer Guide
+      </button>
+
+      <button class="btn secondary" onclick="jumpTo('notesTool')">
+        📝 Farmer Notes
+      </button>
+
+      <button class="btn secondary" onclick="jumpTo('farmculture')">
+        🤖 FarmCulture AI
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- RISK -->
+  <section class="form-card" id="riskTool">
+
+    <h2>🌱 Crop Failure Risk Predictor</h2>
+
+    <p>
+      Analyze crop suitability before investing money and water.
     </p>
 
-    <label>Season</label>
-    <select id="season" onchange="showQuickAdvice()">
-      <option value="">Select Season</option>
-      <option value="monsoon">Monsoon (Kharif)</option>
-      <option value="winter">Winter (Rabi)</option>
-      <option value="summer">Summer</option>
-    </select>
+    <div class="form-grid">
 
-    <label>Crop</label>
-    <input id="cropSearch" type="text"
-      placeholder="Search crop (example: onion, wheat, cotton)"
-      oninput="filterCrops()" />
+      <div class="form-group">
+        <label>Season</label>
 
-    <select id="crop" onchange="showQuickAdvice()">
-      <option value="">Select Crop</option>
-      <option value="rice">Rice</option>
-      <option value="wheat">Wheat</option>
-      <option value="cotton">Cotton</option>
-      <option value="sugarcane">Sugarcane</option>
-      <option value="soybean">Soybean</option>
-      <option value="maize">Maize</option>
-      <option value="bajra">Bajra</option>
-      <option value="jowar">Jowar</option>
-      <option value="ragi">Ragi</option>
-      <option value="gram">Chana (Gram)</option>
-      <option value="tur">Tur</option>
-      <option value="moong">Moong</option>
-      <option value="urad">Urad</option>
-      <option value="groundnut">Groundnut</option>
-      <option value="sunflower">Sunflower</option>
-      <option value="mustard">Mustard</option>
-      <option value="onion">Onion</option>
-      <option value="tomato">Tomato</option>
-      <option value="potato">Potato</option>
-      <option value="chilli">Chilli</option>
-      <option value="brinjal">Brinjal</option>
-      <option value="okra">Okra</option>
-      <option value="banana">Banana</option>
-      <option value="grapes">Grapes</option>
-      <option value="pomegranate">Pomegranate</option>
-    </select>
+        <select id="season">
+          <option value="">Select Season</option>
+          <option value="monsoon">Monsoon</option>
+          <option value="winter">Winter</option>
+          <option value="summer">Summer</option>
+        </select>
+      </div>
 
-    <label>Soil Type</label>
-    <select id="soil" onchange="showQuickAdvice()">
-      <option value="">Select Soil</option>
-      <option value="black">Black Soil</option>
-      <option value="red">Red Soil</option>
-      <option value="loamy">Loamy Soil</option>
-      <option value="sandy">Sandy Soil</option>
-      <option value="clay">Clay Soil</option>
-      <option value="mixed">Mixed / Local Soil</option>
-    </select>
+      <div class="form-group">
+        <label>Crop</label>
 
-    <label>Water Source</label>
-    <select id="water" onchange="showQuickAdvice()">
-      <option value="">Select Water Source</option>
-      <option value="rain">Rainfed Only</option>
-      <option value="borewell">Borewell</option>
-      <option value="openwell">Open Well</option>
-      <option value="canal">Canal</option>
-      <option value="river">River</option>
-      <option value="farmpond">Farm Pond</option>
-      <option value="drip">Drip Irrigation</option>
-      <option value="sprinkler">Sprinkler Irrigation</option>
-      <option value="tank">Water Tank</option>
-    </select>
+        <select id="crop">
+          <option value="">Select Crop</option>
+          <option value="rice">Rice</option>
+          <option value="wheat">Wheat</option>
+          <option value="cotton">Cotton</option>
+          <option value="sugarcane">Sugarcane</option>
+          <option value="soybean">Soybean</option>
+          <option value="maize">Maize</option>
+          <option value="bajra">Bajra</option>
+          <option value="jowar">Jowar</option>
+          <option value="onion">Onion</option>
+        </select>
+      </div>
 
-    <button class="btn" onclick="analyzeRisk()">🚀 Analyze Risk</button>
+      <div class="form-group">
+        <label>Soil Type</label>
 
-    <div class="result-box" id="riskResult">
-      Your risk analysis will appear here.
+        <select id="soil">
+          <option value="">Select Soil</option>
+          <option value="black">Black Soil</option>
+          <option value="loamy">Loamy Soil</option>
+          <option value="sandy">Sandy Soil</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Water Source</label>
+
+        <select id="water">
+          <option value="">Select Water Source</option>
+          <option value="rain">Rainfed</option>
+          <option value="borewell">Borewell</option>
+          <option value="canal">Canal</option>
+          <option value="drip">Drip Irrigation</option>
+        </select>
+      </div>
+
     </div>
-  </div>
 
-  <!-- QUICK RECOMMENDATION -->
-  <div class="form-card">
-    <h2 style="text-align:center;">⚡ Quick Recommendation</h2>
+    <button class="btn" onclick="checkRisk()">
+      🚀 Analyze Risk
+    </button>
+
+    <div class="result-box" id="result">
+      Your strategic risk analysis will appear here.
+    </div>
+
+  </section>
+
+  <!-- QUICK -->
+  <section class="form-card">
+
+    <h2>⚡ Quick Recommendation</h2>
+
+    <p>
+      Smart farming guidance based on current conditions.
+    </p>
+
     <div class="result-box" id="quickAdvice">
-      Select season, crop, soil and water source to see quick advice.
+      Select season, crop, soil, and water source to receive guidance.
     </div>
-  </div>
 
-  <!-- 2) WATER TOOL -->
-  <div class="form-card" id="waterTool">
-    <h2 style="text-align:center;">💧 Water Budget + Water Risk</h2>
+  </section>
 
-    <label>Crop</label>
-    <select id="w_crop">
-      <option value="">Select Crop</option>
-      <option value="rice">Rice</option>
-      <option value="wheat">Wheat</option>
-      <option value="cotton">Cotton</option>
-      <option value="sugarcane">Sugarcane</option>
-      <option value="soybean">Soybean</option>
-      <option value="onion">Onion</option>
-      <option value="tomato">Tomato</option>
-      <option value="banana">Banana</option>
-      <option value="gram">Chana</option>
-      <option value="bajra">Bajra</option>
-      <option value="jowar">Jowar</option>
-    </select>
+  <!-- WATER -->
+  <section class="form-card" id="waterTool">
 
-    <label>Land (Acres)</label>
-    <input id="w_acres" type="number" placeholder="Example: 1.5" />
+    <h2>💧 Water Budget + Water Risk</h2>
 
-    <label>Water Source</label>
-    <select id="w_source">
-      <option value="">Select Water</option>
-      <option value="rain">Rainfed</option>
-      <option value="well">Well</option>
-      <option value="borewell">Borewell</option>
-      <option value="canal">Canal</option>
-      <option value="drip">Drip</option>
-    </select>
+    <p>
+      Evaluate whether your water source can support your crop safely.
+    </p>
 
-    <button class="btn" onclick="calcWater()">💧 Calculate Water Budget</button>
+    <div class="form-grid">
+
+      <div class="form-group">
+        <label>Crop</label>
+
+        <select id="w_crop">
+          <option value="">Select Crop</option>
+          <option value="rice">Rice</option>
+          <option value="wheat">Wheat</option>
+          <option value="cotton">Cotton</option>
+          <option value="soybean">Soybean</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Land (Acres)</label>
+
+        <input
+          id="w_acres"
+          type="number"
+          placeholder="Example: 2"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Water Source</label>
+
+        <select id="w_source">
+          <option value="">Select Water</option>
+          <option value="rain">Rainfed</option>
+          <option value="well">Well</option>
+          <option value="borewell">Borewell</option>
+          <option value="canal">Canal</option>
+        </select>
+      </div>
+
+    </div>
+
+    <button class="btn" onclick="calcWater()">
+      💧 Calculate Water Budget
+    </button>
 
     <div class="result-box" id="waterResult">
-      Water budget will appear here.
+      Water analysis will appear here.
     </div>
-  </div>
 
-  <!-- 3) SEED TOOL -->
-  <div class="form-card" id="seedTool">
-    <h2 style="text-align:center;">🌾 Seed Rate + Seed Varieties</h2>
+  </section>
 
-    <label>Crop</label>
-    <select id="seed_crop">
-      <option value="">Select Crop</option>
-      <option value="rice">Rice</option>
-      <option value="wheat">Wheat</option>
-      <option value="cotton">Cotton</option>
-      <option value="soybean">Soybean</option>
-      <option value="maize">Maize</option>
-      <option value="gram">Chana</option>
-      <option value="tur">Tur</option>
-      <option value="onion">Onion</option>
-      <option value="tomato">Tomato</option>
-      <option value="bajra">Bajra</option>
-      <option value="jowar">Jowar</option>
-    </select>
+  <!-- SEED -->
+  <section class="form-card" id="seedTool">
 
-    <label>Land (Acres)</label>
-    <input id="seed_acres" type="number" placeholder="Example: 2" />
+    <h2>🌾 Seed + Variety Intelligence</h2>
 
-    <button class="btn" onclick="calcSeed()">🌱 Calculate Seed + Varieties</button>
+    <p>
+      Estimate seed requirement and variety suggestions.
+    </p>
+
+    <div class="form-grid">
+
+      <div class="form-group">
+        <label>Crop</label>
+
+        <select id="seed_crop">
+          <option value="">Select Crop</option>
+          <option value="rice">Rice</option>
+          <option value="wheat">Wheat</option>
+          <option value="soybean">Soybean</option>
+          <option value="maize">Maize</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Land (Acres)</label>
+
+        <input
+          id="seed_acres"
+          type="number"
+          placeholder="Example: 3"
+        />
+      </div>
+
+    </div>
+
+    <button class="btn" onclick="calcSeed()">
+      🌱 Calculate Seed Logic
+    </button>
 
     <div class="result-box" id="seedResult">
-      Seed rate and varieties will appear here.
+      Seed analysis will appear here.
     </div>
-  </div>
 
-  <!-- 4) CROP CALENDAR -->
-  <div class="form-card" id="calendarTool">
-    <h2 style="text-align:center;">📅 Crop Calendar (Month-wise)</h2>
+  </section>
 
-    <label>Select Crop</label>
-    <select id="cal_crop">
-      <option value="">Select Crop</option>
-      <option value="rice">Rice</option>
-      <option value="wheat">Wheat</option>
-      <option value="soybean">Soybean</option>
-      <option value="cotton">Cotton</option>
-      <option value="onion">Onion</option>
-      <option value="gram">Chana</option>
-      <option value="tur">Tur</option>
-      <option value="bajra">Bajra</option>
-      <option value="jowar">Jowar</option>
-      <option value="sugarcane">Sugarcane</option>
-    </select>
+  <!-- CALENDAR -->
+  <section class="form-card" id="calendarTool">
 
-    <button class="btn" onclick="showCalendar()">📅 Show Calendar</button>
+    <h2>📅 Crop Calendar</h2>
 
-    <div class="result-box" id="calendarResult">
+    <p>
+      Month-wise crop timing guidance.
+    </p>
+
+    <div class="form-grid">
+
+      <div class="form-group">
+        <label>Select Crop</label>
+
+        <select id="cal_crop">
+          <option value="">Select Crop</option>
+          <option value="rice">Rice</option>
+          <option value="wheat">Wheat</option>
+          <option value="cotton">Cotton</option>
+        </select>
+      </div>
+
+    </div>
+
+    <button class="btn">
+      📅 Show Calendar
+    </button>
+
+    <div class="result-box">
       Crop calendar will appear here.
     </div>
-  </div>
 
-  <!-- 5) RESCUE MODE -->
-  <div class="form-card" id="rescueTool">
-    <h2 style="text-align:center;">🚨 Emergency Crop Rescue Mode</h2>
+  </section>
+
+  <!-- RESCUE -->
+  <section class="form-card" id="rescueTool">
+
+    <h2>🚨 Emergency Rescue Mode</h2>
+
+    <p>
+      Quick emergency guidance for visible crop stress.
+    </p>
 
     <div class="grid2">
-      <button class="btn secondary" onclick="rescue('yellow')">🍂 Leaves Yellow</button>
-      <button class="btn secondary" onclick="rescue('dry')">🔥 Plant Drying</button>
-      <button class="btn secondary" onclick="rescue('slow')">🐌 Slow Growth</button>
-      <button class="btn secondary" onclick="rescue('pest')">🐛 Pest Attack</button>
+
+      <button class="btn secondary">
+        🍂 Leaves Yellow
+      </button>
+
+      <button class="btn secondary">
+        🔥 Plant Drying
+      </button>
+
+      <button class="btn secondary">
+        🐌 Slow Growth
+      </button>
+
+      <button class="btn secondary">
+        🐛 Pest Attack
+      </button>
+
     </div>
 
-    <div class="result-box" id="rescueResult">
-      Rescue steps will appear here.
+    <div class="result-box">
+      Rescue intelligence will appear here.
     </div>
-  </div>
 
-  <!-- 6) FERTILIZER GUIDE -->
-  <div class="form-card" id="fertTool">
-    <h2 style="text-align:center;">🧪 Fertilizer Basic Guide (Safe)</h2>
+  </section>
 
-    <label>Select Crop</label>
-    <select id="f_crop">
-      <option value="">Select Crop</option>
-      <option value="rice">Rice</option>
-      <option value="wheat">Wheat</option>
-      <option value="cotton">Cotton</option>
-      <option value="soybean">Soybean</option>
-      <option value="onion">Onion</option>
-      <option value="tomato">Tomato</option>
-      <option value="gram">Chana</option>
-      <option value="tur">Tur</option>
-      <option value="bajra">Bajra</option>
-      <option value="jowar">Jowar</option>
-    </select>
+  <!-- FERT -->
+  <section class="form-card" id="fertTool">
 
-    <button class="btn" onclick="fertGuide()">🧪 Show Fertilizer Guide</button>
+    <h2>🧪 Fertilizer Guide</h2>
 
-    <div class="result-box" id="fertResult">
-      Fertilizer guide will appear here.
+    <p>
+      Simple fertilizer guidance with safer usage direction.
+    </p>
+
+    <div class="form-grid">
+
+      <div class="form-group">
+        <label>Select Crop</label>
+
+        <select id="f_crop">
+          <option value="">Select Crop</option>
+          <option value="rice">Rice</option>
+          <option value="wheat">Wheat</option>
+          <option value="soybean">Soybean</option>
+        </select>
+      </div>
+
     </div>
-  </div>
 
-  <!-- 7) NOTES -->
-  <div class="form-card" id="notesTool">
-    <h2 style="text-align:center;">📝 Farmer Notes (Saved on Phone)</h2>
+    <button class="btn">
+      🧪 Show Fertilizer Guide
+    </button>
 
-    <label>My Notes</label>
-    <textarea id="notesBox"
-      style="width:100%; height:120px; padding:12px; border-radius:14px; border:1px solid rgba(0,0,0,0.12);"></textarea>
+    <div class="result-box">
+      Fertilizer intelligence will appear here.
+    </div>
 
-    <button class="btn" onclick="saveNotes()">💾 Save Notes</button>
-    <button class="btn secondary" onclick="clearNotes()">🗑 Clear Notes</button>
+  </section>
+
+  <!-- NOTES -->
+  <section class="form-card" id="notesTool">
+
+    <h2>📝 Farmer Notes</h2>
+
+    <p>
+      Save important farm notes locally on your device.
+    </p>
+
+    <div class="form-group">
+
+      <label>Notes</label>
+
+      <textarea
+        id="notesBox"
+        placeholder="Write your farming notes here..."
+      ></textarea>
+
+    </div>
+
+    <div class="grid2">
+
+      <button class="btn" onclick="saveNotes()">
+        💾 Save Notes
+      </button>
+
+      <button class="btn secondary" onclick="clearNotes()">
+        🗑 Clear Notes
+      </button>
+
+    </div>
 
     <div class="result-box" id="notesStatus">
       Notes status will appear here.
     </div>
-  </div>
 
-  <!-- 8) AI -->
-  <div class="form-card" id="aiTool">
-    <h2 style="text-align:center;">🤖 FarmCulture AI Assistant</h2>
+  </section>
 
-    <button class="btn" onclick="openFarmCulture()">🤖 Open FarmCulture AI (Live)</button>
+  <!-- AI -->
+  <section class="form-card" id="farmculture">
+
+    <h2>🤖 FarmCulture AI</h2>
+
+    <p>
+      Dedicated integrated AI assistant for agricultural guidance and strategic support.
+    </p>
+
+    <a
+      href="https://huggingface.co/spaces/Chaitu2121/farmculture-ai"
+      target="_blank"
+      class="btn"
+    >
+      🚀 Open FarmCulture AI
+    </a>
 
     <div class="result-box">
-      ⚠️ AI gives guidance. Final decision depends on local conditions.
+      Farming depends on land, climate, water, and local conditions.
+      AI guidance is informational only.
     </div>
-  </div>
 
-  <a href="index.html" class="btn secondary">⬅ Back to Home</a>
+  </section>
 
 </div>
 
-<!-- JS -->
-<script src="tools.js?v=1"></script>
+<script src="tools.js?v=20"></script>
 </body>
-        </html>
-
-Tool
+</html>
