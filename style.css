@@ -1,148 +1,331 @@
-/* =========================================
-   RICHARD MILLE CINEMATIC OVERRIDE
-========================================= */
+/* AgroSense - Premium UI (Mobile First) */
 
-body.rm-mode {
-  background-color: #030504;
-  color: #ffffff;
+:root{
+  --bg: #f6fff6;
+  --card: #ffffff;
+  --text: #132018;
+  --muted: #51605a;
+  --primary: #1b7d3b;
+  --primary2: #0f5a2a;
+  --border: rgba(19, 32, 24, 0.10);
+  --shadow: 0 12px 30px rgba(0,0,0,0.08);
+  --radius: 18px;
+}
+
+*{
+  box-sizing: border-box;
+}
+
+body{
   margin: 0;
-  overflow: hidden; /* Stops standard scrolling */
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: radial-gradient(circle at top, #eaffea 0%, var(--bg) 45%, #ffffff 100%);
+  color: var(--text);
 }
 
-/* Minimal Top Nav */
-.rm-nav {
-  position: fixed;
-  top: 0; width: 100%;
-  padding: 20px 30px;
-  display: flex; justify-content: space-between;
-  z-index: 100;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  background: rgba(3, 5, 4, 0.8);
-  backdrop-filter: blur(10px);
+.container{
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 18px 14px 60px;
 }
 
-.rm-brand {
-  font-size: 12px; letter-spacing: 4px; font-weight: 300;
+header{
+  text-align: center;
+  margin-bottom: 18px;
 }
 
-.rm-back {
-  font-size: 10px; letter-spacing: 2px; color: #888; text-decoration: none;
-  transition: color 0.3s;
-}
-.rm-back:hover { color: #fff; }
-
-/* The Snap Scrolling Physics */
-.snap-container {
-  height: 100vh;
-  overflow-y: scroll;
-  scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
+header h1{
+  font-size: 28px;
+  margin: 6px 0 6px;
+  letter-spacing: -0.6px;
 }
 
-.snap-slide {
-  height: 100vh;
-  width: 100vw;
-  scroll-snap-align: start;
+.subtitle{
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.form-card{
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-top: 16px;
+  box-shadow: var(--shadow);
+}
+
+.form-card h2{
+  margin: 0 0 6px;
+  font-size: 18px;
+  letter-spacing: -0.3px;
+}
+
+.form-card p{
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+label{
+  display: block;
+  margin: 12px 0 6px;
+  font-weight: 600;
+  font-size: 13px;
+  color: #2a3a32;
+}
+
+select, input{
+  width: 100%;
+  padding: 12px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: #fbfffb;
+  font-size: 15px;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+select:focus, input:focus{
+  border-color: rgba(27, 125, 59, 0.55);
+  box-shadow: 0 0 0 4px rgba(27, 125, 59, 0.12);
+}
+
+.btn{
+  width: 100%;
+  padding: 13px 14px;
+  margin-top: 14px;
+  background: linear-gradient(180deg, var(--primary), var(--primary2));
+  color: white;
+  border: none;
+  border-radius: 16px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  box-shadow: 0 10px 20px rgba(27,125,59,0.22);
+}
+
+.btn:active{
+  transform: scale(0.99);
+}
+
+.btn.secondary{
+  background: #ffffff;
+  color: var(--primary);
+  border: 1px solid rgba(27, 125, 59, 0.25);
+  box-shadow: none;
+}
+
+.result-box{
+  margin-top: 14px;
+  padding: 14px;
+  border-radius: 16px;
+  background: #f2fff2;
+  border: 1px solid rgba(27, 125, 59, 0.18);
+  color: #173222;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.pill{
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  margin: 6px 6px 0 0;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+.pill.good{ background: #e9fff0; }
+.pill.mid{ background: #fff8e6; }
+.pill.bad{ background: #ffecec; }
+
+.grid2{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 640px){
+  header h1{ font-size: 34px; }
+  .grid2{ grid-template-columns: 1fr 1fr; }
+}
+
+/* FIX MOBILE BUTTON OVERLAP */
+@media (max-width: 600px) {
+  .btn {
+    width: 100% !important;
+    display: block !important;
+    margin: 10px 0 !important;
+    text-align: center !important;
+  }
+
+  .grid2 {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+}
+/* ===========================
+   STEP 1: DESIGN SYSTEM LOCK
+   (Do not break consistency)
+=========================== */
+
+h1, h2, h3 {
+  letter-spacing: -0.3px;
+}
+
+a {
+  text-decoration: none;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid rgba(0,0,0,0.08);
+}
+
+button, select, input {
+  font-family: inherit;
+}
+/* ===========================
+   STEP 2.5: APPLE / STRIPE UI
+=========================== */
+
+.topbar{
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background: rgba(246, 255, 246, 0.75);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+.topbar-inner{
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 12px 14px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  position: relative;
+  justify-content: space-between;
 }
 
-/* Content Layout Grid */
-.slide-content {
-  width: 90%;
-  max-width: 1200px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
+.brand{
+  font-size: 15px;
+  color: var(--text);
+  display: flex;
+  gap: 8px;
   align-items: center;
 }
 
-/* Massive Typography */
-.massive-title {
-  font-size: 8vw;
-  font-weight: 900;
-  line-height: 0.85;
+.topbar-links{
+  display: flex;
+  gap: 14px;
+}
+
+.topbar-links a{
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(19, 32, 24, 0.75);
+  padding: 8px 10px;
+  border-radius: 12px;
+}
+
+.topbar-links a:hover{
+  background: rgba(27,125,59,0.08);
+  color: var(--primary);
+}
+
+.hero{
+  padding-top: 10px;
+  margin-bottom: 6px;
+}
+
+.hero-title{
+  font-size: 38px;
+  margin: 10px 0 8px;
+  letter-spacing: -1px;
+}
+
+.hero-subtitle{
   margin: 0;
-  text-transform: uppercase;
-  letter-spacing: -2px;
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.6;
 }
 
-.outline-text {
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+.hero-actions{
+  margin-top: 16px;
 }
 
-/* Transparent, High-End Forms */
-.rm-form {
-  background: transparent;
-  display: flex; flex-direction: column; gap: 20px;
+.hero-badges{
+  margin-top: 14px;
 }
 
-.input-group {
-  position: relative;
+.footer-card{
+  text-align: center;
 }
 
-.rm-input {
-  width: 100%;
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid rgba(255,255,255,0.2);
-  color: #fff;
-  font-size: 16px;
-  padding: 15px 0;
-  outline: none;
-  border-radius: 0;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: border-color 0.3s;
-  appearance: none;
+.footer-card p{
+  margin: 0;
 }
 
-.rm-input:focus {
-  border-bottom: 1px solid #2e7d32;
+.footer-card .muted{
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 13px;
 }
 
-.rm-input option {
-  background: #000; color: #fff;
-}
-
-/* Instrument Buttons */
-.rm-btn {
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.4);
-  color: #fff;
-  padding: 18px 20px;
-  font-size: 12px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 10px;
-}
-
-.rm-btn:hover {
-  background: #fff;
-  color: #000;
-}
-
-/* Terminal Style Output */
-.rm-result {
-  margin-top: 20px;
-  font-family: monospace;
-  color: #2e7d32;
-  font-size: 14px;
-  letter-spacing: 1px;
-}
-
-/* Mobile Fallback */
-@media (max-width: 768px) {
-  .slide-content {
-    grid-template-columns: 1fr;
-    text-align: left;
-    gap: 30px;
+/* Mobile navbar wrap */
+@media (max-width: 420px){
+  .topbar-inner{
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
   }
-  .massive-title { font-size: 16vw; }
 }
+/* ===========================
+   STEP 3: PREMIUM ANIMATIONS
+=========================== */
+
+.form-card{
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.form-card:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.10);
+}
+
+.btn{
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+}
+
+.btn:hover{
+  filter: brightness(1.02);
+  box-shadow: 0 14px 28px rgba(27,125,59,0.26);
+}
+
+.btn.secondary:hover{
+  box-shadow: 0 10px 22px rgba(0,0,0,0.08);
+}
+
+.pill{
+  transition: transform 0.15s ease;
+}
+
+.pill:hover{
+  transform: scale(1.03);
+}
+
+/* Smooth page entrance */
+.container{
+  animation: fadeUp 0.45s ease;
+}
+
+@keyframes fadeUp{
+  from{ opacity: 0; transform: translateY(10px); }
+  to{ opacity: 1; transform: translateY(0); }
+    }
