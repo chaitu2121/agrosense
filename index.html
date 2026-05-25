@@ -11,14 +11,11 @@
     
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body, html {
-      background: #000000;
-      color: #ffffff;
+      background: #000000; color: #ffffff;
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      overflow: hidden; 
-      -webkit-font-smoothing: antialiased;
+      overflow: hidden; -webkit-font-smoothing: antialiased;
     }
 
-    /* THE RM LOADER */
     #rm-loader {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       background: #000000; z-index: 99999; display: flex;
@@ -26,11 +23,8 @@
       transition: opacity 0.6s ease, visibility 0.6s ease;
     }
     #rm-loader.hidden { opacity: 0; visibility: hidden; }
-    .rm-loader-text {
-      font-size: 18px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-    }
+    .rm-loader-text { font-size: 18px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
 
-    /* MINIMALIST TOP HEADER */
     .rm-header {
       position: fixed; top: 0; left: 0; width: 100%; height: 70px; padding: 0 24px;
       display: flex; align-items: center; justify-content: space-between; z-index: 50;
@@ -55,7 +49,6 @@
       bottom: -4px; right: -3px; transform: rotate(-45deg);
     }
 
-    /* FULL SCREEN OVERLAY MENU */
     #rm-menu {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000000;
       z-index: 55; padding: 100px 30px 40px; display: flex; flex-direction: column;
@@ -67,14 +60,12 @@
       color: #ffffff; text-decoration: none; font-size: 26px; font-weight: 700; letter-spacing: -0.5px; text-transform: uppercase;
     }
     
-    /* SNAP SCROLLING ARCHITECTURE */
     .snap-container {
       height: 100vh; width: 100vw; overflow-y: scroll; scroll-snap-type: y mandatory; scroll-behavior: smooth;
     }
     .snap-container::-webkit-scrollbar { display: none; }
     .snap-container { -ms-overflow-style: none; scrollbar-width: none; }
 
-    /* INDIVIDUAL SECTIONS & CINEMATIC BACKGROUNDS */
     .rm-section {
       height: 100vh; width: 100vw; scroll-snap-align: start; position: relative;
       display: flex; flex-direction: column; justify-content: flex-end; padding: 0 24px 60px 24px;
@@ -88,15 +79,11 @@
     .bg-7 { background: radial-gradient(circle at center, #0a2a2a 0%, #020808 80%); } 
     .bg-8 { background: #000000; } 
 
-    /* TYPOGRAPHY */
     .rm-subtitle { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
     .rm-title { font-size: 44px; font-weight: 700; letter-spacing: -1.5px; line-height: 0.95; margin-bottom: 12px; text-transform: uppercase; }
     .rm-desc { font-size: 18px; font-weight: 300; margin-bottom: 30px; color: #dddddd; }
 
-    /* FORMS & BUTTONS */
-    .rm-form-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; width: 100%;
-    }
+    .rm-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; width: 100%; }
     .rm-input {
       background: transparent; border: none; border-bottom: 1px solid rgba(255,255,255,0.3); color: #ffffff;
       font-size: 13px; padding: 10px 0; border-radius: 0; outline: none; text-transform: uppercase; letter-spacing: 0.5px;
@@ -112,9 +99,7 @@
     }
     .rm-action-btn:hover { background: #ffffff; color: #000000; }
 
-    .rm-result-output {
-      margin-top: 20px; font-size: 12px; letter-spacing: 1px; color: #22c55e; text-transform: uppercase;
-    }
+    .rm-result-output { margin-top: 20px; font-size: 12px; letter-spacing: 1px; color: #22c55e; text-transform: uppercase; }
   </style>
 </head>
 <body>
@@ -151,30 +136,38 @@
       <div class="rm-form-grid">
         <select id="season" class="rm-input">
           <option value="" disabled selected>Season</option>
-          <option value="monsoon">Monsoon</option>
-          <option value="winter">Winter</option>
+          <option value="monsoon">Monsoon (Kharif)</option>
+          <option value="winter">Winter (Rabi)</option>
           <option value="summer">Summer</option>
         </select>
         <select id="crop" class="rm-input">
           <option value="" disabled selected>Crop Type</option>
+          <option value="rice">Rice</option>
           <option value="wheat">Wheat</option>
+          <option value="soybean">Soybean</option>
           <option value="cotton">Cotton</option>
+          <option value="maize">Maize</option>
+          <option value="bajra">Bajra</option>
+          <option value="jowar">Jowar</option>
+          <option value="gram">Gram (Chana)</option>
+          <option value="tur">Tur (Pigeon Pea)</option>
           <option value="onion">Onion</option>
+          <option value="tomato">Tomato</option>
           <option value="sugarcane">Sugarcane</option>
           <option value="pomegranate">Pomegranate</option>
-          <option value="soybean">Soybean</option>
         </select>
         <select id="soil" class="rm-input">
           <option value="" disabled selected>Soil Type</option>
           <option value="black">Black Soil</option>
           <option value="red">Red Soil</option>
+          <option value="loamy">Loamy Soil</option>
           <option value="sandy">Sandy Soil</option>
         </select>
         <select id="water" class="rm-input">
           <option value="" disabled selected>Water Source</option>
           <option value="rain">Rainfed</option>
           <option value="borewell">Borewell</option>
-          <option value="drip">Drip</option>
+          <option value="drip">Drip Irrigation</option>
         </select>
       </div>
       <button class="rm-action-btn" onclick="analyzeRisk()">EXECUTE ANALYSIS</button>
@@ -188,17 +181,26 @@
       <div class="rm-form-grid">
         <select id="w_crop" class="rm-input">
           <option value="" disabled selected>Target Crop</option>
+          <option value="rice">Rice</option>
           <option value="wheat">Wheat</option>
+          <option value="soybean">Soybean</option>
           <option value="cotton">Cotton</option>
-          <option value="sugarcane">Sugarcane</option>
+          <option value="maize">Maize</option>
+          <option value="bajra">Bajra</option>
+          <option value="jowar">Jowar</option>
+          <option value="gram">Gram (Chana)</option>
+          <option value="tur">Tur (Pigeon Pea)</option>
           <option value="onion">Onion</option>
+          <option value="tomato">Tomato</option>
+          <option value="sugarcane">Sugarcane</option>
+          <option value="pomegranate">Pomegranate</option>
         </select>
         <input id="w_acres" type="number" class="rm-input" placeholder="ACREAGE" />
         <select id="w_source" class="rm-input" style="grid-column: span 2;">
           <option value="" disabled selected>Water Source</option>
           <option value="rain">Rainfed</option>
           <option value="borewell">Borewell</option>
-          <option value="drip">Drip</option>
+          <option value="drip">Drip Irrigation</option>
         </select>
       </div>
       <button class="rm-action-btn" onclick="calcWater()">CALCULATE CAPACITY</button>
@@ -212,10 +214,19 @@
       <div class="rm-form-grid">
         <select id="seed_crop" class="rm-input">
           <option value="" disabled selected>Target Crop</option>
+          <option value="rice">Rice</option>
           <option value="wheat">Wheat</option>
+          <option value="soybean">Soybean</option>
           <option value="cotton">Cotton</option>
+          <option value="maize">Maize</option>
+          <option value="bajra">Bajra</option>
+          <option value="jowar">Jowar</option>
+          <option value="gram">Gram (Chana)</option>
+          <option value="tur">Tur (Pigeon Pea)</option>
           <option value="onion">Onion</option>
+          <option value="tomato">Tomato</option>
           <option value="sugarcane">Sugarcane</option>
+          <option value="pomegranate">Pomegranate</option>
         </select>
         <input id="seed_acres" type="number" class="rm-input" placeholder="ACREAGE" />
       </div>
@@ -230,10 +241,19 @@
       <div class="rm-form-grid">
         <select id="eco_crop" class="rm-input">
           <option value="" disabled selected>Target Crop</option>
-          <option value="sugarcane">Sugarcane</option>
-          <option value="onion">Onion</option>
-          <option value="cotton">Cotton</option>
+          <option value="rice">Rice</option>
+          <option value="wheat">Wheat</option>
           <option value="soybean">Soybean</option>
+          <option value="cotton">Cotton</option>
+          <option value="maize">Maize</option>
+          <option value="bajra">Bajra</option>
+          <option value="jowar">Jowar</option>
+          <option value="gram">Gram (Chana)</option>
+          <option value="tur">Tur (Pigeon Pea)</option>
+          <option value="onion">Onion</option>
+          <option value="tomato">Tomato</option>
+          <option value="sugarcane">Sugarcane</option>
+          <option value="pomegranate">Pomegranate</option>
         </select>
         <input id="eco_acres" type="number" class="rm-input" placeholder="ACREAGE" />
       </div>
@@ -248,10 +268,19 @@
       <div class="rm-form-grid">
         <select id="chem_crop" class="rm-input">
           <option value="" disabled selected>Target Crop</option>
-          <option value="sugarcane">Sugarcane</option>
-          <option value="onion">Onion</option>
-          <option value="cotton">Cotton</option>
+          <option value="rice">Rice</option>
           <option value="wheat">Wheat</option>
+          <option value="soybean">Soybean</option>
+          <option value="cotton">Cotton</option>
+          <option value="maize">Maize</option>
+          <option value="bajra">Bajra</option>
+          <option value="jowar">Jowar</option>
+          <option value="gram">Gram (Chana)</option>
+          <option value="tur">Tur (Pigeon Pea)</option>
+          <option value="onion">Onion</option>
+          <option value="tomato">Tomato</option>
+          <option value="sugarcane">Sugarcane</option>
+          <option value="pomegranate">Pomegranate</option>
         </select>
         <input id="chem_acres" type="number" class="rm-input" placeholder="ACREAGE" />
       </div>
@@ -267,7 +296,7 @@
         <button class="rm-action-btn" style="width:100%; border-color:rgba(255,255,255,0.4);" onclick="rescue('yellow')">LEAVES YELLOW</button>
         <button class="rm-action-btn" style="width:100%; border-color:rgba(255,255,255,0.4);" onclick="rescue('dry')">PLANT DRYING</button>
         <button class="rm-action-btn" style="width:100%; border-color:rgba(255,255,255,0.4);" onclick="rescue('slow')">SLOW GROWTH</button>
-        <button class="rm-action-btn" style="width:100%; border-color:rgba(255,255,255,0.4);" onclick="rescue('pest')">PEST INFESTATION</button>
+        <button class="rm-action-btn" style="width:100%; border-color:rgba(255,255,255,0.4);" onclick="rescue('pest')">PEST INFEST</button>
       </div>
       <div id="rescueResult" class="rm-result-output" style="color:#ef4444;"></div>
     </section>
@@ -296,4 +325,4 @@
   <script src="tools.js"></script>
 </body>
   </html>
-  
+        
