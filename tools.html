@@ -2,119 +2,357 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AgroSense – Instruments</title>
-  <link rel="stylesheet" href="rm-style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>AgroSense – Premium Instruments</title>
+  <style>
+    /* =========================================================
+       AGROSENSE - RICHARD MILLE 1:1 MOBILE ARCHITECTURE
+       ========================================================= */
+    
+    /* 1. GLOBAL RESET & TYPOGRAPHY */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body, html {
+      background: #000000;
+      color: #ffffff;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      overflow: hidden; /* Prevent default scrolling */
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* 2. THE RM LOADER (Matches Image 1) */
+    #rm-loader {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: #000000;
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+    #rm-loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    .rm-loader-text {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* 3. MINIMALIST TOP HEADER (Matches Images 2, 3, 4) */
+    .rm-header {
+      position: fixed;
+      top: 0; left: 0; width: 100%;
+      height: 70px;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 50;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+    }
+    .rm-hamburger {
+      width: 24px; height: 18px;
+      display: flex; flex-direction: column; justify-content: center; gap: 6px;
+      cursor: pointer; z-index: 60;
+    }
+    .rm-hamburger span {
+      display: block; width: 100%; height: 1.5px; background: #ffffff;
+      transition: 0.3s ease;
+    }
+    .rm-logo {
+      font-size: 14px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase;
+      position: absolute; left: 50%; transform: translateX(-50%);
+      z-index: 60;
+    }
+    .rm-search {
+      width: 20px; height: 20px;
+      border: 1.5px solid #ffffff; border-radius: 50%;
+      position: relative; z-index: 60;
+    }
+    .rm-search::after {
+      content: ''; position: absolute;
+      width: 1.5px; height: 8px; background: #ffffff;
+      bottom: -4px; right: -3px; transform: rotate(-45deg);
+    }
+
+    /* 4. FULL SCREEN OVERLAY MENU (Matches Image 5) */
+    #rm-menu {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: #000000;
+      z-index: 55;
+      padding: 100px 30px 40px;
+      display: flex; flex-direction: column;
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.4s ease;
+    }
+    #rm-menu.active {
+      opacity: 1; visibility: visible;
+    }
+    .rm-menu-links {
+      display: flex; flex-direction: column; gap: 15px;
+      margin-bottom: 40px;
+    }
+    .rm-menu-link {
+      color: #ffffff; text-decoration: none;
+      font-size: 26px; font-weight: 700; letter-spacing: -0.5px;
+      text-transform: uppercase;
+    }
+    .rm-menu-divider {
+      width: 100%; height: 1px; background: rgba(255,255,255,0.2);
+      margin-bottom: 30px;
+    }
+    .rm-menu-sublinks {
+      display: flex; flex-direction: column; gap: 18px;
+    }
+    .rm-menu-sublink {
+      color: #ffffff; text-decoration: none;
+      font-size: 16px; font-weight: 300;
+    }
+
+    /* 5. SNAP SCROLLING ARCHITECTURE */
+    .snap-container {
+      height: 100vh;
+      width: 100vw;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+    }
+    
+    /* Hide scrollbar for clean look */
+    .snap-container::-webkit-scrollbar { display: none; }
+    .snap-container { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* 6. INDIVIDUAL FULL-SCREEN SECTIONS */
+    .rm-section {
+      height: 100vh; width: 100vw;
+      scroll-snap-align: start;
+      position: relative;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 0 24px 60px 24px;
+    }
+
+    /* Cinematic Backgrounds (Simulating the watch product shots) */
+    .bg-1 { background: radial-gradient(circle at center, #1a2a1a 0%, #050805 80%); } /* Risk (Green tint) */
+    .bg-2 { background: radial-gradient(circle at center, #0a192f 0%, #030810 80%); } /* Water (Blue tint) */
+    .bg-3 { background: radial-gradient(circle at center, #2a1a0a 0%, #080502 80%); } /* Seed (Earth tint) */
+
+    /* 7. EXACT TYPOGRAPHY (Matches Images 2, 3, 4) */
+    .rm-subtitle {
+      font-size: 11px; font-weight: 600; letter-spacing: 1px;
+      text-transform: uppercase; margin-bottom: 6px;
+    }
+    .rm-title {
+      font-size: 44px; font-weight: 700; letter-spacing: -1.5px;
+      line-height: 0.95; margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+    .rm-desc {
+      font-size: 18px; font-weight: 300; margin-bottom: 30px;
+      color: #dddddd;
+    }
+
+    /* 8. FORMS ENGINEERED FOR THE RM AESTHETIC */
+    .rm-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-bottom: 25px;
+      width: 100%;
+    }
+    .rm-input {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+      color: #ffffff;
+      font-size: 13px;
+      padding: 10px 0;
+      border-radius: 0;
+      outline: none;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    .rm-input:focus {
+      border-bottom: 1px solid #ffffff;
+    }
+    .rm-input option {
+      background: #000000; color: #ffffff;
+    }
+
+    /* RM Style Action Button */
+    .rm-action-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: max-content;
+      padding: 14px 30px;
+      background: transparent;
+      border: 1px solid #ffffff;
+      border-radius: 30px;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    .rm-action-btn:hover {
+      background: #ffffff; color: #000000;
+    }
+
+    /* Output Terminal */
+    .rm-result-output {
+      margin-top: 20px;
+      font-size: 12px;
+      letter-spacing: 1px;
+      color: #22c55e;
+      text-transform: uppercase;
+    }
+  </style>
 </head>
 <body>
 
-  <div class="loading-first" id="rm-loader">
-    <div class="title title--h3" style="letter-spacing: 4px;">AGROSENSE</div>
+  <div id="rm-loader">
+    <div class="rm-loader-text">AGROSENSE</div>
   </div>
 
-  <div class="layout">
-    
-    <header>
-      <div class="overflow">
-        <div style="opacity: 0.5;">[ SYSTEM ACTIVE ]</div>
-        <div class="title title--h4" style="font-weight: 500;">AGROSENSE</div>
-        <div style="opacity: 0.5;"><a href="index.html" style="color:#fff; text-decoration:none;">EXIT</a></div>
-      </div>
-    </header>
+  <header class="rm-header">
+    <div class="rm-hamburger" onclick="toggleMenu()">
+      <span id="line1"></span>
+      <span id="line2"></span>
+    </div>
+    <div class="rm-logo">AGROSENSE</div>
+    <div class="rm-search"></div>
+  </header>
 
-    <div class="container">
-      
-      <div class="breadcrumb">
-        <div class="breadcrumb__item">Instruments <span style="margin: 0 12px; color: #515151;">/</span> Dashboard Analytics</div>
-      </div>
-
-      <section class="form__group" id="riskTool">
-        <h2 class="title title--h2">01. Risk Predictor</h2>
-        <p class="text text--body3">Execute probabilistic failure analysis before capital allocation.</p>
-        
-        <div class="form__cols">
-          <div class="form__col">
-            <select id="season" class="form__input form__input--dark">
-              <option value="" disabled selected>Select Season</option>
-              <option value="monsoon">Monsoon (Kharif)</option>
-              <option value="winter">Winter (Rabi)</option>
-              <option value="summer">Summer</option>
-            </select>
-          </div>
-          <div class="form__col">
-            <select id="crop" class="form__input form__input--dark">
-              <option value="" disabled selected>Select Crop</option>
-              <option value="wheat">Wheat</option>
-              <option value="cotton">Cotton</option>
-            </select>
-          </div>
-          <div class="form__col">
-            <select id="soil" class="form__input form__input--dark">
-              <option value="" disabled selected>Soil Composition</option>
-              <option value="black">Black Soil</option>
-              <option value="red">Red Soil</option>
-            </select>
-          </div>
-          <div class="form__col">
-            <select id="water" class="form__input form__input--dark">
-              <option value="" disabled selected>Water Infrastructure</option>
-              <option value="rain">Rainfed Only</option>
-              <option value="borewell">Borewell</option>
-            </select>
-          </div>
-        </div>
-        
-        <div style="margin-top: 15px;">
-          <button class="link-button" onclick="analyzeRisk()">Initialize Analysis</button>
-        </div>
-        
-        <div class="rm-result-box" id="riskResult">[ AWAITING PARAMETERS ]</div>
-      </section>
-
-      <section class="form__group" id="waterTool">
-        <h2 class="title title--h2">02. Water Budget</h2>
-        <p class="text text--body3">Calculate hydration requirements against available resources.</p>
-        
-        <div class="form__cols">
-          <div class="form__col">
-            <select id="w_crop" class="form__input form__input--dark">
-              <option value="" disabled selected>Target Crop</option>
-              <option value="wheat">Wheat</option>
-              <option value="cotton">Cotton</option>
-            </select>
-          </div>
-          <div class="form__col">
-            <input type="number" id="w_acres" class="form__input form__input--dark" placeholder="Land Volume (Acres)" />
-          </div>
-          <div class="form__col">
-            <select id="w_source" class="form__input form__input--dark">
-              <option value="" disabled selected>Water Source</option>
-              <option value="rain">Rainfed</option>
-              <option value="borewell">Borewell</option>
-            </select>
-          </div>
-        </div>
-
-        <div style="margin-top: 15px;">
-          <button class="link-button" onclick="calcWater()">Calculate Capacity</button>
-        </div>
-        
-        <div class="rm-result-box" id="waterResult">[ AWAITING PARAMETERS ]</div>
-      </section>
-      
-      <div style="height: 100px;"></div>
-
+  <div id="rm-menu">
+    <div class="rm-menu-links">
+      <a href="index.html" class="rm-menu-link">HOME</a>
+      <a href="#risk" class="rm-menu-link" onclick="toggleMenu()">RISK PREDICTOR</a>
+      <a href="#water" class="rm-menu-link" onclick="toggleMenu()">WATER BUDGET</a>
+      <a href="#seed" class="rm-menu-link" onclick="toggleMenu()">SEED MATRIX</a>
+      <a href="#rescue" class="rm-menu-link" onclick="toggleMenu()">RESCUE MODE</a>
+    </div>
+    <div class="rm-menu-divider"></div>
+    <div class="rm-menu-sublinks">
+      <a href="notes.html" class="rm-menu-sublink">Secure Notes</a>
+      <a href="https://huggingface.co/spaces/Chaitu2121/farmculture-ai" class="rm-menu-sublink">FarmCulture AI</a>
     </div>
   </div>
 
+  <div class="snap-container">
+
+    <section class="rm-section bg-1" id="risk">
+      <div class="rm-subtitle">INSTRUMENT 01</div>
+      <h1 class="rm-title">RISK<br>PREDICTOR</h1>
+      <p class="rm-desc">Analyze failure probability before investing capital.</p>
+
+      <div class="rm-form-grid">
+        <select id="season" class="rm-input">
+          <option value="" disabled selected>Season</option>
+          <option value="monsoon">Monsoon</option>
+          <option value="winter">Winter</option>
+          <option value="summer">Summer</option>
+        </select>
+        <select id="crop" class="rm-input">
+          <option value="" disabled selected>Crop Type</option>
+          <option value="wheat">Wheat</option>
+          <option value="cotton">Cotton</option>
+          <option value="onion">Onion</option>
+        </select>
+        <select id="soil" class="rm-input">
+          <option value="" disabled selected>Soil Type</option>
+          <option value="black">Black Soil</option>
+          <option value="red">Red Soil</option>
+        </select>
+        <select id="water" class="rm-input">
+          <option value="" disabled selected>Water Source</option>
+          <option value="rain">Rainfed</option>
+          <option value="borewell">Borewell</option>
+        </select>
+      </div>
+
+      <button class="rm-action-btn" onclick="analyzeRisk()">EXECUTE ANALYSIS</button>
+      <div id="riskResult" class="rm-result-output"></div>
+    </section>
+
+    <section class="rm-section bg-2" id="water">
+      <div class="rm-subtitle">INSTRUMENT 02</div>
+      <h1 class="rm-title">WATER<br>BUDGET</h1>
+      <p class="rm-desc">Calculate hydration requirements against available resources.</p>
+
+      <div class="rm-form-grid">
+        <select id="w_crop" class="rm-input">
+          <option value="" disabled selected>Target Crop</option>
+          <option value="wheat">Wheat</option>
+          <option value="cotton">Cotton</option>
+        </select>
+        <input id="w_acres" type="number" class="rm-input" placeholder="ACREAGE" />
+        <select id="w_source" class="rm-input" style="grid-column: span 2;">
+          <option value="" disabled selected>Water Source</option>
+          <option value="rain">Rainfed</option>
+          <option value="borewell">Borewell</option>
+        </select>
+      </div>
+
+      <button class="rm-action-btn" onclick="calcWater()">CALCULATE CAPACITY</button>
+      <div id="waterResult" class="rm-result-output"></div>
+    </section>
+
+    <section class="rm-section bg-3" id="seed">
+      <div class="rm-subtitle">INSTRUMENT 03</div>
+      <h1 class="rm-title">SEED<br>MATRIX</h1>
+      <p class="rm-desc">Precision per-acre seed rate and variety optimization.</p>
+
+      <div class="rm-form-grid">
+        <select id="seed_crop" class="rm-input">
+          <option value="" disabled selected>Target Crop</option>
+          <option value="wheat">Wheat</option>
+          <option value="cotton">Cotton</option>
+        </select>
+        <input id="seed_acres" type="number" class="rm-input" placeholder="ACREAGE" />
+      </div>
+
+      <button class="rm-action-btn" onclick="calcSeed()">OPTIMIZE RATE</button>
+      <div id="seedResult" class="rm-result-output"></div>
+    </section>
+
+  </div>
+
   <script src="tools.js"></script>
-  
   <script>
+    // 1. Remove Loader after page is ready
     window.addEventListener('load', () => {
       setTimeout(() => {
-        document.getElementById('rm-loader').classList.add('inactive');
-      }, 800); 
+        document.getElementById('rm-loader').classList.add('hidden');
+      }, 800); // 0.8s cinematic delay
     });
+
+    // 2. Menu Toggle Logic (Transforms hamburger to an 'X' visually)
+    const menu = document.getElementById('rm-menu');
+    const line1 = document.getElementById('line1');
+    const line2 = document.getElementById('line2');
+    let menuOpen = false;
+
+    function toggleMenu() {
+      menuOpen = !menuOpen;
+      if(menuOpen) {
+        menu.classList.add('active');
+        line1.style.transform = "translateY(3.5px) rotate(45deg)";
+        line2.style.transform = "translateY(-3.5px) rotate(-45deg)";
+      } else {
+        menu.classList.remove('active');
+        line1.style.transform = "none";
+        line2.style.transform = "none";
+      }
+    }
   </script>
 </body>
 </html>
