@@ -46,7 +46,6 @@ function openFarmCulture() {
   window.open("https://huggingface.co/spaces/Chaitu2121/farmculture-ai", "_blank");
 }
 
-
 // --- 2. INSTRUMENT LOGIC ---
 
 function analyzeRisk() {
@@ -267,4 +266,4 @@ function clearNotes() {
   localStorage.removeItem("agrosense_encrypted_vault");
   document.getElementById("notesBox").value = "";
   document.getElementById("notesStatus").innerHTML = "<span style='color:#ef4444;'>[ VAULT FORMATTED ]</span>";
-     }
+                  }
