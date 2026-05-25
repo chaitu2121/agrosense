@@ -1,5 +1,5 @@
 /* =========================================================
-   AGROSENSE - NEURAL LOGIC ENGINE (V2.0 AGRONOMIC MATH)
+   AGROSENSE - NEURAL LOGIC ENGINE (V2.1 TARGETED DIAGNOSTICS)
    ========================================================= */
 
 window.addEventListener('load', () => {
@@ -19,21 +19,18 @@ window.addEventListener('load', () => {
   } catch(e) {}
 });
 
-const menu = document.getElementById('rm-menu');
-const line1 = document.getElementById('line1');
-const line2 = document.getElementById('line2');
-let menuOpen = false;
-
 function toggleMenu() {
-  menuOpen = !menuOpen;
-  if(menuOpen) {
-    menu.classList.add('active');
-    line1.style.transform = "translateY(3.5px) rotate(45deg)";
-    line2.style.transform = "translateY(-3.5px) rotate(-45deg)";
-  } else {
+  const menu = document.getElementById('rm-menu');
+  const line1 = document.getElementById('line1');
+  const line2 = document.getElementById('line2');
+  if(menu.classList.contains('active')) {
     menu.classList.remove('active');
     line1.style.transform = "none";
     line2.style.transform = "none";
+  } else {
+    menu.classList.add('active');
+    line1.style.transform = "translateY(3.5px) rotate(45deg)";
+    line2.style.transform = "translateY(-3.5px) rotate(-45deg)";
   }
 }
 
@@ -42,7 +39,7 @@ function openFarmCulture() {
 }
 
 // =========================================================
-// 1. RISK PREDICTOR (Weighted Probability Matrix)
+// 1. RISK PREDICTOR
 // =========================================================
 function analyzeRisk() {
   const season = document.getElementById("season").value;
@@ -51,30 +48,24 @@ function analyzeRisk() {
   const water = document.getElementById("water").value;
   const out = document.getElementById("riskResult");
 
-  if(!season || !crop || !soil || !water) {
-    out.innerHTML = "<span style='color:#ef4444;'>[ ERROR ] INCOMPLETE PARAMETERS</span>"; return;
-  }
+  if(!season) { out.innerHTML = "<span style='color:#ef4444;'>[ ERROR ] SEASON NOT SELECTED</span>"; return; }
+  if(!crop) { out.innerHTML = "<span style='color:#ef4444;'>[ ERROR ] CROP NOT SELECTED</span>"; return; }
+  if(!soil) { out.innerHTML = "<span style='color:#ef4444;'>[ ERROR ] SOIL TYPE NOT SELECTED</span>"; return; }
+  if(!water) { out.innerHTML = "<span style='color:#ef4444;'>[ ERROR ] WATER SOURCE NOT SELECTED</span>"; return; }
 
-  // Weightings: Water (40%), Soil (30%), Season (30%)
   let riskScore = 0; 
   let alerts = [];
 
-  // Water Variables
   if (water === "rain") { riskScore += 35; alerts.push("Rainfed dependence limits yield consistency."); }
   else if (water === "borewell") { riskScore += 15; }
-  else if (water === "drip") { riskScore += 0; }
-
-  // Soil Variables
+  
   if (soil === "sandy") { riskScore += 25; alerts.push("Sandy soil: High percolation rate. Evaporation risk."); }
   else if (soil === "red") { riskScore += 10; }
-  else if (soil === "black") { riskScore += 0; } // Ideal retention
 
-  // Temporal Variables
   if (season === "summer" && water !== "drip") { riskScore += 30; alerts.push("Summer cultivation without precision irrigation is critical."); }
   else if (season === "monsoon") { riskScore += 10; }
   else if (season === "winter") { riskScore += 5; }
 
-  // Crop Overrides
   if (crop === "sugarcane" && water === "rain") { riskScore += 40; alerts.push("CRITICAL: Sugarcane requires continuous hydration."); }
   if (crop === "pomegranate" && soil === "black" && season === "monsoon") { riskScore += 20; alerts.push("WARNING: High moisture in black soil risks bacterial blight."); }
 
@@ -96,59 +87,60 @@ function analyzeRisk() {
 }
 
 // =========================================================
-// 2. WATER BUDGET (FAO Penman-Monteith ETc Calculation)
+// 2. WATER BUDGET
 // =========================================================
 function calcWater() {
   const crop = document.getElementById("w_crop").value;
   const acres = parseFloat(document.getElementById("w_acres").value);
+  const source = document.getElementById("w_source").value;
   const out = document.getElementById("waterResult");
 
-  if(!crop || !acres || acres <= 0) {
-    out.innerHTML = "<span style='color:#ef4444;'>[ ERROR ] INVALID ACREAGE</span>"; return;
-  }
+  if(!crop) { out.innerHTML = "<span style='color:#ef4444;'>[ ERROR ] CROP NOT SELECTED</span>"; return; }
+  if(!acres || acres <= 0) { out.innerHTML = "<span style='color:#ef4444;'>[ ERROR ] ACREAGE INPUT REQUIRED</span>"; return; }
+  if(!source) { out.innerHTML = "<span style='color:#ef4444;'>[ ERROR ] WATER SOURCE NOT SELECTED</span>"; return; }
 
-  // Base ETo (Evapotranspiration approx 5mm/day) * Kc (Crop Coefficient) * Cycle Days
   const cropData = {
-    sugarcane: { kc: 1.25, days: 365 }, 
-    wheat: { kc: 1.15, days: 120 },
-    cotton: { kc: 1.20, days: 160 },
-    onion: { kc: 1.05, days: 110 }
+    sugarcane: { kc: 1.25, days: 365, need: "EXTREME" }, 
+    wheat: { kc: 1.15, days: 120, need: "MODERATE" },
+    cotton: { kc: 1.20, days: 160, need: "HIGH" },
+    onion: { kc: 1.05, days: 110, need: "MODERATE" }
   };
 
   const c = cropData[crop];
-  const eTo = 5.0; // mm per day
-  const eTc = eTo * c.kc * c.days; // Total mm required
-  
-  // 1 mm of water over 1 Acre (4046.86 sq meters) = 4046.86 Liters
+  const eTc = 5.0 * c.kc * c.days; 
   const totalLiters = (eTc * 4046.86 * acres);
+
+  let risk = "LOW"; 
+  if(c.need === "EXTREME" && (source === "rain" || source === "borewell")) { risk = "HIGH (DEPLETION IMMINENT)"; } 
+  else if (c.need === "HIGH" && source === "rain") { risk = "MODERATE (MONSOON DEPENDENT)"; }
 
   out.innerHTML = `
     <div style="color: #22c55e; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px;">
       [ HYDRATION MATRIX ]<br>
-      CROP EVAPOTRANSPIRATION (ETc): ${eTc.toLocaleString('en-IN')} MM<br>
+      CROP EVAPOTRANSPIRATION: ${eTc.toLocaleString('en-IN')} MM<br>
       TOTAL VOLUME REQ: ${totalLiters.toLocaleString('en-IN')} LITERS
     </div>
     <div style="color: #a1a1a1; font-size: 11px; line-height: 1.6;">
-      /// BASELINE: FAO PENMAN-MONTEITH METHOD<br>
-      /// CROP COEFFICIENT (Kc): ${c.kc} | CYCLE: ${c.days} DAYS
+      /// WATER SOURCE RISK: ${risk}<br>
+      /// BASELINE: FAO PENMAN-MONTEITH METHOD
     </div>
   `;
 }
 
 // =========================================================
-// 3. SEED MATRIX (Geometric Population Math)
+// 3. SEED MATRIX
 // =========================================================
 function calcSeed() {
   const crop = document.getElementById("seed_crop").value;
   const acres = parseFloat(document.getElementById("seed_acres").value);
   const out = document.getElementById("seedResult");
 
-  if(!crop || !acres || acres <= 0) { out.innerHTML = "<span style='color:#ef4444;'>[ ERROR ] INVALID ACREAGE</span>"; return; }
+  if(!crop) { out.innerHTML = "<span style='color:#ef4444;'>[ ERROR ] CROP NOT SELECTED</span>"; return; }
+  if(!acres || acres <= 0) { out.innerHTML = "<span style='color:#ef4444;'>[ ERROR ] ACREAGE INPUT REQUIRED</span>"; return; }
 
-  // 1 Acre = 43560 sq ft. 
   const geometricData = {
     wheat: { spacing: "22.5cm x 10cm", plantsPerAcre: 180000, seedWeightGrams: 40, unit: "KG" },
-    cotton: { spacing: "90cm x 90cm", plantsPerAcre: 5000, seedWeightGrams: 100, unit: "KG" }, // Bt Cotton packets
+    cotton: { spacing: "90cm x 90cm", plantsPerAcre: 5000, seedWeightGrams: 100, unit: "KG" }, 
     onion: { spacing: "15cm x 10cm", plantsPerAcre: 270000, seedWeightGrams: 4, unit: "KG (Nursery)" },
     sugarcane: { spacing: "120cm row", plantsPerAcre: 12000, seedWeightGrams: null, unit: "SETTS" }
   };
@@ -157,7 +149,6 @@ function calcSeed() {
   let seedOutput = "";
 
   if(g.seedWeightGrams) {
-    // Total Seed (kg) = (Plants * Test Weight(g)) / (1000 * 100) -> Adjusted for 85% Germination
     const calcKg = ((g.plantsPerAcre * acres * g.seedWeightGrams) / 100000) / 0.85; 
     seedOutput = `${calcKg.toFixed(2)} ${g.unit}`;
   } else {
@@ -175,16 +166,16 @@ function calcSeed() {
 }
 
 // =========================================================
-// 4. YIELD ECONOMICS (Net Profit & ROI Formula)
+// 4. YIELD ECONOMICS
 // =========================================================
 function calcEconomics() {
   const crop = document.getElementById("eco_crop").value;
   const acres = parseFloat(document.getElementById("eco_acres").value);
   const out = document.getElementById("ecoResult");
 
-  if(!crop || !acres || acres <= 0) { out.innerHTML = "<span style='color:#ef4444;'>[ ERROR ] INVALID METRICS</span>"; return; }
+  if(!crop) { out.innerHTML = "<span style='color:#ef4444;'>[ ERROR ] CROP NOT SELECTED</span>"; return; }
+  if(!acres || acres <= 0) { out.innerHTML = "<span style='color:#ef4444;'>[ ERROR ] ACREAGE INPUT REQUIRED</span>"; return; }
 
-  // Baseline data: Yield (Quintals/Tons), Price (₹), Input Costs per Acre (₹)
   const marketData = {
     sugarcane: { yield: 45, unit: "TONS", price: 3200, inputCost: 55000 },
     onion: { yield: 120, unit: "QUINTALS", price: 1800, inputCost: 65000 },
@@ -216,18 +207,18 @@ function calcEconomics() {
 }
 
 // =========================================================
-// 5. CHEMICAL MATRIX (Stoichiometric Fertilizer Math)
+// 5. CHEMICAL MATRIX
 // =========================================================
 function calcFertilizer() {
   const crop = document.getElementById("chem_crop").value;
   const acres = parseFloat(document.getElementById("chem_acres").value);
   const out = document.getElementById("chemResult");
 
-  if(!crop || !acres || acres <= 0) { out.innerHTML = "<span style='color:#ef4444;'>[ ERROR ] INVALID METRICS</span>"; return; }
+  if(!crop) { out.innerHTML = "<span style='color:#ef4444;'>[ ERROR ] CROP NOT SELECTED</span>"; return; }
+  if(!acres || acres <= 0) { out.innerHTML = "<span style='color:#ef4444;'>[ ERROR ] ACREAGE INPUT REQUIRED</span>"; return; }
 
-  // Target N-P-K requirement per Acre (in KG)
   const reqNPK = {
-    sugarcane: { N: 100, P: 46, K: 46 }, // Heavy feeder
+    sugarcane: { N: 100, P: 46, K: 46 }, 
     wheat: { N: 48, P: 24, K: 16 },
     cotton: { N: 40, P: 20, K: 20 },
     onion: { N: 40, P: 20, K: 20 }
@@ -238,17 +229,11 @@ function calcFertilizer() {
   const pReq = target.P * acres;
   const kReq = target.K * acres;
 
-  // Commercial Grades: DAP (18-46-0), Urea (46-0-0), MOP (0-0-60)
-  // Step 1: Fulfill Phosphorus (P) using DAP
   const dapKg = (pReq / 0.46);
-  // Step 2: DAP also provides Nitrogen. Calculate N provided by DAP.
   const nFromDap = dapKg * 0.18;
-  // Step 3: Fulfill remaining Nitrogen (N) using Urea
   const ureaKg = ((nReq - nFromDap) / 0.46);
-  // Step 4: Fulfill Potassium (K) using MOP
   const mopKg = (kReq / 0.60);
 
-  // Convert exact Kg to 50kg bags (rounded up to nearest 0.5 bag)
   const toBags = (kg) => (Math.ceil((kg / 50) * 2) / 2).toFixed(1);
 
   out.innerHTML = `
