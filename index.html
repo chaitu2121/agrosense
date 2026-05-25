@@ -1,852 +1,299 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>AgroSense – Premium Instruments</title>
+  <style>
+    /* =========================================================
+       AGROSENSE - RICHARD MILLE 1:1 MASTER ARCHITECTURE
+       ========================================================= */
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body, html {
+      background: #000000;
+      color: #ffffff;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      overflow: hidden; 
+      -webkit-font-smoothing: antialiased;
+    }
 
-  <meta charset="UTF-8" />
+    /* THE RM LOADER */
+    #rm-loader {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: #000000; z-index: 99999; display: flex;
+      align-items: center; justify-content: center;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+    #rm-loader.hidden { opacity: 0; visibility: hidden; }
+    .rm-loader-text {
+      font-size: 18px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    }
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
+    /* MINIMALIST TOP HEADER */
+    .rm-header {
+      position: fixed; top: 0; left: 0; width: 100%; height: 70px; padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between; z-index: 50;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+    }
+    .rm-hamburger {
+      width: 24px; height: 18px; display: flex; flex-direction: column; justify-content: center; gap: 6px;
+      cursor: pointer; z-index: 60;
+    }
+    .rm-hamburger span {
+      display: block; width: 100%; height: 1.5px; background: #ffffff; transition: 0.3s ease;
+    }
+    .rm-logo {
+      font-size: 14px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      position: absolute; left: 50%; transform: translateX(-50%); z-index: 60;
+    }
+    .rm-search {
+      width: 20px; height: 20px; border: 1.5px solid #ffffff; border-radius: 50%; position: relative; z-index: 60;
+    }
+    .rm-search::after {
+      content: ''; position: absolute; width: 1.5px; height: 8px; background: #ffffff;
+      bottom: -4px; right: -3px; transform: rotate(-45deg);
+    }
 
-  <title>
-    AgroSense Tools
-  </title>
+    /* FULL SCREEN OVERLAY MENU */
+    #rm-menu {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000000;
+      z-index: 55; padding: 100px 30px 40px; display: flex; flex-direction: column;
+      opacity: 0; visibility: hidden; transition: opacity 0.4s ease; overflow-y: auto;
+    }
+    #rm-menu.active { opacity: 1; visibility: visible; }
+    .rm-menu-links { display: flex; flex-direction: column; gap: 15px; margin-bottom: 40px; }
+    .rm-menu-link {
+      color: #ffffff; text-decoration: none; font-size: 26px; font-weight: 700; letter-spacing: -0.5px; text-transform: uppercase;
+    }
+    
+    /* SNAP SCROLLING ARCHITECTURE */
+    .snap-container {
+      height: 100vh; width: 100vw; overflow-y: scroll; scroll-snap-type: y mandatory; scroll-behavior: smooth;
+    }
+    .snap-container::-webkit-scrollbar { display: none; }
+    .snap-container { -ms-overflow-style: none; scrollbar-width: none; }
 
-  <link
-    rel="stylesheet"
-    href="style.css?v=50"
-  />
+    /* INDIVIDUAL SECTIONS & CINEMATIC BACKGROUNDS */
+    .rm-section {
+      height: 100vh; width: 100vw; scroll-snap-align: start; position: relative;
+      display: flex; flex-direction: column; justify-content: flex-end; padding: 0 24px 60px 24px;
+    }
+    .bg-1 { background: radial-gradient(circle at center, #1a2a1a 0%, #050805 80%); } 
+    .bg-2 { background: radial-gradient(circle at center, #0a192f 0%, #030810 80%); } 
+    .bg-3 { background: radial-gradient(circle at center, #2a1a0a 0%, #080502 80%); } 
+    .bg-4 { background: radial-gradient(circle at center, #1a1a2a 0%, #050508 80%); } 
+    .bg-5 { background: radial-gradient(circle at center, #2a0a0a 0%, #080202 80%); } 
+    .bg-6 { background: radial-gradient(circle at center, #2a150a 0%, #080402 80%); } 
+    .bg-7 { background: radial-gradient(circle at center, #0a2a2a 0%, #020808 80%); } 
+    .bg-8 { background: #000000; } 
 
+    /* TYPOGRAPHY */
+    .rm-subtitle { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+    .rm-title { font-size: 44px; font-weight: 700; letter-spacing: -1.5px; line-height: 0.95; margin-bottom: 12px; text-transform: uppercase; }
+    .rm-desc { font-size: 18px; font-weight: 300; margin-bottom: 30px; color: #dddddd; }
+
+    /* FORMS & BUTTONS */
+    .rm-form-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; width: 100%;
+    }
+    .rm-input {
+      background: transparent; border: none; border-bottom: 1px solid rgba(255,255,255,0.3); color: #ffffff;
+      font-size: 13px; padding: 10px 0; border-radius: 0; outline: none; text-transform: uppercase; letter-spacing: 0.5px;
+      appearance: none; -webkit-appearance: none; font-family: inherit;
+    }
+    .rm-input:focus { border-bottom: 1px solid #ffffff; }
+    .rm-input option { background: #000000; color: #ffffff; }
+    
+    .rm-action-btn {
+      display: inline-flex; align-items: center; justify-content: center; width: max-content; padding: 14px 30px;
+      background: transparent; border: 1px solid #ffffff; border-radius: 30px; color: #ffffff;
+      font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: 0.3s ease;
+    }
+    .rm-action-btn:hover { background: #ffffff; color: #000000; }
+
+    .rm-result-output {
+      margin-top: 20px; font-size: 12px; letter-spacing: 1px; color: #22c55e; text-transform: uppercase;
+    }
+  </style>
 </head>
-
 <body>
 
-<!-- INTRO -->
+  <div id="rm-loader"><div class="rm-loader-text">AGROSENSE</div></div>
 
-<div class="intro" id="intro">
+  <header class="rm-header">
+    <div class="rm-hamburger" onclick="toggleMenu()">
+      <span id="line1"></span><span id="line2"></span>
+    </div>
+    <div class="rm-logo">AGROSENSE</div>
+    <div class="rm-search"></div>
+  </header>
 
-  <div class="intro-overlay"></div>
+  <div id="rm-menu">
+    <div class="rm-menu-links">
+      <a href="#risk" class="rm-menu-link" onclick="toggleMenu()">RISK PREDICTOR</a>
+      <a href="#water" class="rm-menu-link" onclick="toggleMenu()">WATER BUDGET</a>
+      <a href="#seed" class="rm-menu-link" onclick="toggleMenu()">SEED MATRIX</a>
+      <a href="#economics" class="rm-menu-link" onclick="toggleMenu()">YIELD ECONOMICS</a>
+      <a href="#fertilizer" class="rm-menu-link" onclick="toggleMenu()">CHEMICAL MATRIX</a>
+      <a href="#rescue" class="rm-menu-link" onclick="toggleMenu()">EMERGENCY RESCUE</a>
+      <a href="#notes" class="rm-menu-link" onclick="toggleMenu()">SECURE NOTES</a>
+      <a href="#ai" class="rm-menu-link" onclick="toggleMenu()">FARMCULTURE AI</a>
+    </div>
+  </div>
 
-  <h1 class="intro-logo">
-    AGROSENSE
-  </h1>
+  <div class="snap-container">
 
-</div>
+    <section class="rm-section bg-1" id="risk">
+      <div class="rm-subtitle">INSTRUMENT 01</div>
+      <h1 class="rm-title">RISK<br>PREDICTOR</h1>
+      <p class="rm-desc">Analyze failure probability before investing capital.</p>
+      <div class="rm-form-grid">
+        <select id="season" class="rm-input">
+          <option value="" disabled selected>Season</option>
+          <option value="monsoon">Monsoon</option>
+          <option value="winter">Winter</option>
+          <option value="summer">Summer</option>
+        </select>
+        <select id="crop" class="rm-input">
+          <option value="" disabled selected>Crop Type</option>
+          <option value="wheat">Wheat</option>
+          <option value="cotton">Cotton</option>
+          <option value="onion">Onion</option>
+          <option value="sugarcane">Sugarcane</option>
+          <option value="pomegranate">Pomegranate</option>
+          <option value="soybean">Soybean</option>
+        </select>
+        <select id="soil" class="rm-input">
+          <option value="" disabled selected>Soil Type</option>
+          <option value="black">Black Soil</option>
+          <option value="red">Red Soil</option>
+          <option value="sandy">Sandy Soil</option>
+        </select>
+        <select id="water" class="rm-input">
+          <option value="" disabled selected>Water Source</option>
+          <option value="rain">Rainfed</option>
+          <option value="borewell">Borewell</option>
+          <option value="drip">Drip</option>
+        </select>
+      </div>
+      <button class="rm-action-btn" onclick="analyzeRisk()">EXECUTE ANALYSIS</button>
+      <div id="riskResult" class="rm-result-output"></div>
+    </section>
 
-<!-- TOPBAR -->
+    <section class="rm-section bg-2" id="water">
+      <div class="rm-subtitle">INSTRUMENT 02</div>
+      <h1 class="rm-title">WATER<br>BUDGET</h1>
+      <p class="rm-desc">Calculate hydration requirements against available resources.</p>
+      <div class="rm-form-grid">
+        <select id="w_crop" class="rm-input">
+          <option value="" disabled selected>Target Crop</option>
+          <option value="wheat">Wheat</option>
+          <option value="cotton">Cotton</option>
+          <option value="sugarcane">Sugarcane</option>
+          <option value="onion">Onion</option>
+        </select>
+        <input id="w_acres" type="number" class="rm-input" placeholder="ACREAGE" />
+        <select id="w_source" class="rm-input" style="grid-column: span 2;">
+          <option value="" disabled selected>Water Source</option>
+          <option value="rain">Rainfed</option>
+          <option value="borewell">Borewell</option>
+          <option value="drip">Drip</option>
+        </select>
+      </div>
+      <button class="rm-action-btn" onclick="calcWater()">CALCULATE CAPACITY</button>
+      <div id="waterResult" class="rm-result-output"></div>
+    </section>
 
-<header class="topbar">
+    <section class="rm-section bg-3" id="seed">
+      <div class="rm-subtitle">INSTRUMENT 03</div>
+      <h1 class="rm-title">SEED<br>MATRIX</h1>
+      <p class="rm-desc">Precision per-acre seed rate and variety optimization.</p>
+      <div class="rm-form-grid">
+        <select id="seed_crop" class="rm-input">
+          <option value="" disabled selected>Target Crop</option>
+          <option value="wheat">Wheat</option>
+          <option value="cotton">Cotton</option>
+          <option value="onion">Onion</option>
+          <option value="sugarcane">Sugarcane</option>
+        </select>
+        <input id="seed_acres" type="number" class="rm-input" placeholder="ACREAGE" />
+      </div>
+      <button class="rm-action-btn" onclick="calcSeed()">OPTIMIZE RATE</button>
+      <div id="seedResult" class="rm-result-output"></div>
+    </section>
 
-  <div class="topbar-inner">
+    <section class="rm-section bg-4" id="economics">
+      <div class="rm-subtitle">INSTRUMENT 04</div>
+      <h1 class="rm-title">YIELD<br>ECONOMICS</h1>
+      <p class="rm-desc">Projected harvest volume and financial ROI matrix.</p>
+      <div class="rm-form-grid">
+        <select id="eco_crop" class="rm-input">
+          <option value="" disabled selected>Target Crop</option>
+          <option value="sugarcane">Sugarcane</option>
+          <option value="onion">Onion</option>
+          <option value="cotton">Cotton</option>
+          <option value="soybean">Soybean</option>
+        </select>
+        <input id="eco_acres" type="number" class="rm-input" placeholder="ACREAGE" />
+      </div>
+      <button class="rm-action-btn" onclick="calcEconomics()">RUN PROJECTIONS</button>
+      <div id="ecoResult" class="rm-result-output"></div>
+    </section>
 
-    <a
-      class="brand"
-      href="index.html"
-    >
+    <section class="rm-section bg-5" id="fertilizer">
+      <div class="rm-subtitle">INSTRUMENT 05</div>
+      <h1 class="rm-title">CHEMICAL<br>MATRIX</h1>
+      <p class="rm-desc">Precision NPK bag allocation (Urea, DAP, MOP).</p>
+      <div class="rm-form-grid">
+        <select id="chem_crop" class="rm-input">
+          <option value="" disabled selected>Target Crop</option>
+          <option value="sugarcane">Sugarcane</option>
+          <option value="onion">Onion</option>
+          <option value="cotton">Cotton</option>
+          <option value="wheat">Wheat</option>
+        </select>
+        <input id="chem_acres" type="number" class="rm-input" placeholder="ACREAGE" />
+      </div>
+      <button class="rm-action-btn" onclick="calcFertilizer()">COMPUTE CHEMISTRY</button>
+      <div id="chemResult" class="rm-result-output"></div>
+    </section>
 
-      <span class="brand-mark"></span>
+    <section class="rm-section bg-6" id="rescue">
+      <div class="rm-subtitle">INSTRUMENT 06</div>
+      <h1 class="rm-title">EMERGENCY<br>RESCUE</h1>
+      <p class="rm-desc">Immediate triage protocols for crop failure symptoms.</p>
+      <div class="rm-form-grid">
+        <button class="rm-action-btn" style="width:100%; border-color:rgba(255,255,255,0.4);" onclick="rescue('yellow')">LEAVES YELLOW</button>
+        <button class="rm-action-btn" style="width:100%; border-color:rgba(255,255,255,0.4);" onclick="rescue('dry')">PLANT DRYING</button>
+        <button class="rm-action-btn" style="width:100%; border-color:rgba(255,255,255,0.4);" onclick="rescue('slow')">SLOW GROWTH</button>
+        <button class="rm-action-btn" style="width:100%; border-color:rgba(255,255,255,0.4);" onclick="rescue('pest')">PEST INFESTATION</button>
+      </div>
+      <div id="rescueResult" class="rm-result-output" style="color:#ef4444;"></div>
+    </section>
 
-      <span class="brand-text">
-        AGROSENSE
-      </span>
+    <section class="rm-section bg-7" id="notes">
+      <div class="rm-subtitle">INSTRUMENT 07</div>
+      <h1 class="rm-title">SECURE<br>NOTES</h1>
+      <p class="rm-desc">Encrypted local storage for field observations.</p>
+      <textarea id="notesBox" class="rm-input" style="height:120px; resize:none; margin-bottom:20px;" placeholder="ENTER SYSTEM LOGS HERE..."></textarea>
+      <div style="display:flex; gap:15px;">
+        <button class="rm-action-btn" onclick="saveNotes()">WRITE TO DISK</button>
+        <button class="rm-action-btn" style="border-color:#ef4444; color:#ef4444;" onclick="clearNotes()">FORMAT</button>
+      </div>
+      <div id="notesStatus" class="rm-result-output"></div>
+    </section>
 
-    </a>
-
-    <nav class="topbar-links">
-
-      <a href="#riskTool">
-        Risk
-      </a>
-
-      <a href="#waterTool">
-        Water
-      </a>
-
-      <a href="#seedTool">
-        Seed
-      </a>
-
-      <a href="#calendarTool">
-        Calendar
-      </a>
-
-      <a href="#farmculture">
-        AI
-      </a>
-
-    </nav>
+    <section class="rm-section bg-8" id="ai">
+      <div class="rm-subtitle">INTELLIGENCE UNIT</div>
+      <h1 class="rm-title">FARMCULTURE<br>AI</h1>
+      <p class="rm-desc">Activate neural processing unit for dynamic agricultural guidance.</p>
+      <button class="rm-action-btn" style="background:#ffffff; color:#000000;" onclick="openFarmCulture()">INITIALIZE SYSTEM</button>
+    </section>
 
   </div>
 
-</header>
-
-<!-- MAIN -->
-
-<main class="container">
-
-  <!-- HERO -->
-
-  <section class="hero">
-
-    <div class="hero-content">
-
-      <p class="hero-label">
-        AGRICULTURE • AI • FARMING SUPPORT
-      </p>
-
-      <h1 class="hero-title">
-        TOOLS
-      </h1>
-
-      <p class="hero-subtitle">
-
-        Farming utilities for crop planning,
-        risk analysis, water management,
-        seed estimation, crop guidance,
-        and field-level support.
-
-      </p>
-
-    </div>
-
-  </section>
-
-  <!-- RISK TOOL -->
-
-  <section
-    class="form-card"
-    id="riskTool"
-  >
-
-    <div class="section-head">
-
-      <p class="section-label">
-        RISK ANALYSIS
-      </p>
-
-      <h2>
-        Crop Risk Predictor
-      </h2>
-
-    </div>
-
-    <div class="form-grid">
-
-      <div class="form-group">
-
-        <label>
-          Season
-        </label>
-
-        <select
-          id="season"
-          onchange="showQuickAdvice()"
-        >
-
-          <option value="">
-            Select Season
-          </option>
-
-          <option value="monsoon">
-            Monsoon
-          </option>
-
-          <option value="winter">
-            Winter
-          </option>
-
-          <option value="summer">
-            Summer
-          </option>
-
-        </select>
-
-      </div>
-
-      <div class="form-group">
-
-        <label>
-          Search Crop
-        </label>
-
-        <input
-          type="text"
-          id="cropSearch"
-          placeholder="Search crop"
-          oninput="filterCrops()"
-        />
-
-      </div>
-
-      <div class="form-group">
-
-        <label>
-          Crop
-        </label>
-
-        <select
-          id="crop"
-          onchange="showQuickAdvice()"
-        >
-
-          <option value="">
-            Select Crop
-          </option>
-
-          <!-- Cereals -->
-
-          <option value="rice">Rice</option>
-          <option value="wheat">Wheat</option>
-          <option value="maize">Maize</option>
-
-          <!-- Millets -->
-
-          <option value="bajra">Bajra</option>
-          <option value="jowar">Jowar</option>
-
-          <!-- Pulses -->
-
-          <option value="gram">Gram</option>
-          <option value="tur">Tur</option>
-
-          <!-- Oilseed -->
-
-          <option value="soybean">Soybean</option>
-
-          <!-- Commercial -->
-
-          <option value="cotton">Cotton</option>
-
-          <!-- Vegetables -->
-
-          <option value="onion">Onion</option>
-          <option value="tomato">Tomato</option>
-
-        </select>
-
-      </div>
-
-      <div class="form-group">
-
-        <label>
-          Soil Type
-        </label>
-
-        <select
-          id="soil"
-          onchange="showQuickAdvice()"
-        >
-
-          <option value="">
-            Select Soil
-          </option>
-
-          <option value="black">
-            Black Soil
-          </option>
-
-          <option value="loamy">
-            Loamy Soil
-          </option>
-
-          <option value="sandy">
-            Sandy Soil
-          </option>
-
-        </select>
-
-      </div>
-
-      <div class="form-group">
-
-        <label>
-          Water Source
-        </label>
-
-        <select
-          id="water"
-          onchange="showQuickAdvice()"
-        >
-
-          <option value="">
-            Select Water Source
-          </option>
-
-          <option value="rain">
-            Rainfed
-          </option>
-
-          <option value="borewell">
-            Borewell
-          </option>
-
-          <option value="well">
-            Well
-          </option>
-
-          <option value="canal">
-            Canal
-          </option>
-
-          <option value="farmpond">
-            Farm Pond
-          </option>
-
-          <option value="drip">
-            Drip Irrigation
-          </option>
-
-        </select>
-
-      </div>
-
-    </div>
-
-    <button
-      class="btn"
-      onclick="analyzeRisk()"
-    >
-
-      Analyze Risk
-
-    </button>
-
-    <div
-      class="result-box"
-      id="riskResult"
-    >
-
-      Risk analysis will appear here.
-
-    </div>
-
-  </section>
-
-  <!-- QUICK ADVICE -->
-
-  <section class="form-card">
-
-    <div class="section-head">
-
-      <p class="section-label">
-        GUIDANCE
-      </p>
-
-      <h2>
-        Quick Advice
-      </h2>
-
-    </div>
-
-    <div
-      class="result-box"
-      id="quickAdvice"
-    >
-
-      Select season, crop,
-      soil and water source
-      to receive guidance.
-
-    </div>
-
-  </section>
-
-  <!-- WATER -->
-
-  <section
-    class="form-card"
-    id="waterTool"
-  >
-
-    <div class="section-head">
-
-      <p class="section-label">
-        WATER
-      </p>
-
-      <h2>
-        Water Budget
-      </h2>
-
-    </div>
-
-    <div class="form-grid">
-
-      <div class="form-group">
-
-        <label>
-          Crop
-        </label>
-
-        <select id="w_crop">
-
-          <option value="">
-            Select Crop
-          </option>
-
-          <option value="rice">Rice</option>
-          <option value="wheat">Wheat</option>
-          <option value="soybean">Soybean</option>
-          <option value="cotton">Cotton</option>
-          <option value="maize">Maize</option>
-          <option value="bajra">Bajra</option>
-          <option value="jowar">Jowar</option>
-          <option value="gram">Gram</option>
-          <option value="tur">Tur</option>
-          <option value="onion">Onion</option>
-          <option value="tomato">Tomato</option>
-
-        </select>
-
-      </div>
-
-      <div class="form-group">
-
-        <label>
-          Land (Acres)
-        </label>
-
-        <input
-          type="number"
-          id="w_acres"
-          placeholder="Example: 2"
-        />
-
-      </div>
-
-      <div class="form-group">
-
-        <label>
-          Water Source
-        </label>
-
-        <select id="w_source">
-
-          <option value="">
-            Select Source
-          </option>
-
-          <option value="rain">Rainfed</option>
-          <option value="well">Well</option>
-          <option value="borewell">Borewell</option>
-          <option value="canal">Canal</option>
-          <option value="drip">Drip</option>
-
-        </select>
-
-      </div>
-
-    </div>
-
-    <button
-      class="btn"
-      onclick="calcWater()"
-    >
-
-      Calculate Water Budget
-
-    </button>
-
-    <div
-      class="result-box"
-      id="waterResult"
-    >
-
-      Water analysis will appear here.
-
-    </div>
-
-  </section>
-
-  <!-- SEED -->
-
-  <section
-    class="form-card"
-    id="seedTool"
-  >
-
-    <div class="section-head">
-
-      <p class="section-label">
-        SEED
-      </p>
-
-      <h2>
-        Seed Planning
-      </h2>
-
-    </div>
-
-    <div class="form-grid">
-
-      <div class="form-group">
-
-        <label>
-          Crop
-        </label>
-
-        <select id="seed_crop">
-
-          <option value="">
-            Select Crop
-          </option>
-
-          <option value="rice">Rice</option>
-          <option value="wheat">Wheat</option>
-          <option value="soybean">Soybean</option>
-          <option value="cotton">Cotton</option>
-          <option value="maize">Maize</option>
-          <option value="bajra">Bajra</option>
-          <option value="jowar">Jowar</option>
-          <option value="gram">Gram</option>
-          <option value="tur">Tur</option>
-          <option value="onion">Onion</option>
-          <option value="tomato">Tomato</option>
-
-        </select>
-
-      </div>
-
-      <div class="form-group">
-
-        <label>
-          Land (Acres)
-        </label>
-
-        <input
-          type="number"
-          id="seed_acres"
-          placeholder="Example: 3"
-        />
-
-      </div>
-
-    </div>
-
-    <button
-      class="btn"
-      onclick="calcSeed()"
-    >
-
-      Calculate Seed
-
-    </button>
-
-    <div
-      class="result-box"
-      id="seedResult"
-    >
-
-      Seed analysis will appear here.
-
-    </div>
-
-  </section>
-
-  <!-- CALENDAR -->
-
-  <section
-    class="form-card"
-    id="calendarTool"
-  >
-
-    <div class="section-head">
-
-      <p class="section-label">
-        CALENDAR
-      </p>
-
-      <h2>
-        Crop Calendar
-      </h2>
-
-    </div>
-
-    <div class="form-group">
-
-      <label>
-        Crop
-      </label>
-
-      <select id="cal_crop">
-
-        <option value="">
-          Select Crop
-        </option>
-
-        <option value="rice">Rice</option>
-        <option value="wheat">Wheat</option>
-        <option value="soybean">Soybean</option>
-        <option value="cotton">Cotton</option>
-        <option value="maize">Maize</option>
-        <option value="bajra">Bajra</option>
-        <option value="jowar">Jowar</option>
-        <option value="gram">Gram</option>
-        <option value="tur">Tur</option>
-        <option value="onion">Onion</option>
-        <option value="tomato">Tomato</option>
-
-      </select>
-
-    </div>
-
-    <button
-      class="btn"
-      onclick="showCalendar()"
-    >
-
-      Show Calendar
-
-    </button>
-
-    <div
-      class="result-box"
-      id="calendarResult"
-    >
-
-      Calendar information will appear here.
-
-    </div>
-
-  </section>
-
-  <!-- RESCUE -->
-
-  <section
-    class="form-card"
-    id="rescueTool"
-  >
-
-    <div class="section-head">
-
-      <p class="section-label">
-        RESCUE
-      </p>
-
-      <h2>
-        Rescue Mode
-      </h2>
-
-    </div>
-
-    <div class="grid2">
-
-      <button
-        class="btn secondary"
-        onclick="rescue('yellow')"
-      >
-
-        Leaves Yellow
-
-      </button>
-
-      <button
-        class="btn secondary"
-        onclick="rescue('dry')"
-      >
-
-        Plant Drying
-
-      </button>
-
-      <button
-        class="btn secondary"
-        onclick="rescue('slow')"
-      >
-
-        Slow Growth
-
-      </button>
-
-      <button
-        class="btn secondary"
-        onclick="rescue('pest')"
-      >
-
-        Pest Attack
-
-      </button>
-
-    </div>
-
-    <div
-      class="result-box"
-      id="rescueResult"
-    >
-
-      Rescue guidance will appear here.
-
-    </div>
-
-  </section>
-
-  <!-- FERTILIZER -->
-
-  <section
-    class="form-card"
-    id="fertTool"
-  >
-
-    <div class="section-head">
-
-      <p class="section-label">
-        FERTILIZER
-      </p>
-
-      <h2>
-        Fertilizer Guide
-      </h2>
-
-    </div>
-
-    <div class="form-group">
-
-      <label>
-        Crop
-      </label>
-
-      <select id="f_crop">
-
-        <option value="">
-          Select Crop
-        </option>
-
-        <option value="rice">Rice</option>
-        <option value="wheat">Wheat</option>
-        <option value="soybean">Soybean</option>
-        <option value="cotton">Cotton</option>
-        <option value="maize">Maize</option>
-        <option value="bajra">Bajra</option>
-        <option value="jowar">Jowar</option>
-        <option value="gram">Gram</option>
-        <option value="tur">Tur</option>
-        <option value="onion">Onion</option>
-        <option value="tomato">Tomato</option>
-
-      </select>
-
-    </div>
-
-    <button
-      class="btn"
-      onclick="fertGuide()"
-    >
-
-      Show Guide
-
-    </button>
-
-    <div
-      class="result-box"
-      id="fertResult"
-    >
-
-      Fertilizer guidance will appear here.
-
-    </div>
-
-  </section>
-
-  <!-- NOTES -->
-
-  <section class="form-card">
-
-    <div class="section-head">
-
-      <p class="section-label">
-        NOTES
-      </p>
-
-      <h2>
-        Farmer Notes
-      </h2>
-
-    </div>
-
-    <textarea
-      id="notesBox"
-      placeholder="Write notes here..."
-    ></textarea>
-
-    <div class="grid2">
-
-      <button
-        class="btn"
-        onclick="saveNotes()"
-      >
-
-        Save Notes
-
-      </button>
-
-      <button
-        class="btn secondary"
-        onclick="clearNotes()"
-      >
-
-        Clear Notes
-
-      </button>
-
-    </div>
-
-    <div
-      class="result-box"
-      id="notesStatus"
-    >
-
-      Notes status will appear here.
-
-    </div>
-
-  </section>
-
-  <!-- AI -->
-
-  <section
-    class="form-card"
-    id="farmculture"
-  >
-
-    <div class="section-head">
-
-      <p class="section-label">
-        AI
-      </p>
-
-      <h2>
-        FarmCulture AI
-      </h2>
-
-    </div>
-
-    <p>
-
-      AI-assisted farming support
-      integrated with AgroSense tools.
-
-    </p>
-
-    <br>
-
-    <a
-      href="https://huggingface.co/spaces/Chaitu2121/farmculture-ai"
-      target="_blank"
-      class="btn"
-    >
-
-      Open FarmCulture AI
-
-    </a>
-
-  </section>
-
-</main>
-
-<script src="script.js?v=50"></script>
-
-<script src="tools.js?v=50"></script>
-
+  <script src="tools.js"></script>
 </body>
-            </html>
+  </html>
+  
