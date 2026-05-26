@@ -14,8 +14,8 @@ window.addEventListener('load', () => {
     if(saved) {
       const box = document.getElementById("notesBox");
       if(box) box.value = saved;
-      const status = document.getElementById("notesStatus");
-      if(status) status.innerHTML = "[ PREVIOUS SESSION RESTORED ]";
+      // Use the new animation trigger for the vault status
+      displayResult("notesStatus", "[ PREVIOUS SESSION RESTORED ]");
     }
   } catch(e) {}
 });
@@ -40,12 +40,32 @@ function openFarmCulture() {
 }
 
 /* =========================================================
-   MASTER AGRONOMIC DATABASE (Fused from your original data)
+   MASTER UI ANIMATION TRIGGER
+   Forces a clean CSS animation restart on every click.
+========================================================= */
+function displayResult(elementId, htmlContent) {
+  const out = document.getElementById(elementId);
+  if (!out) return;
+  
+  // 1. Remove the active class to instantly kill the old animation
+  out.classList.remove("active");
+  
+  // 2. The DOM Reflow trick: Forces the browser to process the removal 
+  // before adding it back. This guarantees the slide-up animation fires every time.
+  void out.offsetWidth; 
+  
+  // 3. Inject the math/text and re-trigger the cinematic fade-in
+  out.innerHTML = htmlContent;
+  out.classList.add("active");
+}
+
+/* =========================================================
+   MASTER AGRONOMIC DATABASE 
 ========================================================= */
 const MASTER_DB = {
   rice: { seasons: ["monsoon"], soils: ["loamy", "black"], waterNeed: "Very High", kc: 1.20, days: 120, seed: {min: 8, max: 12, unit: "KG (Nursery)"}, spacing: "20cm x 15cm", vars: ["Swarna", "IR 64", "Indrayani", "MTU 1010"], yieldQtl: 25, priceQtl: 2200, costAcre: 20000, npk: {N: 40, P: 20, K: 20} },
   wheat: { seasons: ["winter"], soils: ["loamy", "black"], waterNeed: "Medium", kc: 1.15, days: 120, seed: {min: 35, max: 45, unit: "KG"}, spacing: "22.5cm x 10cm", vars: ["HD 2967", "HD 3086", "Lok 1", "GW 322"], yieldQtl: 18, priceQtl: 2300, costAcre: 15000, npk: {N: 48, P: 24, K: 16} },
-  soybean: { seasons: ["monsoon"], soils: ["black", "loamy"], waterNeed: "Medium", kc: 1.00, days: 100, seed: {min: 25, max: 35, unit: "KG"}, spacing: "45cm x 5cm", vars: ["JS 335", "JS 9560", "MAUS 71", "RKS 18"], yieldQtl: 10, priceQtl: 4500, costAcre: 16000, npk: {N: 12, P: 32, K: 16} }, // Low N because it fixes nitrogen
+  soybean: { seasons: ["monsoon"], soils: ["black", "loamy"], waterNeed: "Medium", kc: 1.00, days: 100, seed: {min: 25, max: 35, unit: "KG"}, spacing: "45cm x 5cm", vars: ["JS 335", "JS 9560", "MAUS 71", "RKS 18"], yieldQtl: 10, priceQtl: 4500, costAcre: 16000, npk: {N: 12, P: 32, K: 16} },
   cotton: { seasons: ["monsoon"], soils: ["black", "loamy"], waterNeed: "Medium", kc: 1.20, days: 160, seed: {min: 1.2, max: 2.0, unit: "KG"}, spacing: "90cm x 90cm", vars: ["RCH 2 Bt", "Bunny Bt", "Ankur Bt"], yieldQtl: 12, priceQtl: 7000, costAcre: 35000, npk: {N: 40, P: 20, K: 20} },
   maize: { seasons: ["monsoon"], soils: ["loamy", "black"], waterNeed: "Medium", kc: 1.15, days: 100, seed: {min: 8, max: 10, unit: "KG"}, spacing: "60cm x 20cm", vars: ["HQPM 1", "Deccan 103", "NK-6240"], yieldQtl: 22, priceQtl: 1800, costAcre: 18000, npk: {N: 48, P: 24, K: 16} },
   bajra: { seasons: ["monsoon"], soils: ["sandy", "loamy", "black"], waterNeed: "Low", kc: 0.80, days: 85, seed: {min: 3, max: 4, unit: "KG"}, spacing: "45cm x 15cm", vars: ["HHB 67", "ICTP 8203"], yieldQtl: 10, priceQtl: 2000, costAcre: 10000, npk: {N: 24, P: 12, K: 0} },
@@ -59,35 +79,31 @@ const MASTER_DB = {
 };
 
 // =========================================================
-// 1. RISK PREDICTOR (Now uses your exact soil/season logic)
+// 1. RISK PREDICTOR 
 // =========================================================
 function analyzeRisk() {
   const season = document.getElementById("season").value;
   const crop = document.getElementById("crop").value;
   const soil = document.getElementById("soil").value;
   const water = document.getElementById("water").value;
-  const out = document.getElementById("riskResult");
-
-  if(!season) { out.innerHTML = "<span style='color:#ef4444;'>[ ERROR ] SEASON NOT SELECTED</span>"; return; }
-  if(!crop) { out.innerHTML = "<span style='color:#ef4444;'>[ ERROR ] CROP NOT SELECTED</span>"; return; }
-  if(!soil) { out.innerHTML = "<span style='color:#ef4444;'>[ ERROR ] SOIL TYPE NOT SELECTED</span>"; return; }
-  if(!water) { out.innerHTML = "<span style='color:#ef4444;'>[ ERROR ] WATER SOURCE NOT SELECTED</span>"; return; }
+  
+  if(!season) return displayResult("riskResult", "<span style='color:#ef4444;'>[ ERROR ] SEASON NOT SELECTED</span>");
+  if(!crop) return displayResult("riskResult", "<span style='color:#ef4444;'>[ ERROR ] CROP NOT SELECTED</span>");
+  if(!soil) return displayResult("riskResult", "<span style='color:#ef4444;'>[ ERROR ] SOIL TYPE NOT SELECTED</span>");
+  if(!water) return displayResult("riskResult", "<span style='color:#ef4444;'>[ ERROR ] WATER SOURCE NOT SELECTED</span>");
 
   const db = MASTER_DB[crop];
   let riskScore = 0; 
   let alerts = [];
 
-  // 1. Check strict season & soil compatibility from your old file
   if(!db.seasons.includes(season)) { riskScore += 25; alerts.push(`CRITICAL: ${season.toUpperCase()} is not the preferred season for this crop.`); }
   if(!db.soils.includes(soil)) { riskScore += 20; alerts.push(`WARNING: Crop root system is incompatible with ${soil.toUpperCase()} soil.`); }
 
-  // 2. Check Water Profile
   if (water === "rain") { 
     riskScore += 25; alerts.push("Rainfed dependence limits yield consistency."); 
     if(db.waterNeed === "Very High") { riskScore += 30; alerts.push("FATAL: Cannot sustain 'Very High' water crop on rain alone."); }
   } else if (water === "borewell") { riskScore += 10; }
   
-  // 3. Sandy Soil Penalty
   if (soil === "sandy") { 
     alerts.push("Sandy soil: High percolation rate. Evaporation risk."); 
     if(water !== "drip") riskScore += 15;
@@ -98,7 +114,7 @@ function analyzeRisk() {
   if (survivalRate < 75) { status = "ELEVATED RISK"; color = "#eab308"; }
   if (survivalRate < 50) { status = "CRITICAL WARNING"; color = "#ef4444"; }
 
-  out.innerHTML = `
+  displayResult("riskResult", `
     <div style="color: ${color}; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px;">
       [ DIAGNOSTIC COMPLETE ]<br>
       PROBABILITY OF SUCCESS: ${survivalRate}%<br>
@@ -107,24 +123,23 @@ function analyzeRisk() {
     <div style="color: #a1a1a1; font-size: 11px; line-height: 1.6;">
       ${alerts.length > 0 ? alerts.map(a => `/// ${a}`).join("<br>") : "/// PARAMETERS IDEAL. PROCEED WITH SOWING."}
     </div>
-  `;
+  `);
 }
 
 // =========================================================
-// 2. WATER BUDGET (FAO Math + Your 13 Crops)
+// 2. WATER BUDGET 
 // =========================================================
 function calcWater() {
   const crop = document.getElementById("w_crop").value;
   const acres = parseFloat(document.getElementById("w_acres").value);
   const source = document.getElementById("w_source").value;
-  const out = document.getElementById("waterResult");
 
-  if(!crop) { out.innerHTML = "<span style='color:#ef4444;'>[ ERROR ] CROP NOT SELECTED</span>"; return; }
-  if(!acres || acres <= 0) { out.innerHTML = "<span style='color:#ef4444;'>[ ERROR ] ACREAGE INPUT REQUIRED</span>"; return; }
-  if(!source) { out.innerHTML = "<span style='color:#ef4444;'>[ ERROR ] WATER SOURCE NOT SELECTED</span>"; return; }
+  if(!crop) return displayResult("waterResult", "<span style='color:#ef4444;'>[ ERROR ] CROP NOT SELECTED</span>");
+  if(!acres || acres <= 0) return displayResult("waterResult", "<span style='color:#ef4444;'>[ ERROR ] ACREAGE INPUT REQUIRED</span>");
+  if(!source) return displayResult("waterResult", "<span style='color:#ef4444;'>[ ERROR ] WATER SOURCE NOT SELECTED</span>");
 
   const c = MASTER_DB[crop];
-  if(!c) { out.innerHTML = "<span style='color:#eab308;'>[ NOTICE ] METRICS UNAVAILABLE</span>"; return; }
+  if(!c) return displayResult("waterResult", "<span style='color:#eab308;'>[ NOTICE ] METRICS UNAVAILABLE</span>");
 
   const eTc = 5.0 * c.kc * c.days; 
   const totalLiters = (eTc * 4046.86 * acres);
@@ -133,7 +148,7 @@ function calcWater() {
   if(c.waterNeed === "Very High" && (source === "rain" || source === "borewell")) { risk = "HIGH (DEPLETION IMMINENT)"; } 
   else if (c.waterNeed === "Medium" && source === "rain") { risk = "MODERATE (MONSOON DEPENDENT)"; }
 
-  out.innerHTML = `
+  displayResult("waterResult", `
     <div style="color: #22c55e; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px;">
       [ HYDRATION MATRIX ]<br>
       CROP EVAPOTRANSPIRATION: ${eTc.toLocaleString('en-IN')} MM<br>
@@ -143,27 +158,26 @@ function calcWater() {
       /// WATER SOURCE RISK: ${risk}<br>
       /// BASELINE: FAO PENMAN-MONTEITH METHOD
     </div>
-  `;
+  `);
 }
 
 // =========================================================
-// 3. SEED MATRIX (Dynamic to your 13 Crops)
+// 3. SEED MATRIX 
 // =========================================================
 function calcSeed() {
   const crop = document.getElementById("seed_crop").value;
   const acres = parseFloat(document.getElementById("seed_acres").value);
-  const out = document.getElementById("seedResult");
 
-  if(!crop) { out.innerHTML = "<span style='color:#ef4444;'>[ ERROR ] CROP NOT SELECTED</span>"; return; }
-  if(!acres || acres <= 0) { out.innerHTML = "<span style='color:#ef4444;'>[ ERROR ] ACREAGE INPUT REQUIRED</span>"; return; }
+  if(!crop) return displayResult("seedResult", "<span style='color:#ef4444;'>[ ERROR ] CROP NOT SELECTED</span>");
+  if(!acres || acres <= 0) return displayResult("seedResult", "<span style='color:#ef4444;'>[ ERROR ] ACREAGE INPUT REQUIRED</span>");
 
   const c = MASTER_DB[crop];
-  if(!c) { out.innerHTML = "<span style='color:#eab308;'>[ NOTICE ] METRICS UNAVAILABLE</span>"; return; }
+  if(!c) return displayResult("seedResult", "<span style='color:#eab308;'>[ NOTICE ] METRICS UNAVAILABLE</span>");
 
   const minTotal = (c.seed.min * acres).toLocaleString('en-IN');
   const maxTotal = (c.seed.max * acres).toLocaleString('en-IN');
 
-  out.innerHTML = `
+  displayResult("seedResult", `
     <div style="color: #ffffff; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px;">
       [ OPTIMIZATION COMPLETE ]<br>
       GEOMETRY: ${c.spacing}<br>
@@ -172,22 +186,21 @@ function calcSeed() {
     <div style="color: #22c55e; font-size: 11px; line-height: 1.6;">
       /// APPROVED STRAINS:<br>${c.vars.map(v => `> ${v}`).join("<br>")}
     </div>
-  `;
+  `);
 }
 
 // =========================================================
-// 4. YIELD ECONOMICS (Full 13 Crop ROI Math)
+// 4. YIELD ECONOMICS 
 // =========================================================
 function calcEconomics() {
   const crop = document.getElementById("eco_crop").value;
   const acres = parseFloat(document.getElementById("eco_acres").value);
-  const out = document.getElementById("ecoResult");
 
-  if(!crop) { out.innerHTML = "<span style='color:#ef4444;'>[ ERROR ] CROP NOT SELECTED</span>"; return; }
-  if(!acres || acres <= 0) { out.innerHTML = "<span style='color:#ef4444;'>[ ERROR ] ACREAGE INPUT REQUIRED</span>"; return; }
+  if(!crop) return displayResult("ecoResult", "<span style='color:#ef4444;'>[ ERROR ] CROP NOT SELECTED</span>");
+  if(!acres || acres <= 0) return displayResult("ecoResult", "<span style='color:#ef4444;'>[ ERROR ] ACREAGE INPUT REQUIRED</span>");
 
   const c = MASTER_DB[crop];
-  if(!c) { out.innerHTML = "<span style='color:#eab308;'>[ NOTICE ] METRICS UNAVAILABLE</span>"; return; }
+  if(!c) return displayResult("ecoResult", "<span style='color:#eab308;'>[ NOTICE ] METRICS UNAVAILABLE</span>");
 
   const totalYield = c.yieldQtl * acres;
   const grossRev = totalYield * c.priceQtl;
@@ -197,7 +210,7 @@ function calcEconomics() {
 
   let color = netProfit > 0 ? "#22c55e" : "#ef4444";
 
-  out.innerHTML = `
+  displayResult("ecoResult", `
     <div style="color: #ffffff; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px;">
       [ FINANCIAL PROJECTION ]<br>
       EST. HARVEST: ${totalYield.toLocaleString('en-IN')} QUINTALS<br>
@@ -208,37 +221,34 @@ function calcEconomics() {
       NET PROFIT: ₹${netProfit.toLocaleString('en-IN')}<br>
       R.O.I: ${roi}%
     </div>
-  `;
+  `);
 }
 
 // =========================================================
-// 5. CHEMICAL MATRIX (Stoichiometric Math for 13 Crops)
+// 5. CHEMICAL MATRIX 
 // =========================================================
 function calcFertilizer() {
   const crop = document.getElementById("chem_crop").value;
   const acres = parseFloat(document.getElementById("chem_acres").value);
-  const out = document.getElementById("chemResult");
 
-  if(!crop) { out.innerHTML = "<span style='color:#ef4444;'>[ ERROR ] CROP NOT SELECTED</span>"; return; }
-  if(!acres || acres <= 0) { out.innerHTML = "<span style='color:#ef4444;'>[ ERROR ] ACREAGE INPUT REQUIRED</span>"; return; }
+  if(!crop) return displayResult("chemResult", "<span style='color:#ef4444;'>[ ERROR ] CROP NOT SELECTED</span>");
+  if(!acres || acres <= 0) return displayResult("chemResult", "<span style='color:#ef4444;'>[ ERROR ] ACREAGE INPUT REQUIRED</span>");
 
   const c = MASTER_DB[crop];
-  if(!c) { out.innerHTML = "<span style='color:#eab308;'>[ NOTICE ] METRICS UNAVAILABLE</span>"; return; }
+  if(!c) return displayResult("chemResult", "<span style='color:#eab308;'>[ NOTICE ] METRICS UNAVAILABLE</span>");
 
   const nReq = c.npk.N * acres;
   const pReq = c.npk.P * acres;
   const kReq = c.npk.K * acres;
 
-  // Stoichiometry: DAP provides P and N. Urea provides N. MOP provides K.
   const dapKg = (pReq / 0.46);
   const nFromDap = dapKg * 0.18;
-  const ureaKg = Math.max(0, ((nReq - nFromDap) / 0.46)); // Ensure it doesn't go negative
+  const ureaKg = Math.max(0, ((nReq - nFromDap) / 0.46)); 
   const mopKg = (kReq / 0.60);
 
-  // Convert to 50kg Bags
   const toBags = (kg) => (Math.ceil((kg / 50) * 2) / 2).toFixed(1);
 
-  out.innerHTML = `
+  displayResult("chemResult", `
     <div style="color: #ffffff; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px;">
       [ CHEMICAL STOICHIOMETRY (50KG BAGS) ]<br>
       UREA (46% N): ${toBags(ureaKg)} BAGS<br>
@@ -249,14 +259,13 @@ function calcFertilizer() {
       /// ALGORITHM COMPENSATED FOR DAP NITROGEN OVERLAP.<br>
       /// BASE NPK TARGET: ${c.npk.N}-${c.npk.P}-${c.npk.K} KG/ACRE
     </div>
-  `;
+  `);
 }
 
 // =========================================================
 // 6. EMERGENCY & UTILITIES
 // =========================================================
 function rescue(type) {
-  const out = document.getElementById("rescueResult");
   const data = {
     yellow: "/// LEAF YELLOWING DETECTED<br>> Action 1: Verify soil moisture levels.<br>> Action 2: Check for Nitrogen deficiency.<br>> Action 3: Apply micro-nutrients via foliar spray.",
     dry: "/// RAPID DRYING DETECTED<br>> Action 1: Execute emergency irrigation.<br>> Action 2: Apply organic mulch immediately.<br>> Action 3: Suspend all fertilizer application.",
@@ -264,25 +273,25 @@ function rescue(type) {
     pest: "/// PEST INFESTATION DETECTED<br>> Action 1: Identify biological threat.<br>> Action 2: Deploy initial Neem extract spray.<br>> Action 3: Isolate and purge infected biomass."
   };
 
-  out.innerHTML = `
-    <div style="border-bottom: 1px solid rgba(239, 68, 68, 0.2); padding-bottom: 10px; margin-bottom: 10px;">
+  displayResult("rescueResult", `
+    <div style="border-bottom: 1px solid rgba(239, 68, 68, 0.2); padding-bottom: 10px; margin-bottom: 10px; color: #ef4444;">
       [ EMERGENCY PROTOCOL INITIATED ]
     </div>
-    <div style="font-size: 11px; line-height: 1.6;">
+    <div style="font-size: 11px; line-height: 1.6; color: #ffffff;">
       ${data[type]}
     </div>
-  `;
+  `);
 }
 
 function saveNotes() {
   const text = document.getElementById("notesBox").value;
   localStorage.setItem("agrosense_encrypted_vault", text);
-  document.getElementById("notesStatus").innerHTML = "[ DATA WRITTEN TO LOCAL DISK ]";
+  displayResult("notesStatus", "<span style='color: #22c55e'>[ DATA WRITTEN TO LOCAL DISK ]</span>");
 }
 
 function clearNotes() {
   localStorage.removeItem("agrosense_encrypted_vault");
   document.getElementById("notesBox").value = "";
-  document.getElementById("notesStatus").innerHTML = "<span style='color:#ef4444;'>[ VAULT FORMATTED ]</span>";
-   }
-       
+  displayResult("notesStatus", "<span style='color:#ef4444;'>[ VAULT FORMATTED ]</span>");
+                              }
+     
