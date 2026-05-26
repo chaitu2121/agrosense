@@ -28,7 +28,7 @@
     .rm-header {
       position: fixed; top: 0; left: 0; width: 100%; height: 70px; padding: 0 24px;
       display: flex; align-items: center; justify-content: space-between; z-index: 50;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+      background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
     }
     .rm-hamburger {
       width: 24px; height: 18px; display: flex; flex-direction: column; justify-content: center; gap: 6px;
@@ -99,7 +99,41 @@
     }
     .rm-action-btn:hover { background: #ffffff; color: #000000; }
 
-    .rm-result-output { margin-top: 20px; font-size: 12px; letter-spacing: 1px; color: #22c55e; text-transform: uppercase; }
+    /* =========================================================
+       NEW ANIMATED RESULT CARDS (REPLACING RAW TEXT)
+       ========================================================= */
+    .rm-result-card {
+      display: none; /* Hidden strictly until JavaScript fires */
+      background: rgba(10, 15, 10, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 20px;
+      margin-top: 25px;
+      color: #ffffff;
+      font-size: 13px;
+      line-height: 1.6;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    
+    /* The Animation Trigger Class */
+    .rm-result-card.active {
+      display: block;
+      animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Keyframes for butter-smooth appearance */
+    @keyframes slideUpFade {
+      0% { opacity: 0; transform: translateY(20px) scale(0.98); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Green highlight class to be used by Javascript */
+    .rm-highlight { color: #22c55e; font-weight: 700; }
+
   </style>
 </head>
 <body>
@@ -171,7 +205,7 @@
         </select>
       </div>
       <button class="rm-action-btn" onclick="analyzeRisk()">EXECUTE ANALYSIS</button>
-      <div id="riskResult" class="rm-result-output"></div>
+      <div id="riskResult" class="rm-result-card"></div>
     </section>
 
     <section class="rm-section bg-2" id="water">
@@ -204,7 +238,7 @@
         </select>
       </div>
       <button class="rm-action-btn" onclick="calcWater()">CALCULATE CAPACITY</button>
-      <div id="waterResult" class="rm-result-output"></div>
+      <div id="waterResult" class="rm-result-card"></div>
     </section>
 
     <section class="rm-section bg-3" id="seed">
@@ -231,7 +265,7 @@
         <input id="seed_acres" type="number" class="rm-input" placeholder="ACREAGE" />
       </div>
       <button class="rm-action-btn" onclick="calcSeed()">OPTIMIZE RATE</button>
-      <div id="seedResult" class="rm-result-output"></div>
+      <div id="seedResult" class="rm-result-card"></div>
     </section>
 
     <section class="rm-section bg-4" id="economics">
@@ -258,7 +292,7 @@
         <input id="eco_acres" type="number" class="rm-input" placeholder="ACREAGE" />
       </div>
       <button class="rm-action-btn" onclick="calcEconomics()">RUN PROJECTIONS</button>
-      <div id="ecoResult" class="rm-result-output"></div>
+      <div id="ecoResult" class="rm-result-card"></div>
     </section>
 
     <section class="rm-section bg-5" id="fertilizer">
@@ -285,7 +319,7 @@
         <input id="chem_acres" type="number" class="rm-input" placeholder="ACREAGE" />
       </div>
       <button class="rm-action-btn" onclick="calcFertilizer()">COMPUTE CHEMISTRY</button>
-      <div id="chemResult" class="rm-result-output"></div>
+      <div id="chemResult" class="rm-result-card"></div>
     </section>
 
     <section class="rm-section bg-6" id="rescue">
@@ -298,7 +332,7 @@
         <button class="rm-action-btn" style="width:100%; border-color:rgba(255,255,255,0.4);" onclick="rescue('slow')">SLOW GROWTH</button>
         <button class="rm-action-btn" style="width:100%; border-color:rgba(255,255,255,0.4);" onclick="rescue('pest')">PEST INFEST</button>
       </div>
-      <div id="rescueResult" class="rm-result-output" style="color:#ef4444;"></div>
+      <div id="rescueResult" class="rm-result-card" style="border-color: #ef4444;"></div>
     </section>
 
     <section class="rm-section bg-7" id="notes">
@@ -310,7 +344,7 @@
         <button class="rm-action-btn" onclick="saveNotes()">WRITE TO DISK</button>
         <button class="rm-action-btn" style="border-color:#ef4444; color:#ef4444;" onclick="clearNotes()">FORMAT</button>
       </div>
-      <div id="notesStatus" class="rm-result-output"></div>
+      <div id="notesStatus" class="rm-result-card"></div>
     </section>
 
     <section class="rm-section bg-8" id="ai">
@@ -325,4 +359,4 @@
   <script src="tools.js"></script>
 </body>
   </html>
-        
+  
