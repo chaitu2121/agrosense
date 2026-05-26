@@ -100,10 +100,10 @@
     .rm-action-btn:hover { background: #ffffff; color: #000000; }
 
     /* =========================================================
-       NEW ANIMATED RESULT CARDS (REPLACING RAW TEXT)
+       NEW ANIMATED RESULT CARDS
        ========================================================= */
     .rm-result-card {
-      display: none; /* Hidden strictly until JavaScript fires */
+      display: none; 
       background: rgba(10, 15, 10, 0.7);
       border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 16px;
@@ -119,20 +119,47 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
     
-    /* The Animation Trigger Class */
     .rm-result-card.active {
       display: block;
       animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    /* Keyframes for butter-smooth appearance */
     @keyframes slideUpFade {
       0% { opacity: 0; transform: translateY(20px) scale(0.98); }
       100% { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    /* Green highlight class to be used by Javascript */
     .rm-highlight { color: #22c55e; font-weight: 700; }
+
+    /* =========================================================
+       PREMIUM GLASSMORPHISM ARTIST SIGNATURE
+       ========================================================= */
+    .rm-glass-sig {
+      position: absolute;
+      bottom: 24px;
+      left: 24px; /* Anchors firmly to the left side */
+      background: rgba(255, 255, 255, 0.04); /* Subtly translucent */
+      backdrop-filter: blur(12px); /* The glassy blur effect */
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 30px; /* Circular pill shape */
+      padding: 8px 18px;
+      font-size: 10px;
+      font-weight: 600;
+      color: #b3b3b3;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      z-index: 10;
+      transition: all 0.3s ease;
+    }
+    
+    /* Adds a sleek hover glow effect */
+    .rm-glass-sig:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.3);
+    }
 
   </style>
 </head>
@@ -352,11 +379,12 @@
       <h1 class="rm-title">FARMCULTURE<br>AI</h1>
       <p class="rm-desc">Activate neural processing unit for dynamic agricultural guidance.</p>
       <button class="rm-action-btn" style="background:#ffffff; color:#000000;" onclick="openFarmCulture()">INITIALIZE SYSTEM</button>
+      
+      <div class="rm-glass-sig">BY CHAITANYA</div>
     </section>
 
   </div>
 
   <script src="tools.js"></script>
 </body>
-  </html>
-  
+</html>
